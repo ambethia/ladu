@@ -1,0 +1,77 @@
+require_relative 'test_helper'
+
+require 'entity_system'
+
+class Position < EntitySystem::Component
+  provides :x, :y
+end
+
+class Locator < EntitySystem::System
+
+  def process(delta)
+    each(Position) do |entity, component|
+      component.x += (1 * delta)
+      component.y += (1 * delta)
+    end
+  end
+end
+
+class EntitySystem::ManagerTest < Test::Unit::TestCase
+
+  def setup
+    @manager = EntitySystem::Manager.new
+  end
+
+  def test_create_entity_returns_a_uuid
+    entity = @manager.create
+    assert_match /^[0-9a-f\-]{36}$/, entity
+  end
+end
+
+class EntitySystem::ComponentTest < Test::Unit::TestCase
+
+  def setup
+    @component = Position.new(x: 1, y: 2)
+  end
+
+  def test_component_gains_attribute_readers
+    assert_equal 1, @component.x
+  end
+
+  def test_component_gains_attribute_setter
+    @component.y = 42
+    assert_equal 42, @component.y
+  end
+end
+
+class EntitySystem::ComponentTest < Test::Unit::TestCase
+
+  def setup
+    @component = Position.new(x: 1, y: 2)
+  end
+
+  def test_component_gains_attribute_readers
+    assert_equal 1, @component.x
+  end
+
+  def test_component_gains_attribute_setter
+    @component.y = 42
+    assert_equal 42, @component.y
+  end
+end
+
+class EntitySystem::SystemTest < Test::Unit::TestCase
+
+  def setup
+    @manager = EntitySystem::Manager.new
+    @component = Position.new(x: 1, y: 2)
+    entity = @manager.create
+    @manager.attach(entity, @component)
+    @system = Locator.new(@manager)
+  end
+
+  def test_system_changes_component
+    @system.process(1)
+    assert_equal 2, @component.x
+  end
+end
