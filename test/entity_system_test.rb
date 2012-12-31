@@ -26,6 +26,17 @@ class EntitySystem::ManagerTest < Test::Unit::TestCase
     entity = @manager.create
     assert_match /^[0-9a-f\-]{36}$/, entity
   end
+
+  def test_create_tagged_entity
+    entity = @manager.create('player')
+    assert_equal entity, @manager.find('player')
+  end
+
+  def test_create_entities_with_same_tag
+    entities = [@manager.create('enemy'), @manager.create('enemy')]
+    assert @manager.all('enemy').include?(entities[0])
+    assert @manager.all('enemy').include?(entities[1])
+  end
 end
 
 class EntitySystem::ComponentTest < Test::Unit::TestCase

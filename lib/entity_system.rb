@@ -3,18 +3,27 @@ require 'securerandom'
 module EntitySystem
 
   class Manager
+    UNTAGGED = ''
 
     attr_reader :game
 
     def initialize(game = nil)
-      @components = Hash.new
-      @entities = []
       @game = game
+      @entities = []
+      @ids_to_tags = Hash.new
+      @tags_to_ids = Hash.new
+      @components = Hash.new
     end
 
-    def create
+    def create(tag = UNTAGGED)
       entity = SecureRandom.uuid
       @entities << entity
+      @ids_to_tags[entity] = tag
+      if @tags_to_ids.has_key?(tag)
+        @tags_to_ids[tag] << entity
+      else
+        @tags_to_ids[tag] = [entity]
+      end
       entity
     end
 
@@ -22,6 +31,12 @@ module EntitySystem
       @components.each_value do |store|
         store.delete(entity)
       end
+      @tags_to_ids.each_key do |tag|
+        if @tags_to_ids[tag].include?(entity)
+          @tags_to_ids[tag].delete(entity)
+        end
+      end
+      @ids_to_tags.delete(entity)
       @entities.delete(entity)
     end
 
@@ -45,6 +60,14 @@ module EntitySystem
 
     def entities(component_class)
       component_store(component_class).keys
+    end
+
+    def all(tag)
+      @tags_to_ids[tag] || []
+    end
+
+    def find(tag)
+      all(tag).first
     end
 
     def size
@@ -79,6 +102,7 @@ module EntitySystem
 
     def initialize(manager)
       @manager = manager
+      setup
     end
 
     def each(component_class)
@@ -89,6 +113,10 @@ module EntitySystem
 
     def process(delta)
       raise RuntimeError, "Systems must `process()`."
+    end
+
+    # Optionally overriden in subclasses
+    def setup
     end
   end
 end

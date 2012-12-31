@@ -29,21 +29,20 @@ java_import com.badlogic.gdx.graphics.GL20
 java_import com.badlogic.gdx.graphics.Pixmap
 java_import com.badlogic.gdx.math.Rectangle
 java_import com.badlogic.gdx.math.Vector3
+java_import com.badlogic.gdx.scenes.scene2d.InputListener
 java_import com.badlogic.gdx.ApplicationListener
 java_import com.badlogic.gdx.Game
 java_import com.badlogic.gdx.Gdx
 java_import com.badlogic.gdx.Input
 java_import com.badlogic.gdx.Screen
 
-
-
 require 'lucky_princess_nitro'
 
 config = LwjglApplicationConfiguration.new
 config.title = "Lucky Princess Nitro"
 config.useGL20 = true
-config.width = TestScreen::VIRTUAL_WIDTH * TestScreen::DEFAULT_SCALE
-config.height = TestScreen::VIRTUAL_HEIGHT * TestScreen::DEFAULT_SCALE
+config.width = LuckyPrincessNitro::VIRTUAL_WIDTH * LuckyPrincessNitro::DEFAULT_SCALE
+config.height = LuckyPrincessNitro::VIRTUAL_HEIGHT * LuckyPrincessNitro::DEFAULT_SCALE
 
 game = LuckyPrincessNitro.new
 LwjglApplication.new(game, config)

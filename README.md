@@ -2,8 +2,8 @@
 
 ## Todo
 
-* Convert player to entity
-* Possibly convert background to an entity
+* √ Convert player to entity
+* √ Possibly convert background to an entity
 * Enemies artwork
 * Enemy spawning
 * Collision system
