@@ -1,4 +1,4 @@
-class TestScreen
+class GameScreen
   include Screen
 
   VIRTUAL_WIDTH = 320

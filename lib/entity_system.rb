@@ -1,5 +1,4 @@
 require 'securerandom'
-require 'set'
 
 module EntitySystem
 

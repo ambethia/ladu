@@ -17,7 +17,7 @@ class LuckyPrincessNitro < Game
 
   def create
     ShaderProgram.pedantic = false
-    set_screen TestScreen.new(self)
+    set_screen GameScreen.new(self)
   end
 
   def dispose
