@@ -153,6 +153,14 @@
             <filename>images/bullet_0.png</filename>
             <filename>images/bullet_1.png</filename>
             <filename>images/bullet_2.png</filename>
+            <filename>images/enemy_a_1.png</filename>
+            <filename>images/enemy_a_2.png</filename>
+            <filename>images/enemy_a_3.png</filename>
+            <filename>images/enemy_a_4.png</filename>
+            <filename>images/enemy_a_5.png</filename>
+            <filename>images/enemy_a_6.png</filename>
+            <filename>images/enemy_a_7.png</filename>
+            <filename>images/enemy_a_8.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

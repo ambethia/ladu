@@ -15,7 +15,8 @@ class GameScreen
     @entity_manager = EntitySystem::Manager.new(@game)
 
     @update_systems = %w[
-      Input Player Camera RangedCull Motion Rotation Animation
+      Input Player Enemy Camera RangedCull Spawn
+      Motion Rotation Animation
     ].map { |n|
       Object.const_get("#{n}System").new(@entity_manager)
     }
