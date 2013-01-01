@@ -36,7 +36,6 @@ class SpawnSystem < EntitySystem::System
     camera = manager.component(SpatialComponent, manager.find('camera'))
     entity = manager.create('enemy')
     manager.attach(entity, EnemyComponent.new(type: 'a'))
-    manager.attach(entity, MotionComponent.new)
     manager.attach(entity, SpatialComponent.new({
       px: camera.px,
       py: camera.py,
