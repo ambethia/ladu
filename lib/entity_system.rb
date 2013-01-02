@@ -70,6 +70,10 @@ module EntitySystem
       all(tag).first
     end
 
+    def tag(entity)
+      @ids_to_tags[entity]
+    end
+
     def size
       @entities.size
     end

@@ -27,6 +27,8 @@ java_import com.badlogic.gdx.graphics.glutils.FrameBuffer
 java_import com.badlogic.gdx.graphics.glutils.ShaderProgram
 java_import com.badlogic.gdx.graphics.GL20
 java_import com.badlogic.gdx.graphics.Pixmap
+java_import com.badlogic.gdx.math.Circle
+java_import com.badlogic.gdx.math.Intersector
 java_import com.badlogic.gdx.math.Rectangle
 java_import com.badlogic.gdx.math.Vector3
 java_import com.badlogic.gdx.scenes.scene2d.InputListener

@@ -13,7 +13,7 @@ class LuckyPrincessNitro < Game
 
   include ApplicationListener
 
-  attr_reader :is_running
+  attr_reader :is_running, :game_screen, :splash_screen
 
   def initialize
     @is_running = true
@@ -21,7 +21,16 @@ class LuckyPrincessNitro < Game
 
   def create
     ShaderProgram.pedantic = false
-    set_screen GameScreen.new(self)
+    @game_screen = GameScreen.new(self)
+    @splash_screen = SplashScreen.new(self)
+
+    if ENV['SCREEN']
+      # for test modes
+      set_screen send("#{ENV['SCREEN']}_screen")
+    else
+      toggle_fullscreen
+      set_screen splash_screen
+    end
   end
 
   def dispose

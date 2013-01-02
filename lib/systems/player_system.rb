@@ -6,6 +6,7 @@ class PlayerSystem < EntitySystem::System
   DECELERATION = 20
   RATE_OF_FIRE = 0.1
   BULLET_SPEED = 240
+  BULLET_RADIUS = 6
 
   def process(delta)
     entity = manager.find('player')
@@ -138,6 +139,10 @@ class PlayerSystem < EntitySystem::System
     manager.attach(bullet, SpatialComponent.new({
       px: spatial.px, py: spatial.py,
       bearing: spatial.bearing, speed: BULLET_SPEED
+    }))
+    manager.attach(bullet, CollisionComponent.new({
+      owner: manager.find('player'),
+      radius: BULLET_RADIUS
     }))
     manager.attach(bullet, MotionComponent.new)
     manager.attach(bullet, RenderableComponent.new)

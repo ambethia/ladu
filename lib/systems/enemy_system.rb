@@ -13,7 +13,9 @@ class EnemySystem < EntitySystem::System
       ellipse_w, ellipse_h = 50, 30
 
       @angle ||= 0
-      if player_c.is_turning_left || player_c.is_turning_right
+      if player_c.is_turning_left
+        @angle -= (2 * delta) % 360
+      elsif player_c.is_turning_right
         @angle += (2 * delta) % 360
       end
 

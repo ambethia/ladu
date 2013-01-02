@@ -1,20 +1,25 @@
 class SpawnSystem < EntitySystem::System
   SPAWN_TIME = 1
+  MAX_ENEMIES = 1
 
   def process(delta)
     @elapsed ||= 0
+    @elapsed += delta
 
-    if @elapsed > SPAWN_TIME && @enemies_spawned == 0
-      spawn_enemy
-      @enemies_spawned += 1
+    @active_enemy_count = manager.all('enemy').size
+
+    if @active_enemy_count < MAX_ENEMIES
+      if @elapsed > SPAWN_TIME
+        spawn_enemy
+        @elapsed = 0
+      end
+    else
       @elapsed = 0
     end
 
-    @elapsed += delta
   end
 
   def setup
-    @enemies_spawned = 0
     @enemy_sprites = {}
     atlas = manager.game.screen.atlas
 

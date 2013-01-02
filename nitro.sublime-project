@@ -1,0 +1,15 @@
+{
+  "folders":
+  [
+    {
+      "name": "Nitro",
+      "path": ".",
+      "folder_exclude_patterns": [
+        ".bundle", "vendor"
+      ],
+      "file_exclude_patterns": [
+        "*.sublime-*", "Gemfile.lock"
+      ]
+    }
+  ]
+}
