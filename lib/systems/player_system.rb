@@ -3,7 +3,7 @@ class PlayerSystem < EntitySystem::System
   MAX_SPEED = 120
   MIN_SPEED = -90
   ACCELERATION = 50
-  DECELERATION = 60
+  DECELERATION = 30
   RATE_OF_FIRE = 0.1
   BULLET_SPEED = 240
   BULLET_RADIUS = 6

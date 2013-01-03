@@ -7,15 +7,17 @@ class EnemySystem < EntitySystem::System
       camera = manager.component(SpatialComponent, manager.find('camera'))
       enemy = manager.component(SpatialComponent, entity)
 
-      ellipse_w, ellipse_h = 50, 30
-
+      # rotate around the player, but not if they are holding steady
       if player_c.is_turning_left
-        component.data[:t_angle] -= (2 * delta) % 360
+        increment = rand(5)
+        component.data[:t_angle] -= (increment * delta) % 360
       elsif player_c.is_turning_right
-        component.data[:t_angle] += (2 * delta) % 360
+        increment = rand(5)
+        component.data[:t_angle] += (increment * delta) % 360
       end
       component.data[:c_angle] = weighted_average(component.data[:c_angle], component.data[:t_angle])
 
+      ellipse_w, ellipse_h = 50, 50
       delta_x = player_s.px - enemy.px
       delta_y = player_s.py - enemy.py
       target_x = player_s.px - (delta_x * 0.25)
