@@ -9,8 +9,7 @@ class BaseScreen
   end
 
   def setup
-    @update_systems = []
-    @render_systems = []
+    @systems = []
   end
 
   def show
@@ -20,10 +19,7 @@ class BaseScreen
 
     @entity_manager = EntitySystem::Manager.new(@game)
 
-    @systems = {}
-    @systems[:update] = @update_systems.map { |n|
-      Object.const_get("#{n}System").new(@entity_manager) }
-    @systems[:render] = @render_systems.map { |n|
+    @initialized_systems = @systems.map { |n|
       Object.const_get("#{n}System").new(@entity_manager) }
 
     @buffer_object = FrameBuffer.new(Pixmap::Format::RGB888, @game.width, @game.height, false)
@@ -37,8 +33,8 @@ class BaseScreen
   end
 
   def render(delta)
-    @systems[:update].each do |system|
-      system.process(delta)
+    @initialized_systems.each do |system|
+      system.update(delta)
     end
 
     reset_viewport
@@ -49,8 +45,8 @@ class BaseScreen
       @batch.shader = @original_shader
     end
 
-    @systems[:render].each do |system|
-      system.process(delta)
+    @initialized_systems.each do |system|
+      system.render(delta)
     end
 
     @batch.end

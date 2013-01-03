@@ -22,7 +22,7 @@ class BackgroundSystem < EntitySystem::System
     end
   end
 
-  def process(delta)
+  def render(delta)
     world = Vector3.new(0, 0, 0)
     manager.component(CameraComponent, manager.find('camera')).object.unproject(world)
     @background.draw(@pixmap, 0, 0)

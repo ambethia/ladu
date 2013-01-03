@@ -1,6 +1,6 @@
 class RenderSystem < EntitySystem::System
 
-  def process(delta)
+  def render(delta)
     each(RenderableComponent) do |entity, component|
       image = component.image
       spatial = manager.component(SpatialComponent, entity)

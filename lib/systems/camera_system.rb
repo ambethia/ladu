@@ -15,7 +15,7 @@ class CameraSystem < EntitySystem::System
     @viewport = Rectangle.new(0, 0, manager.game.width, manager.game.height)
   end
 
-  def process(delta)
+  def update(delta)
     player = manager.component(SpatialComponent, manager.find('player'))
     x_vector = Math.cos(player.bearing * Math::PI/180)
     y_vector = Math.sin(player.bearing * Math::PI/180)

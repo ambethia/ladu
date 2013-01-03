@@ -2,7 +2,7 @@ class SpawnSystem < EntitySystem::System
   SPAWN_TIME = 1
   MAX_ENEMIES = 3
 
-  def process(delta)
+  def update(delta)
     @elapsed ||= 0
     @elapsed += delta
 

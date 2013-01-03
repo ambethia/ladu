@@ -1,6 +1,6 @@
 class AnimationSystem < EntitySystem::System
 
-  def process(delta)
+  def update(delta)
     @elapsed ||= 0
 
     each(AnimatedComponent) do |entity, component|

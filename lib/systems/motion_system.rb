@@ -1,6 +1,6 @@
 class MotionSystem < EntitySystem::System
 
-  def process(delta)
+  def update(delta)
     each(MotionComponent) do |entity, component|
       spatial = manager.component(SpatialComponent, entity)
       x_vel = Math.cos(spatial.bearing * Math::PI/180) * spatial.speed

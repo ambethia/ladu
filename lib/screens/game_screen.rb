@@ -1,7 +1,7 @@
 class GameScreen < BaseScreen
 
   def setup
-    @update_systems = %w[
+    @systems = %w[
       Input
       Player
       Enemy
@@ -12,9 +12,6 @@ class GameScreen < BaseScreen
       Motion
       Rotation
       Animation
-    ]
-
-    @render_systems = %w[
       Background
       Render
     ]

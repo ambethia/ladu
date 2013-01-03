@@ -1,6 +1,6 @@
 class RotationSystem < EntitySystem::System
 
-  def process(delta)
+  def update(delta)
     each(RotatedComponent) do |entity, component|
       spatial = manager.component(SpatialComponent, entity)
       render = manager.component(RenderableComponent, entity)

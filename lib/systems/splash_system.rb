@@ -4,7 +4,7 @@ class SplashSystem < EntitySystem::System
     @image = Texture.new(Gdx.files.internal(RELATIVE_ROOT + "assets/splash.png"))
   end
 
-  def process(delta)
+  def render(delta)
     # For reason I don't want to figure out, this seems to get called
     # still when were transitioning out of the splash screen and we get
     # a "SpriteBatch.begin must be called before draw" error. Whatever.

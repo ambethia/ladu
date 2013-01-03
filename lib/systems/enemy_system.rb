@@ -1,6 +1,6 @@
 class EnemySystem < EntitySystem::System
 
-  def process(delta)
+  def update(delta)
     each(EnemyComponent) do |entity, component|
       player_s = manager.component(SpatialComponent, manager.find('player'))
       player_c = manager.component(PlayerComponent, manager.find('player'))

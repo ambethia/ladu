@@ -115,12 +115,16 @@ module EntitySystem
       end
     end
 
-    def process(delta)
-      raise RuntimeError, "Systems must `process()`."
-    end
-
     # Optionally overriden in subclasses
     def setup
+    end
+
+    # Called in the update block, don't draw in here
+    def update(delta)
+    end
+
+    # Called in the render block, draw in here
+    def render(delta)
     end
   end
 end

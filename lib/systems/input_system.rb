@@ -1,6 +1,6 @@
 class InputSystem < EntitySystem::System
 
-  def process(delta)
+  def update(delta)
     player = manager.component(PlayerComponent, manager.find('player'))
 
     if Gdx.input.is_key_pressed(Input::Keys::Q)

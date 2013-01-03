@@ -2,7 +2,7 @@ class CollisionSystem < EntitySystem::System
   ENEMY_RADIUS = 8
   PLAYER_RADIUS = 8
 
-  def process(delta)
+  def update(delta)
     each(CollisionComponent) do |entity, component|
       collider_s = manager.component(SpatialComponent, entity)
       collider_c = Circle.new(collider_s.px, collider_s.py, component.radius)

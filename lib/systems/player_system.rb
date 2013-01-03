@@ -8,7 +8,7 @@ class PlayerSystem < EntitySystem::System
   BULLET_SPEED = 240
   BULLET_RADIUS = 6
 
-  def process(delta)
+  def update(delta)
     entity = manager.find('player')
     spatial = manager.component(SpatialComponent, entity)
     player = manager.component(PlayerComponent, entity)
