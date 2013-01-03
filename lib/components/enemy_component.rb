@@ -1,4 +1,4 @@
 class EnemyComponent < EntitySystem::Component
-  provides :type
+  provides :type, :data
 
 end

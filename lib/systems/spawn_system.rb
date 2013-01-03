@@ -1,6 +1,6 @@
 class SpawnSystem < EntitySystem::System
   SPAWN_TIME = 1
-  MAX_ENEMIES = 1
+  MAX_ENEMIES = 3
 
   def process(delta)
     @elapsed ||= 0
@@ -40,10 +40,17 @@ class SpawnSystem < EntitySystem::System
   def spawn_enemy
     camera = manager.component(SpatialComponent, manager.find('camera'))
     entity = manager.create('enemy')
-    manager.attach(entity, EnemyComponent.new(type: 'a'))
+    entry_angle = rand(360)
+    manager.attach(entity, EnemyComponent.new({
+      type: 'a',
+      data: {
+        c_angle: entry_angle,
+        t_angle: entry_angle
+      }
+    }))
     manager.attach(entity, SpatialComponent.new({
-      px: camera.px,
-      py: camera.py,
+      px: camera.px + (Math.cos(entry_angle) * (manager.game.width * 1.2)),
+      py: camera.py + (Math.sin(entry_angle) * (manager.game.height * 1.2)),
       bearing: 0, speed: 100
     }))
     manager.attach(entity, RenderableComponent.new)
