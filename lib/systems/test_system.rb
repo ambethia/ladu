@@ -15,10 +15,10 @@ class TestSystem < EntitySystem::System
       @has_run = false
     end
 
-    @effect.set_position(manager.game.width/2, manager.game.height/2)
+    @effect.set_position($game.width/2, $game.height/2)
   end
 
   def render(delta)
-    @effect.draw(manager.game.screen.batch, delta)
+    @effect.draw($game.screen.batch, delta)
   end
 end

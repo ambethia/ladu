@@ -47,7 +47,7 @@ class PlayerSystem < EntitySystem::System
   end
 
   def setup
-    screen = manager.game.screen
+    screen = $game.screen
     atlas = screen.atlas
     frames = []
 
@@ -115,8 +115,8 @@ class PlayerSystem < EntitySystem::System
     @bullet_sprites[315].flip(false, true)
 
     manager.factory.player do |player|
-      player.px = manager.game.width / 2
-      player.py = manager.game.height / 2
+      player.px = $game.width / 2
+      player.py = $game.height / 2
       player.animations = animations
     end
   end

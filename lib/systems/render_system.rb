@@ -12,6 +12,6 @@ class RenderSystem < EntitySystem::System
   end
 
   def sprite_batch
-    @sprite_batch ||= manager.game.screen.batch
+    @sprite_batch ||= $game.screen.batch
   end
 end

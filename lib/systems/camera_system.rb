@@ -4,28 +4,28 @@ class CameraSystem < EntitySystem::System
   def setup
     entity = manager.create('camera')
     @spatial = manager.attach(entity, SpatialComponent.new({
-      px: manager.game.width / 2, py: manager.game.height / 2
+      px: $game.width / 2, py: $game.height / 2
     }))
     @camera = manager.attach(entity, CameraComponent.new({
       object: OrthographicCamera.new
     }))
 
-    @camera.object.set_to_ortho(false, manager.game.width, manager.game.height)
+    @camera.object.set_to_ortho(false, $game.width, $game.height)
     @camera.object.position.set(@spatial.px, @spatial.py, 0)
-    @viewport = Rectangle.new(0, 0, manager.game.width, manager.game.height)
+    @viewport = Rectangle.new(0, 0, $game.width, $game.height)
   end
 
   def update(delta)
     player = manager.component(SpatialComponent, manager.find('player'))
     x_vector = Math.cos(player.bearing * Math::PI/180)
     y_vector = Math.sin(player.bearing * Math::PI/180)
-    x_offset = player.px + (x_vector * manager.game.width * 0.0035 * player.speed.abs)
-    y_offset = player.py + (y_vector * manager.game.height * 0.003 * player.speed.abs)
+    x_offset = player.px + (x_vector * $game.width * 0.0035 * player.speed.abs)
+    y_offset = player.py + (y_vector * $game.height * 0.003 * player.speed.abs)
     @spatial.px = follow(@spatial.px, x_offset, CAMERA_TRACKING_SPEED)
     @spatial.py = follow(@spatial.py, y_offset, CAMERA_TRACKING_SPEED)
     @camera.object.position.set(@spatial.px, @spatial.py, 0)
     @camera.object.update
-    manager.game.screen.batch.set_projection_matrix(@camera.object.combined)
+    $game.screen.batch.set_projection_matrix(@camera.object.combined)
   end
 
   private

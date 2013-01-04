@@ -6,13 +6,13 @@ class InputSystem < EntitySystem::System
     if Gdx.input.is_key_pressed(Input::Keys::Q)
       Gdx.app.exit
     elsif Gdx.input.is_key_pressed(Input::Keys::F)
-      manager.game.toggle_fullscreen
+      $game.toggle_fullscreen
     end
 
-    case manager.game.screen
+    case $game.screen
     when SplashScreen
       if Gdx.input.is_key_pressed(Input::Keys::SPACE)
-        manager.game.set_screen(manager.game.game_screen)
+        $game.set_screen($game.game_screen)
       end
     when GameScreen
       player.is_turning_right = Gdx.input.is_key_pressed(Input::Keys::RIGHT)

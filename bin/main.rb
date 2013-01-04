@@ -49,7 +49,7 @@ unless $0 == "irb"
   config.width = LuckyPrincessNitro::VIRTUAL_WIDTH * LuckyPrincessNitro::DEFAULT_SCALE
   config.height = LuckyPrincessNitro::VIRTUAL_HEIGHT * LuckyPrincessNitro::DEFAULT_SCALE
 
-  game = LuckyPrincessNitro.new
-  LwjglApplication.new(game, config)
-  while game.is_running; sleep(1); end
+  $game = LuckyPrincessNitro.new
+  LwjglApplication.new($game, config)
+  while $game.is_running; sleep(1); end
 end

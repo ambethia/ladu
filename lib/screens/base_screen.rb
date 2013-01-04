@@ -2,15 +2,16 @@ class BaseScreen
   include Screen
   include GameHelpers
 
-  attr_reader :atlas, :batch
+  attr :systems, :atlas, :batch, :sprites, :animations
 
-  def initialize(game)
-    @game = game
+  def initialize
+    @systems = []
+    @sprites = {}
+    @animations = {}
     setup
   end
 
   def setup
-    @systems = []
   end
 
   def show
@@ -18,12 +19,12 @@ class BaseScreen
     @font = BitmapFont.new(load_asset("alterebro.fnt"), load_asset("alterebro.png"), false)
     @atlas = TextureAtlas.new(load_asset("sprites.pack"))
 
-    @entity_manager = EntitySystem::Manager.new(@game)
+    @entity_manager = EntitySystem::Manager.new
 
     @initialized_systems = @systems.map { |n|
       Object.const_get("#{n}System").new(@entity_manager) }
 
-    @buffer_object = FrameBuffer.new(Pixmap::Format::RGB888, @game.width, @game.height, false)
+    @buffer_object = FrameBuffer.new(Pixmap::Format::RGB888, $game.width, $game.height, false)
     @buffer_texture = @buffer_object.get_color_buffer_texture
     @buffer_texture.set_filter(Texture::TextureFilter::Nearest, Texture::TextureFilter::Nearest)
     @buffer_texture_region = TextureRegion.new(@buffer_texture)
@@ -51,7 +52,7 @@ class BaseScreen
     end
 
     @batch.end
-    @batch.get_projection_matrix.set_to_ortho2_d(0, 0, @game.width, @game.height)
+    @batch.get_projection_matrix.set_to_ortho2_d(0, 0, $game.width, $game.height)
     render_debug if ENV['SCREEN']
     @buffer_object.end
 
@@ -64,19 +65,19 @@ class BaseScreen
       @shader_program.set_uniformf("u_deltaTime", delta)
       @shader_program.set_uniformf("u_scaleFactor", @scale_factor.to_f)
     end
-    @batch.draw(@buffer_texture_region, 0, 0, @game.width, @game.height)
+    @batch.draw(@buffer_texture_region, 0, 0, $game.width, $game.height)
     @batch.end
   end
 
   def resize(width, height)
     @scale_factor = 1
 
-    while @game.width * (@scale_factor + 1) <= width && @game.height * (@scale_factor + 1) <= height
+    while $game.width * (@scale_factor + 1) <= width && $game.height * (@scale_factor + 1) <= height
       @scale_factor += 1
     end
 
-    new_width = @game.width * @scale_factor
-    new_height = @game.height * @scale_factor
+    new_width = $game.width * @scale_factor
+    new_height = $game.height * @scale_factor
     crop_x = (width - new_width) / 2
     crop_y = (height - new_height) / 2
 

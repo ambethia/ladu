@@ -4,7 +4,7 @@ class ParticleSystem < EntitySystem::System
     @effects = {}
     @effects['explosion'] = ParticleEffect.new
     @effects['explosion'].load_emitters(load_asset("explosion.particle"))
-    @effects['explosion'].load_emitter_images(manager.game.screen.atlas)
+    @effects['explosion'].load_emitter_images($game.screen.atlas)
 
   end
 
@@ -21,7 +21,7 @@ class ParticleSystem < EntitySystem::System
 
   def render(delta)
     @effects.values.each do |effect|
-      effect.draw(manager.game.screen.batch, delta)
+      effect.draw($game.screen.batch, delta)
     end
   end
 end

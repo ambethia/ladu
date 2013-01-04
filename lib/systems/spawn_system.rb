@@ -21,7 +21,7 @@ class SpawnSystem < EntitySystem::System
 
   def setup
     @enemy_sprites = {}
-    atlas = manager.game.screen.atlas
+    atlas = $game.screen.atlas
 
     @enemy_sprites['a'] = {
         0 => atlas.create_sprite("enemy_a", 1),
@@ -49,8 +49,8 @@ class SpawnSystem < EntitySystem::System
       }
     }))
     manager.attach(entity, SpatialComponent.new({
-      px: camera.px + (Math.cos(entry_angle) * (manager.game.width * 1.2)),
-      py: camera.py + (Math.sin(entry_angle) * (manager.game.height * 1.2)),
+      px: camera.px + (Math.cos(entry_angle) * ($game.width * 1.2)),
+      py: camera.py + (Math.sin(entry_angle) * ($game.height * 1.2)),
       bearing: 0, speed: 100
     }))
     manager.attach(entity, RenderableComponent.new)

@@ -3,12 +3,11 @@ require 'securerandom'
 class EntitySystem::Manager
   UNTAGGED = ''
 
-  attr_reader :game, :factory
+  attr_reader :factory
 
-  def initialize(game = nil)
-    @factory = EntitySystem::Factory.new(self)
-    @game = game
+  def initialize
     @entities = []
+    @factory = EntitySystem::Factory.new(self)
     @ids_to_tags = Hash.new
     @tags_to_ids = Hash.new
     @components = Hash.new

@@ -5,7 +5,7 @@ class BackgroundSystem < EntitySystem::System
 
   def setup
     # dark grey fill
-    @pixmap = Pixmap.new(manager.game.width, manager.game.height, Pixmap::Format::RGB888)
+    @pixmap = Pixmap.new($game.width, $game.height, Pixmap::Format::RGB888)
     @pixmap.set_color(0.1,0.1,0.1,1)
     @pixmap.fill
     @background = Texture.new(@pixmap)
@@ -13,7 +13,7 @@ class BackgroundSystem < EntitySystem::System
     # stars
     @star_sprites = []
     3.times do |i|
-      @star_sprites << manager.game.screen.atlas.create_sprite("star", i)
+      @star_sprites << $game.screen.atlas.create_sprite("star", i)
     end
 
     @stars = []
@@ -26,7 +26,7 @@ class BackgroundSystem < EntitySystem::System
     world = Vector3.new(0, 0, 0)
     manager.component(CameraComponent, manager.find('camera')).object.unproject(world)
     @background.draw(@pixmap, 0, 0)
-    manager.game.screen.batch.draw(@background, world.x, world.y - manager.game.height)
+    $game.screen.batch.draw(@background, world.x, world.y - $game.height)
 
     player = manager.component(SpatialComponent,
       manager.find('player'))
@@ -40,9 +40,9 @@ class BackgroundSystem < EntitySystem::System
       y = (camera.py + (((star[1] - STARFIELD_HEIGHT) - (player.py / (star[2] * 0.25))) % STARFIELD_HEIGHT) - STARFIELD_HEIGHT / 2)
 
       # culll stars outside the viewport
-      if x > world.x && x < world.x + manager.game.width &&
-         y < world.y && y > world.y - manager.game.height
-        manager.game.screen.batch.draw(@star_sprites[star[3]], x, y)
+      if x > world.x && x < world.x + $game.width &&
+         y < world.y && y > world.y - $game.height
+        $game.screen.batch.draw(@star_sprites[star[3]], x, y)
       end
     end
   end

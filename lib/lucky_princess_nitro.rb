@@ -25,9 +25,9 @@ class LuckyPrincessNitro < Game
 
   def create
     ShaderProgram.pedantic = false
-    @game_screen = GameScreen.new(self)
-    @splash_screen = SplashScreen.new(self)
-    @test_screen = TestScreen.new(self)
+    @game_screen = GameScreen.new
+    @splash_screen = SplashScreen.new
+    @test_screen = TestScreen.new
 
     if ENV['SCREEN']
       # for test modes
