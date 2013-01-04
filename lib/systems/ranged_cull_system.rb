@@ -1,7 +1,7 @@
 class RangedCullSystem < EntitySystem::System
 
   def update(delta)
-    camera = manager.component(CameraComponent, manager.find('camera')).object
+    camera = manager.component(CameraComponent, manager.find(:camera)).object
     camera_position = camera.position
     each(RangedCullComponent) do |entity, component|
       spatial = manager.component(SpatialComponent, entity)

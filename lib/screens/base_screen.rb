@@ -2,12 +2,11 @@ class BaseScreen
   include Screen
   include GameHelpers
 
-  attr :systems, :atlas, :batch, :sprites, :animations
+  attr :atlas, :batch, :sprites, :systems
 
   def initialize
-    @systems = []
     @sprites = {}
-    @animations = {}
+    @systems = []
     setup
   end
 

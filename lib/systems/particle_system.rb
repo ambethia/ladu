@@ -2,10 +2,9 @@ class ParticleSystem < EntitySystem::System
 
   def setup
     @effects = {}
-    @effects['explosion'] = ParticleEffect.new
-    @effects['explosion'].load_emitters(load_asset("explosion.particle"))
-    @effects['explosion'].load_emitter_images($game.screen.atlas)
-
+    @effects[:explosion] = ParticleEffect.new
+    @effects[:explosion].load_emitters(load_asset("explosion.particle"))
+    @effects[:explosion].load_emitter_images($game.screen.atlas)
   end
 
   def update(delta)

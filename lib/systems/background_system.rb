@@ -24,15 +24,15 @@ class BackgroundSystem < EntitySystem::System
 
   def render(delta)
     world = Vector3.new(0, 0, 0)
-    manager.component(CameraComponent, manager.find('camera')).object.unproject(world)
+    manager.component(CameraComponent, manager.find(:camera)).object.unproject(world)
     @background.draw(@pixmap, 0, 0)
     $game.screen.batch.draw(@background, world.x, world.y - $game.height)
 
     player = manager.component(SpatialComponent,
-      manager.find('player'))
+      manager.find(:player))
 
     camera = manager.component(SpatialComponent,
-      manager.find('camera'))
+      manager.find(:camera))
 
     @stars.each do |star|
       # translate relative to the camera, parallax based on depth and wrap them around the screen

@@ -2,7 +2,7 @@ class CameraSystem < EntitySystem::System
   CAMERA_TRACKING_SPEED = 0.075
 
   def setup
-    entity = manager.create('camera')
+    entity = manager.create(:camera)
     @spatial = manager.attach(entity, SpatialComponent.new({
       px: $game.width / 2, py: $game.height / 2
     }))
@@ -16,7 +16,7 @@ class CameraSystem < EntitySystem::System
   end
 
   def update(delta)
-    player = manager.component(SpatialComponent, manager.find('player'))
+    player = manager.component(SpatialComponent, manager.find(:player))
     x_vector = Math.cos(player.bearing * Math::PI/180)
     y_vector = Math.sin(player.bearing * Math::PI/180)
     x_offset = player.px + (x_vector * $game.width * 0.0035 * player.speed.abs)

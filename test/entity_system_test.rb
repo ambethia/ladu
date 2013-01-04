@@ -22,7 +22,7 @@ class WidgetFactory < EntitySystem::Factory::Base
   using :x, :y
 
   def construct
-    entity = manager.create('widget')
+    entity = manager.create(:widget)
     manager.attach(entity, Position.new(x: 0, y: 0))
     entity
   end
@@ -40,14 +40,14 @@ class EntitySystem::ManagerTest < Test::Unit::TestCase
   end
 
   def test_create_tagged_entity
-    entity = @manager.create('player')
-    assert_equal entity, @manager.find('player')
+    entity = @manager.create(:player)
+    assert_equal entity, @manager.find(:player)
   end
 
   def test_create_entities_with_same_tag
-    entities = [@manager.create('enemy'), @manager.create('enemy')]
-    assert @manager.all('enemy').include?(entities[0])
-    assert @manager.all('enemy').include?(entities[1])
+    entities = [@manager.create(:enemy), @manager.create(:enemy)]
+    assert @manager.all(:enemy).include?(entities[0])
+    assert @manager.all(:enemy).include?(entities[1])
   end
 end
 
@@ -110,7 +110,7 @@ class EntitySystem::FactoryTest < Test::Unit::TestCase
       widget.x = 0
       widget.y = 0
     end
-    component = @manager.component(Position, @manager.find('widget'))
+    component = @manager.component(Position, @manager.find(:widget))
     assert_equal 0, component.x
   end
 end

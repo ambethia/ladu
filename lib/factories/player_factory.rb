@@ -3,7 +3,7 @@ class PlayerFactory < EntitySystem::Factory::Base
   using :px, :py, :animations
 
   def construct
-    entity = manager.create('player')
+    entity = manager.create(:player)
     manager.attach(entity, PlayerComponent.new)
     manager.attach(entity, MotionComponent.new)
     manager.attach(entity, SpatialComponent.new({
@@ -14,7 +14,8 @@ class PlayerFactory < EntitySystem::Factory::Base
     }))
     manager.attach(entity, RenderableComponent.new)
     manager.attach(entity, RotatedComponent.new({
-      mapping: animations, is_animated: true
+      mapping: $game.screen.sprites[:player],
+      is_animated: true
     }))
     entity
   end

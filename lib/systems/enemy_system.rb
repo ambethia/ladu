@@ -2,9 +2,9 @@ class EnemySystem < EntitySystem::System
 
   def update(delta)
     each(EnemyComponent) do |entity, component|
-      player_s = manager.component(SpatialComponent, manager.find('player'))
-      player_c = manager.component(PlayerComponent, manager.find('player'))
-      camera = manager.component(SpatialComponent, manager.find('camera'))
+      player_s = manager.component(SpatialComponent, manager.find(:player))
+      player_c = manager.component(PlayerComponent, manager.find(:player))
+      camera = manager.component(SpatialComponent, manager.find(:camera))
       enemy = manager.component(SpatialComponent, entity)
 
       # rotate around the player, but not if they are holding steady
@@ -32,6 +32,20 @@ class EnemySystem < EntitySystem::System
       angle = (Math.atan2(delta_y , delta_x) * 180 / Math::PI) % 360
       enemy.bearing = angle
     end
+  end
+
+  def setup
+    atlas = $game.screen.atlas
+    $game.screen.sprites[:enemy_a] = {
+        0 => atlas.create_sprite("enemy_a", 1),
+       45 => atlas.create_sprite("enemy_a", 2),
+       90 => atlas.create_sprite("enemy_a", 3),
+      135 => atlas.create_sprite("enemy_a", 4),
+      180 => atlas.create_sprite("enemy_a", 5),
+      225 => atlas.create_sprite("enemy_a", 6),
+      270 => atlas.create_sprite("enemy_a", 7),
+      315 => atlas.create_sprite("enemy_a", 8)
+    }
   end
 
   private

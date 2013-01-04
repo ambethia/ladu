@@ -9,7 +9,7 @@ class PlayerSystem < EntitySystem::System
   BULLET_RADIUS = 6
 
   def update(delta)
-    entity = manager.find('player')
+    entity = manager.find(:player)
     spatial = manager.component(SpatialComponent, entity)
     player = manager.component(PlayerComponent, entity)
 
@@ -41,7 +41,13 @@ class PlayerSystem < EntitySystem::System
       @last_fired += delta
       if @last_fired >= RATE_OF_FIRE
         @last_fired = 0
-        fire_bullet
+        manager.factory.bullet do |bullet|
+          bullet.owner = manager.find(:player)
+          bullet.type = :player
+          bullet.px = spatial.px
+          bullet.py = spatial.py
+          bullet.bearing = spatial.bearing
+        end
       end
     end
   end
@@ -86,7 +92,7 @@ class PlayerSystem < EntitySystem::System
     frames[15] = atlas.create_sprite("player_b1")
     frames[15].flip(false, true)
 
-    animations = {
+    $game.screen.sprites[:player] = {
         0 => Animation.new(0.25, *frames[0..1]),
        45 => Animation.new(0.25, *frames[2..3]),
        90 => Animation.new(0.25, *frames[4..5]),
@@ -97,7 +103,7 @@ class PlayerSystem < EntitySystem::System
       315 => Animation.new(0.25, *frames[14..15])
     }
 
-    @bullet_sprites = {
+    bullet_sprites = {
         0 => atlas.create_sprite("bullet", 0),
        45 => atlas.create_sprite("bullet", 1),
        90 => atlas.create_sprite("bullet", 2),
@@ -107,40 +113,18 @@ class PlayerSystem < EntitySystem::System
       270 => atlas.create_sprite("bullet", 2),
       315 => atlas.create_sprite("bullet", 1)
     }
-    @bullet_sprites[90].flip(false, false)
-    @bullet_sprites[135].flip(true, false)
-    @bullet_sprites[180].flip(true, false)
-    @bullet_sprites[225].flip(true, true)
-    @bullet_sprites[270].flip(false, true)
-    @bullet_sprites[315].flip(false, true)
+    bullet_sprites[90].flip(false, false)
+    bullet_sprites[135].flip(true, false)
+    bullet_sprites[180].flip(true, false)
+    bullet_sprites[225].flip(true, true)
+    bullet_sprites[270].flip(false, true)
+    bullet_sprites[315].flip(false, true)
+
+    $game.screen.sprites[:player_bullets] = bullet_sprites
 
     manager.factory.player do |player|
       player.px = $game.width / 2
       player.py = $game.height / 2
-      player.animations = animations
     end
-  end
-
-  private
-
-  def fire_bullet
-    spatial = manager.component(SpatialComponent, manager.find('player'))
-    bullet = manager.create('bullet')
-    manager.attach(bullet, SpatialComponent.new({
-      px: spatial.px, py: spatial.py,
-      bearing: spatial.bearing, speed: BULLET_SPEED
-    }))
-    manager.attach(bullet, CollisionComponent.new({
-      owner: manager.find('player'),
-      radius: BULLET_RADIUS
-    }))
-    manager.attach(bullet, MotionComponent.new)
-    manager.attach(bullet, RenderableComponent.new)
-    manager.attach(bullet, RangedCullComponent.new({
-      range: 400
-    }))
-    manager.attach(bullet, RotatedComponent.new({
-      mapping: @bullet_sprites
-    }))
   end
 end
