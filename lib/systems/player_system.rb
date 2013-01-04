@@ -114,21 +114,11 @@ class PlayerSystem < EntitySystem::System
     @bullet_sprites[270].flip(false, true)
     @bullet_sprites[315].flip(false, true)
 
-    entity = manager.create('player')
-    manager.attach(entity, PlayerComponent.new)
-    manager.attach(entity, MotionComponent.new)
-    manager.attach(entity, SpatialComponent.new({
-      px: manager.game.width / 2,
-      py: manager.game.height / 2,
-      bearing: 0, speed: 0
-    }))
-    manager.attach(entity, AnimatedComponent.new({
-      is_looped: true
-    }))
-    manager.attach(entity, RenderableComponent.new)
-    manager.attach(entity, RotatedComponent.new({
-      mapping: animations, is_animated: true
-    }))
+    manager.factory.player do |player|
+      player.px = manager.game.width / 2
+      player.py = manager.game.height / 2
+      player.animations = animations
+    end
   end
 
   private

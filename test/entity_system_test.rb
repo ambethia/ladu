@@ -1,5 +1,6 @@
 require_relative 'test_helper'
 
+require 'game_helpers'
 require 'entity_system'
 
 class Position < EntitySystem::Component
@@ -13,6 +14,17 @@ class Locator < EntitySystem::System
       component.x += (1 * delta)
       component.y += (1 * delta)
     end
+  end
+end
+
+class WidgetFactory < EntitySystem::Factory::Base
+  build :widget
+  using :x, :y
+
+  def construct
+    entity = manager.create('widget')
+    manager.attach(entity, Position.new(x: 0, y: 0))
+    entity
   end
 end
 
@@ -84,5 +96,21 @@ class EntitySystem::SystemTest < Test::Unit::TestCase
   def test_system_changes_component
     @system.process(1)
     assert_equal 2, @component.x
+  end
+end
+
+class EntitySystem::FactoryTest < Test::Unit::TestCase
+
+  def setup
+    @manager = EntitySystem::Manager.new
+  end
+
+  def test_factory_attaches_component
+    @manager.factory.widget do |widget|
+      widget.x = 0
+      widget.y = 0
+    end
+    component = @manager.component(Position, @manager.find('widget'))
+    assert_equal 0, component.x
   end
 end

@@ -2,6 +2,7 @@ ROOT_DIR = File.expand_path('../..', __FILE__)
 $: << ROOT_DIR + '/lib'
 $: << ROOT_DIR + '/lib/screens'
 $: << ROOT_DIR + '/lib/components'
+$: << ROOT_DIR + '/lib/factories'
 $: << ROOT_DIR + '/lib/systems'
 $: << ROOT_DIR + '/vendor'
 
@@ -41,13 +42,14 @@ java_import com.badlogic.gdx.Screen
 
 require 'lucky_princess_nitro'
 
-config = LwjglApplicationConfiguration.new
-config.title = "Lucky Princess Nitro"
-config.useGL20 = true
-config.width = LuckyPrincessNitro::VIRTUAL_WIDTH * LuckyPrincessNitro::DEFAULT_SCALE
-config.height = LuckyPrincessNitro::VIRTUAL_HEIGHT * LuckyPrincessNitro::DEFAULT_SCALE
+unless $0 == "irb"
+  config = LwjglApplicationConfiguration.new
+  config.title = "Lucky Princess Nitro"
+  config.useGL20 = true
+  config.width = LuckyPrincessNitro::VIRTUAL_WIDTH * LuckyPrincessNitro::DEFAULT_SCALE
+  config.height = LuckyPrincessNitro::VIRTUAL_HEIGHT * LuckyPrincessNitro::DEFAULT_SCALE
 
-game = LuckyPrincessNitro.new
-LwjglApplication.new(game, config)
-while game.is_running; sleep(1); end
-
+  game = LuckyPrincessNitro.new
+  LwjglApplication.new(game, config)
+  while game.is_running; sleep(1); end
+end

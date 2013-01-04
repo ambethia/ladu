@@ -1,7 +1,7 @@
 require 'game_helpers'
 require 'entity_system'
 
-%w[screens components systems].each do |dir|
+%w[screens components factories systems].each do |dir|
   Dir[ROOT_DIR + "/lib/#{dir}/*.rb"].each do |file|
     require File.basename(file)
   end
