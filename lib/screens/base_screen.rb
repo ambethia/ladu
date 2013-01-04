@@ -51,10 +51,10 @@ class BaseScreen
     end
 
     @batch.end
+    @batch.get_projection_matrix.set_to_ortho2_d(0, 0, @game.width, @game.height)
     render_debug if ENV['SCREEN']
     @buffer_object.end
 
-    @batch.get_projection_matrix.set_to_ortho2_d(0, 0, @game.width, @game.height)
     Gdx.gl.gl_viewport(@viewport.x, @viewport.y, @viewport.width, @viewport.height)
     Gdx.gl.gl_clear(GL20.GL_COLOR_BUFFER_BIT)
 
