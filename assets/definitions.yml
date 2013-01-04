@@ -1,0 +1,94 @@
+entities:
+  enemy_a:
+    tag: enemy
+    component:
+      enemy:
+        type: a
+        data:
+          c_angle: {entry_angle}
+          t_angle: {entry_angle}
+      spatial:
+        px: {px}
+        py: {py}
+        bearing: 0
+        speed: 100
+      renderable:
+      rotated:
+        mapping: enemy_a
+
+sprites:
+  enemy_a:
+    0:
+      name: 'enemy_a',
+      index: 1
+    45:
+      name: 'enemy_a',
+      index: 2
+    90:
+      name: 'enemy_a',
+      index: 3
+    135:
+      name: 'enemy_a',
+      index: 4
+    180:
+      name: 'enemy_a',
+      index: 5
+    225:
+      name: 'enemy_a',
+      index: 6
+    270:
+      name: 'enemy_a',
+      index: 7
+    315:
+      name: 'enemy_a',
+      index: 8
+  stars:
+    0:
+      name: 'stars'
+      index: 1
+    1:
+      name: 'stars'
+      index: 2
+    2:
+      name: 'stars'
+      index: 3
+
+  # def setup
+  #   @enemy_sprites = {}
+  #   atlas = manager.game.screen.atlas
+
+  #   @enemy_sprites['a'] = {
+  #       0 => atlas.create_sprite("enemy_a", 1),
+  #      45 => atlas.create_sprite("enemy_a", 2),
+  #      90 => atlas.create_sprite("enemy_a", 3),
+  #     135 => atlas.create_sprite("enemy_a", 4),
+  #     180 => atlas.create_sprite("enemy_a", 5),
+  #     225 => atlas.create_sprite("enemy_a", 6),
+  #     270 => atlas.create_sprite("enemy_a", 7),
+  #     315 => atlas.create_sprite("enemy_a", 8)
+  #   }
+  # end
+
+  # private
+
+  # def spawn_enemy
+  #   camera = manager.component(SpatialComponent, manager.find('camera'))
+  #   entity = manager.create('enemy')
+  #   entry_angle = rand(360)
+  #   manager.attach(entity, EnemyComponent.new({
+  #     type: 'a',
+  #     data: {
+  #       c_angle: entry_angle,
+  #       t_angle: entry_angle
+  #     }
+  #   }))
+  #   manager.attach(entity, SpatialComponent.new({
+  #     px: camera.px + (Math.cos(entry_angle) * (manager.game.width * 1.2)),
+  #     py: camera.py + (Math.sin(entry_angle) * (manager.game.height * 1.2)),
+  #     bearing: 0, speed: 100
+  #   }))
+  #   manager.attach(entity, RenderableComponent.new)
+  #   manager.attach(entity, RotatedComponent.new({
+  #     mapping: @enemy_sprites['a']
+  #   }))
+  # end

@@ -1,5 +1,6 @@
 class BaseScreen
   include Screen
+  include GameHelpers
 
   attr_reader :atlas, :batch
 
@@ -15,7 +16,7 @@ class BaseScreen
   def show
     @batch = SpriteBatch.new
     @font = BitmapFont.new(load_asset("alterebro.fnt"), load_asset("alterebro.png"), false)
-    @atlas = TextureAtlas.new(load_asset("sprites.txt"))
+    @atlas = TextureAtlas.new(load_asset("sprites.pack"))
 
     @entity_manager = EntitySystem::Manager.new(@game)
 
@@ -37,23 +38,25 @@ class BaseScreen
       system.update(delta)
     end
 
-    reset_viewport
+    Gdx.gl.gl_viewport(@viewport.x, @viewport.y, @viewport.width, @viewport.height)
 
     @buffer_object.begin
     @batch.begin
     if @shader_program
       @batch.shader = @original_shader
     end
-
+    Gdx.gl.gl_clear(GL20.GL_COLOR_BUFFER_BIT)
     @initialized_systems.each do |system|
       system.render(delta)
     end
 
     @batch.end
-    render_debug
+    render_debug if ENV['SCREEN']
     @buffer_object.end
 
-    reset_viewport
+    @batch.get_projection_matrix.set_to_ortho2_d(0, 0, @game.width, @game.height)
+    Gdx.gl.gl_viewport(@viewport.x, @viewport.y, @viewport.width, @viewport.height)
+    Gdx.gl.gl_clear(GL20.GL_COLOR_BUFFER_BIT)
 
     @batch.begin
     if @shader_program
@@ -61,7 +64,6 @@ class BaseScreen
       @shader_program.set_uniformf("u_deltaTime", delta)
       @shader_program.set_uniformf("u_scaleFactor", @scale_factor.to_f)
     end
-
     @batch.draw(@buffer_texture_region, 0, 0, @game.width, @game.height)
     @batch.end
   end
@@ -85,19 +87,13 @@ class BaseScreen
   end
 
   def hide
-    @update_systems = []
-    @render_systems = []
+    @systems = []
   end
 
   def dispose
     @batch.dispose
     @atlas.dispose
     @font.dispose
-  end
-
-  def reset_viewport
-    Gdx.gl.gl_viewport(@viewport.x, @viewport.y, @viewport.width, @viewport.height)
-    Gdx.gl.gl_clear(GL20.GL_COLOR_BUFFER_BIT)
   end
 
   def load_shader
@@ -111,12 +107,7 @@ class BaseScreen
     end
   end
 
-  def load_asset(filename)
-    Gdx.files.internal(RELATIVE_ROOT + "assets/#{filename}")
-  end
-
   def render_debug
-    @batch.get_projection_matrix.set_to_ortho2_d(0, 0, @game.width, @game.height)
     @batch.begin
     @font.draw(@batch, debug_text, 8, 16)
     @batch.end

@@ -13,6 +13,13 @@ class CollisionSystem < EntitySystem::System
           enemy_c = Circle.new(enemy_s.px, enemy_s.py, ENEMY_RADIUS)
           if Intersector.overlapCircles(enemy_c, collider_c)
             if manager.tag(entity) == 'bullet'
+              explosion = manager.create('explosion')
+              manager.attach(explosion, ParticleComponent.new({
+                effect: 'explosion'
+              }))
+              manager.attach(explosion, SpatialComponent.new({
+                px: enemy_s.px , py: enemy_s.py, bearing: 0, speed: 0
+              }))
               manager.destroy(entity)
               manager.destroy(enemy)
             end

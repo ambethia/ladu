@@ -19,6 +19,7 @@ java_import com.badlogic.gdx.graphics.Texture
 java_import com.badlogic.gdx.graphics.OrthographicCamera
 java_import com.badlogic.gdx.graphics.g2d.Animation
 java_import com.badlogic.gdx.graphics.g2d.BitmapFont
+java_import com.badlogic.gdx.graphics.g2d.ParticleEffect
 java_import com.badlogic.gdx.graphics.g2d.Sprite
 java_import com.badlogic.gdx.graphics.g2d.SpriteBatch
 java_import com.badlogic.gdx.graphics.g2d.TextureAtlas

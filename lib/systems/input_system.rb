@@ -18,6 +18,7 @@ class InputSystem < EntitySystem::System
       player.is_turning_right = Gdx.input.is_key_pressed(Input::Keys::RIGHT)
       player.is_turning_left = Gdx.input.is_key_pressed(Input::Keys::LEFT)
       player.is_firing = Gdx.input.is_key_pressed(Input::Keys::SPACE)
+    when TestScreen
     end
   end
 end

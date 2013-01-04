@@ -161,6 +161,7 @@
             <filename>images/enemy_a_6.png</filename>
             <filename>images/enemy_a_7.png</filename>
             <filename>images/enemy_a_8.png</filename>
+            <filename>images/explosion.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

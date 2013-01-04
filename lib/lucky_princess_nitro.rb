@@ -1,3 +1,4 @@
+require 'game_helpers'
 require 'entity_system'
 
 %w[screens components systems].each do |dir|
