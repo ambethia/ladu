@@ -32,6 +32,7 @@ java_import com.badlogic.gdx.graphics.Pixmap
 java_import com.badlogic.gdx.math.Circle
 java_import com.badlogic.gdx.math.Intersector
 java_import com.badlogic.gdx.math.Rectangle
+java_import com.badlogic.gdx.math.Vector2
 java_import com.badlogic.gdx.math.Vector3
 java_import com.badlogic.gdx.scenes.scene2d.InputListener
 java_import com.badlogic.gdx.ApplicationListener

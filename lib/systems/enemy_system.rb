@@ -1,5 +1,7 @@
 class EnemySystem < EntitySystem::System
-  RATE_OF_FIRE = 2
+  RATE_OF_FIRE = 0.2
+  MIN_FIRE_DISTANCE = 100
+  MAX_FIRE_DISTANCE = 220
 
   def update(delta)
     each(EnemyComponent) do |entity, component|
@@ -7,6 +9,8 @@ class EnemySystem < EntitySystem::System
       player_c = manager.component(PlayerComponent, manager.find(:player))
       camera = manager.component(SpatialComponent, manager.find(:camera))
       enemy = manager.component(SpatialComponent, entity)
+
+      distance_to_player = Vector2.new(player_s.px, player_s.py).dst(enemy.px, enemy.py)
 
       # rotate around the player, but not if they are holding steady
       if player_c.is_turning_left
@@ -33,7 +37,8 @@ class EnemySystem < EntitySystem::System
       angle = (Math.atan2(delta_y , delta_x) * 180 / Math::PI) % 360
       enemy.bearing = angle
 
-      if component.data[:elapsed_since_last_shot] > RATE_OF_FIRE
+      if component.data[:elapsed_since_last_shot] > RATE_OF_FIRE &&
+        distance_to_player > MIN_FIRE_DISTANCE
         component.data[:elapsed_since_last_shot] = 0
         manager.factory.bullet do |bullet|
           bullet.owner = entity

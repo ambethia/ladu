@@ -13,8 +13,8 @@ class GameScreen < BaseScreen
       Rotation
       Animation
       Background
-      Particle
       Render
+      Particle
     ]
   end
 
