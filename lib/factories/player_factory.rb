@@ -4,7 +4,9 @@ class PlayerFactory < EntitySystem::Factory::Base
 
   def construct
     entity = manager.create(:player)
-    manager.attach(entity, PlayerComponent.new)
+    manager.attach(entity, PlayerComponent.new({
+      shields: 3
+    }))
     manager.attach(entity, MotionComponent.new)
     manager.attach(entity, SpatialComponent.new({
       px: px, py: py, bearing: 0, speed: 0

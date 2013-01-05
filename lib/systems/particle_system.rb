@@ -2,9 +2,11 @@ class ParticleSystem < EntitySystem::System
 
   def setup
     @effects = {}
-    @effects[:explosion] = ParticleEffect.new
-    @effects[:explosion].load_emitters(load_asset("explosion.particle"))
-    @effects[:explosion].load_emitter_images($game.screen.atlas)
+    [:explosion, :bullet_destruct, :shield_damage].each do |type|
+      @effects[type] = ParticleEffect.new
+      @effects[type].load_emitters(load_asset("#{type}.particle"))
+      @effects[type].load_emitter_images($game.screen.atlas)
+    end
   end
 
   def update(delta)
@@ -12,9 +14,15 @@ class ParticleSystem < EntitySystem::System
       spatial = manager.component(SpatialComponent, entity)
       if !particle.started
         @effects[particle.effect].emitters.each(&:start)
-        @effects[particle.effect].set_position(spatial.px, spatial.py)
         particle.started = true
       end
+      if particle.attach_to
+        target = manager.component(SpatialComponent, particle.attach_to)
+        spatial.px = target.px
+        spatial.py = target.py
+      end
+      @effects[particle.effect].set_position(spatial.px, spatial.py)
+      # TODO: remove finished particle components
     end
   end
 

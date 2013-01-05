@@ -1,5 +1,8 @@
 class BulletFactory < EntitySystem::Factory::Base
-  SPEED = 240
+  SPEED = {
+    player: 240,
+    enemy_a: 160
+  }
   RADIUS = 8
   CULL_RANGE = 400
 
@@ -10,7 +13,7 @@ class BulletFactory < EntitySystem::Factory::Base
     bullet = manager.create(:bullet)
     manager.attach(bullet, SpatialComponent.new({
       px: px, py: py,
-      bearing: bearing, speed: SPEED
+      bearing: bearing, speed: SPEED[type]
     }))
     manager.attach(bullet, CollisionComponent.new({
       owner: owner,
@@ -30,9 +33,6 @@ class BulletFactory < EntitySystem::Factory::Base
   private
 
   def bullet_sprites
-    case type
-    when :player
-      $game.screen.sprites[:player_bullets]
-    end
+    $game.screen.sprites["#{type}_bullets".to_sym]
   end
 end

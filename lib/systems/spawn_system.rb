@@ -22,6 +22,8 @@ class SpawnSystem < EntitySystem::System
   private
 
   def spawn_enemy
-    manager.factory.enemy
+    manager.factory.enemy do |enemy|
+      enemy.type = :a
+    end
   end
 end

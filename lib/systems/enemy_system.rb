@@ -1,4 +1,5 @@
 class EnemySystem < EntitySystem::System
+  RATE_OF_FIRE = 2
 
   def update(delta)
     each(EnemyComponent) do |entity, component|
@@ -31,6 +32,19 @@ class EnemySystem < EntitySystem::System
       # face player
       angle = (Math.atan2(delta_y , delta_x) * 180 / Math::PI) % 360
       enemy.bearing = angle
+
+      if component.data[:elapsed_since_last_shot] > RATE_OF_FIRE
+        component.data[:elapsed_since_last_shot] = 0
+        manager.factory.bullet do |bullet|
+          bullet.owner = entity
+          bullet.type = "enemy_#{component.type}".to_sym
+          bullet.px = enemy.px
+          bullet.py = enemy.py
+          bullet.bearing = enemy.bearing
+        end
+      else
+        component.data[:elapsed_since_last_shot] += delta
+      end
     end
   end
 
@@ -45,6 +59,16 @@ class EnemySystem < EntitySystem::System
       225 => atlas.create_sprite("enemy_a", 6),
       270 => atlas.create_sprite("enemy_a", 7),
       315 => atlas.create_sprite("enemy_a", 8)
+    }
+    $game.screen.sprites[:enemy_a_bullets] = {
+        0 => atlas.create_sprite("bullet_1", 1),
+       45 => atlas.create_sprite("bullet_1", 2),
+       90 => atlas.create_sprite("bullet_1", 3),
+      135 => atlas.create_sprite("bullet_1", 4),
+      180 => atlas.create_sprite("bullet_1", 5),
+      225 => atlas.create_sprite("bullet_1", 6),
+      270 => atlas.create_sprite("bullet_1", 7),
+      315 => atlas.create_sprite("bullet_1", 8)
     }
   end
 

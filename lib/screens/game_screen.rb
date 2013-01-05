@@ -19,6 +19,7 @@ class GameScreen < BaseScreen
   end
 
   def debug_text
-    super + ", Enities: #{@entity_manager.size}"
+    player = @entity_manager.component(PlayerComponent, @entity_manager.find(:player))
+    super + ", Shields: #{player.shields}"
   end
 end
