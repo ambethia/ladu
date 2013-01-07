@@ -25,5 +25,6 @@ class SpawnSystem < EntitySystem::System
     manager.factory.enemy do |enemy|
       enemy.type = :a
     end
+    $game.screen.sounds[:enemy_a_spawn].play
   end
 end

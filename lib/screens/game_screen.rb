@@ -6,6 +6,7 @@ class GameScreen < BaseScreen
       Player
       Enemy
       Camera
+      Music
       RangedCull
       Collision
       Spawn

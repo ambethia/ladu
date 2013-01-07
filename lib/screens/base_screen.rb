@@ -2,10 +2,11 @@ class BaseScreen
   include Screen
   include GameHelpers
 
-  attr :atlas, :batch, :sprites, :systems
+  attr :atlas, :batch, :sprites, :sounds, :systems
 
   def initialize
     @sprites = {}
+    @sounds = {}
     @systems = []
     setup
   end
@@ -94,6 +95,8 @@ class BaseScreen
     @batch.dispose
     @atlas.dispose
     @font.dispose
+    @sounds.each(&:dispose)
+    @systems.each(&:dispose)
   end
 
   def load_shader

@@ -1,7 +1,7 @@
 class PlayerSystem < EntitySystem::System
-  ROTATION_SPEED = 180
-  MAX_SPEED = 120
-  MIN_SPEED = -90
+  ROTATION_SPEED = 220
+  MAX_SPEED = 110
+  MIN_SPEED = -40
   ACCELERATION = 50
   DECELERATION = 30
   RATE_OF_FIRE = 0.1
@@ -48,6 +48,7 @@ class PlayerSystem < EntitySystem::System
           bullet.py = spatial.py
           bullet.bearing = spatial.bearing
         end
+        $game.screen.sounds[:player_bullet].play(0.25)
       end
     end
   end
@@ -122,9 +123,20 @@ class PlayerSystem < EntitySystem::System
 
     $game.screen.sprites[:player_bullets] = bullet_sprites
 
-    manager.factory.player do |player|
-      player.px = $game.width / 2
-      player.py = $game.height / 2
+    [:player_spawn, :player_bullet, :player_death, :shield_damage, :bullet_destruct].each do |sound|
+      $game.screen.sounds[sound] = Gdx.audio.new_sound(load_asset("#{sound}.ogg"))
     end
+
+    spawn_player($game.width / 2, $game.height / 2)
+  end
+
+  private
+
+  def spawn_player(x, y)
+    manager.factory.player do |player|
+      player.px = x
+      player.py = y
+    end
+    $game.screen.sounds[:player_spawn].play(2.0)
   end
 end

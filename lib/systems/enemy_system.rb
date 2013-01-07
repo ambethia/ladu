@@ -1,7 +1,7 @@
 class EnemySystem < EntitySystem::System
-  RATE_OF_FIRE = 0.2
-  MIN_FIRE_DISTANCE = 100
-  MAX_FIRE_DISTANCE = 220
+  RATE_OF_FIRE = 0.33
+  MIN_FIRE_DISTANCE = 110
+  MAX_FIRE_DISTANCE = 180
 
   def update(delta)
     each(EnemyComponent) do |entity, component|
@@ -47,6 +47,7 @@ class EnemySystem < EntitySystem::System
           bullet.py = enemy.py
           bullet.bearing = enemy.bearing
         end
+        $game.screen.sounds["enemy_#{component.type}_bullet".to_sym].play
       else
         component.data[:elapsed_since_last_shot] += delta
       end
@@ -75,6 +76,10 @@ class EnemySystem < EntitySystem::System
       270 => atlas.create_sprite("bullet_1", 7),
       315 => atlas.create_sprite("bullet_1", 8)
     }
+
+    [:enemy_a_spawn, :enemy_a_bullet, :enemy_a_death].each do |sound|
+      $game.screen.sounds[sound] = Gdx.audio.new_sound(load_asset("#{sound}.ogg"))
+    end
   end
 
   private

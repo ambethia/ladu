@@ -24,4 +24,7 @@ class EntitySystem::System
   # Called in the render block, draw in here
   def render(delta)
   end
+
+  def dispose
+  end
 end

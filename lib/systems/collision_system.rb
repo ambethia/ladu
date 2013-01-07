@@ -22,6 +22,7 @@ class CollisionSystem < EntitySystem::System
                 particle.px = enemy_s.px
                 particle.py = enemy_s.py
               end
+              $game.screen.sounds[:enemy_a_death].play(0.6)
               manager.destroy(entity)
               manager.destroy(enemy)
             end
@@ -39,6 +40,7 @@ class CollisionSystem < EntitySystem::System
               particle.px = bullet_s.px
               particle.py = bullet_s.py
             end
+            $game.screen.sounds[:bullet_destruct].play
             manager.destroy(entity)
             manager.destroy(bullet)
           end
@@ -53,6 +55,7 @@ class CollisionSystem < EntitySystem::System
           end
           # sustain damage
           manager.component(PlayerComponent, player_e).shields -= 1
+          $game.screen.sounds[:shield_damage].play
           manager.destroy(entity)
         end
       end
