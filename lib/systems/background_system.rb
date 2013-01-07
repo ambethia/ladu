@@ -28,22 +28,24 @@ class BackgroundSystem < EntitySystem::System
     @background.draw(@pixmap, 0, 0)
     $game.screen.batch.draw(@background, world.x, world.y - $game.height)
 
-    player = manager.component(SpatialComponent,
-      manager.find(:player))
+    # player_id = manager.find(:player)
+    # if player_id
+    #   player = manager.component(SpatialComponent, player_id)
 
-    camera = manager.component(SpatialComponent,
-      manager.find(:camera))
+      camera = manager.component(SpatialComponent,
+        manager.find(:camera))
 
-    @stars.each do |star|
-      # translate relative to the camera, parallax based on depth and wrap them around the screen
-      x = (camera.px + (((star[0] - STARFIELD_WIDTH) - (player.px / (star[2] * 0.25))) % STARFIELD_WIDTH) - STARFIELD_WIDTH / 2)
-      y = (camera.py + (((star[1] - STARFIELD_HEIGHT) - (player.py / (star[2] * 0.25))) % STARFIELD_HEIGHT) - STARFIELD_HEIGHT / 2)
+      @stars.each do |star|
+        # translate relative to the camera, parallax based on depth and wrap them around the screen
+        x = (camera.px + (((star[0] - STARFIELD_WIDTH) - (camera.px / (star[2] * 0.25))) % STARFIELD_WIDTH) - STARFIELD_WIDTH / 2)
+        y = (camera.py + (((star[1] - STARFIELD_HEIGHT) - (camera.py / (star[2] * 0.25))) % STARFIELD_HEIGHT) - STARFIELD_HEIGHT / 2)
 
-      # culll stars outside the viewport
-      if x > world.x && x < world.x + $game.width &&
-         y < world.y && y > world.y - $game.height
-        $game.screen.batch.draw(@star_sprites[star[3]], x, y)
+        # culll stars outside the viewport
+        if x > world.x && x < world.x + $game.width &&
+           y < world.y && y > world.y - $game.height
+          $game.screen.batch.draw(@star_sprites[star[3]], x, y)
+        end
       end
-    end
+    # end
   end
 end

@@ -10,6 +10,7 @@ class PlayerSystem < EntitySystem::System
 
   def update(delta)
     entity = manager.find(:player)
+    return unless entity # dont update if there's no player!
     spatial = manager.component(SpatialComponent, entity)
     player = manager.component(PlayerComponent, entity)
 
@@ -50,6 +51,11 @@ class PlayerSystem < EntitySystem::System
         end
         $game.screen.sounds[:player_bullet].play(0.25)
       end
+    end
+
+    if player.shields <= 0
+      # Enemy death
+      manager.destroy(entity)
     end
   end
 
@@ -127,6 +133,10 @@ class PlayerSystem < EntitySystem::System
       $game.screen.sounds[sound] = Gdx.audio.new_sound(load_asset("#{sound}.ogg"))
     end
 
+    reset
+  end
+
+  def reset
     spawn_player($game.width / 2, $game.height / 2)
   end
 

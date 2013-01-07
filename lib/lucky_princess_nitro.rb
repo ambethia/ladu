@@ -17,6 +17,7 @@ class LuckyPrincessNitro < Game
   attr_reader :is_running,
     :game_screen,
     :splash_screen,
+    :game_over_screen,
     :test_screen
 
   def initialize
@@ -27,6 +28,7 @@ class LuckyPrincessNitro < Game
     ShaderProgram.pedantic = false
     @game_screen = GameScreen.new
     @splash_screen = SplashScreen.new
+    @game_over_screen = GameOverScreen.new
     @test_screen = TestScreen.new
 
     if ENV['SCREEN']
@@ -49,6 +51,18 @@ class LuckyPrincessNitro < Game
     else
       Gdx.graphics.set_display_mode(mode.width, mode.height, true)
     end
+  end
+
+  def game_over
+    set_screen(game_over_screen)
+  end
+
+  def game_begin
+    set_screen(game_screen)
+  end
+
+  def game_menu
+    set_screen(splash_screen)
   end
 
   def width

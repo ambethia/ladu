@@ -8,6 +8,7 @@ class BaseScreen
     @sprites = {}
     @sounds = {}
     @systems = []
+    @is_hidden = true
     setup
   end
 
@@ -15,28 +16,34 @@ class BaseScreen
   end
 
   def show
-    @batch = SpriteBatch.new
-    @font = BitmapFont.new(load_asset("alterebro.fnt"), load_asset("alterebro.png"), false)
-    @atlas = TextureAtlas.new(load_asset("sprites.pack"))
+    unless @is_setup
+      @batch = SpriteBatch.new
+      @font = BitmapFont.new(load_asset("alterebro.fnt"), load_asset("alterebro.png"), false)
+      @atlas = TextureAtlas.new(load_asset("sprites.pack"))
 
-    @entity_manager = EntitySystem::Manager.new
+      @entity_manager = EntitySystem::Manager.new
 
-    @initialized_systems = @systems.map { |n|
-      Object.const_get("#{n}System").new(@entity_manager) }
+      @initialized_systems = @systems.map { |n|
+        Object.const_get("#{n}System").new(@entity_manager) }
 
-    @buffer_object = FrameBuffer.new(Pixmap::Format::RGB888, $game.width, $game.height, false)
-    @buffer_texture = @buffer_object.get_color_buffer_texture
-    @buffer_texture.set_filter(Texture::TextureFilter::Nearest, Texture::TextureFilter::Nearest)
-    @buffer_texture_region = TextureRegion.new(@buffer_texture)
-    @buffer_texture_region.flip(false, true)
-    @scale_factor, @elapsed = 0
-
-    load_shader
+      @buffer_object = FrameBuffer.new(Pixmap::Format::RGB888, $game.width, $game.height, false)
+      @buffer_texture = @buffer_object.get_color_buffer_texture
+      @buffer_texture.set_filter(Texture::TextureFilter::Nearest, Texture::TextureFilter::Nearest)
+      @buffer_texture_region = TextureRegion.new(@buffer_texture)
+      @buffer_texture_region.flip(false, true)
+      @scale_factor, @elapsed = 0
+      load_shader
+      @is_setup = true
+    else
+      @initialized_systems.each(&:reset)
+    end
+    @is_hidden = false
   end
 
   def render(delta)
+    return if @is_hidden
     @initialized_systems.each do |system|
-      system.update(delta)
+      system.update(delta) unless @is_hidden
     end
 
     Gdx.gl.gl_viewport(@viewport.x, @viewport.y, @viewport.width, @viewport.height)
@@ -48,7 +55,7 @@ class BaseScreen
     end
     Gdx.gl.gl_clear(GL20.GL_COLOR_BUFFER_BIT)
     @initialized_systems.each do |system|
-      system.render(delta)
+      system.render(delta) unless @is_hidden
     end
 
     @batch.end
@@ -88,15 +95,15 @@ class BaseScreen
   end
 
   def hide
-    @systems = []
+    @is_hidden = true
   end
 
   def dispose
     @batch.dispose
     @atlas.dispose
     @font.dispose
-    @sounds.each(&:dispose)
-    @systems.each(&:dispose)
+    @sounds.values.each(&:dispose)
+    @initialized_systems.each(&:dispose)
   end
 
   def load_shader

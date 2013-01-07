@@ -25,6 +25,9 @@ class EntitySystem::System
   def render(delta)
   end
 
+  def reset
+  end
+
   def dispose
   end
 end

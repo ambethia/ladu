@@ -18,8 +18,10 @@ class ParticleSystem < EntitySystem::System
       end
       if particle.attach_to
         target = manager.component(SpatialComponent, particle.attach_to)
-        spatial.px = target.px
-        spatial.py = target.py
+        if target
+          spatial.px = target.px
+          spatial.py = target.py
+        end
       end
       @effects[particle.effect].set_position(spatial.px, spatial.py)
       # TODO: remove finished particle components
@@ -29,6 +31,12 @@ class ParticleSystem < EntitySystem::System
   def render(delta)
     @effects.values.each do |effect|
       effect.draw($game.screen.batch, delta)
+    end
+  end
+
+  def reset
+    each(ParticleComponent) do |entity|
+      manager.destroy(entity)
     end
   end
 end

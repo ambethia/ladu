@@ -1,7 +1,7 @@
 class BulletFactory < EntitySystem::Factory::Base
   SPEED = {
     player: 240,
-    enemy_a: 200
+    enemy_a: 220
   }
   RADIUS = 8
   CULL_RANGE = 400

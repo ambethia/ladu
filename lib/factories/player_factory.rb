@@ -1,11 +1,14 @@
 class PlayerFactory < EntitySystem::Factory::Base
+  MAX_SHIELDS = 12
+  INITIAL_SHIELDS = 6
+
   build :player
   using :px, :py, :animations
 
   def construct
     entity = manager.create(:player)
     manager.attach(entity, PlayerComponent.new({
-      shields: 3
+      shields: INITIAL_SHIELDS
     }))
     manager.attach(entity, MotionComponent.new)
     manager.attach(entity, SpatialComponent.new({

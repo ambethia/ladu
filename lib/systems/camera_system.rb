@@ -16,16 +16,36 @@ class CameraSystem < EntitySystem::System
   end
 
   def update(delta)
-    player = manager.component(SpatialComponent, manager.find(:player))
-    x_vector = Math.cos(player.bearing * Math::PI/180)
-    y_vector = Math.sin(player.bearing * Math::PI/180)
-    x_offset = player.px + (x_vector * $game.width * 0.0035 * player.speed.abs)
-    y_offset = player.py + (y_vector * $game.height * 0.003 * player.speed.abs)
-    @spatial.px = follow(@spatial.px, x_offset, CAMERA_TRACKING_SPEED)
-    @spatial.py = follow(@spatial.py, y_offset, CAMERA_TRACKING_SPEED)
+    player_id = manager.find(:player)
+    if player_id
+      player = manager.component(SpatialComponent, player_id)
+      @speed = player.speed.abs
+      @player_x = player.px
+      @player_y = player.py
+      @x_vector = Math.cos(player.bearing * Math::PI/180)
+      @y_vector = Math.sin(player.bearing * Math::PI/180)
+    else
+      # Keep the camera scrolling in the direction the player was moving when they died
+      @player_x += @x_vector * delta * @speed
+      @player_y += @y_vector * delta * @speed
+      @speed -= @speed * delta * 0.5
+      if @speed && @speed < 12
+        $game.game_over
+      end
+    end
+
+    @x_offset = @player_x + (@x_vector * $game.width * 0.0035 * @speed)
+    @y_offset = @player_y + (@y_vector * $game.height * 0.003 * @speed)
+
+    @spatial.px = follow(@spatial.px, @x_offset, CAMERA_TRACKING_SPEED)
+    @spatial.py = follow(@spatial.py, @y_offset, CAMERA_TRACKING_SPEED)
     @camera.object.position.set(@spatial.px, @spatial.py, 0)
     @camera.object.update
     $game.screen.batch.set_projection_matrix(@camera.object.combined)
+  end
+
+  def reset
+    @speed = 120
   end
 
   private

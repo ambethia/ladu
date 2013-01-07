@@ -20,7 +20,12 @@ class GameScreen < BaseScreen
   end
 
   def debug_text
-    player = @entity_manager.component(PlayerComponent, @entity_manager.find(:player))
-    super + ", Shields: #{player.shields}"
+    player_id = @entity_manager.find(:player)
+    if player_id
+      player = @entity_manager.component(PlayerComponent, player_id)
+      super + ", Shields: #{player.shields}"
+    else
+      super + ", Player Dead!"
+    end
   end
 end

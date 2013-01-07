@@ -7,9 +7,7 @@ class CollisionSystem < EntitySystem::System
       collider_s = manager.component(SpatialComponent, entity)
       next unless collider_s # incase the collider was suddenly removed
       collider_c = Circle.new(collider_s.px, collider_s.py, component.radius)
-      player_e = manager.find(:player)
-      player_s = manager.component(SpatialComponent, player_e)
-      player_c = Circle.new(player_s.px, player_s.py, PLAYER_RADIUS)
+      player_id = manager.find(:player)
       case manager.tag(component.owner)
       when :player
         manager.all(:enemy).each do |enemy|
@@ -30,7 +28,7 @@ class CollisionSystem < EntitySystem::System
         end
         manager.all(:bullet).each do |bullet|
           # dont't destroy our own bullets
-          next if manager.component(CollisionComponent, bullet).owner == player_e
+          next if manager.component(CollisionComponent, bullet).owner == player_id
 
           bullet_s = manager.component(SpatialComponent, bullet)
           bullet_c = Circle.new(bullet_s.px, bullet_s.py, component.radius)
@@ -46,19 +44,29 @@ class CollisionSystem < EntitySystem::System
           end
         end
       when :enemy
-        if Intersector.overlapCircles(player_c, collider_c)
-          manager.factory.particle do |particle|
-            particle.type = :shield_damage # TODO: Shield damage
-            particle.attach_to = player_e
-            particle.px = player_s.px
-            particle.py = player_s.py
+        if player_id
+          player_s = manager.component(SpatialComponent, player_id)
+          player_c = Circle.new(player_s.px, player_s.py, PLAYER_RADIUS)
+          if Intersector.overlapCircles(player_c, collider_c)
+            manager.factory.particle do |particle|
+              particle.type = :shield_damage # TODO: Shield damage
+              particle.attach_to = player_id
+              particle.px = player_s.px
+              particle.py = player_s.py
+            end
+            # sustain damage
+            manager.component(PlayerComponent, player_id).shields -= 1
+            $game.screen.sounds[:shield_damage].play
+            manager.destroy(entity)
           end
-          # sustain damage
-          manager.component(PlayerComponent, player_e).shields -= 1
-          $game.screen.sounds[:shield_damage].play
-          manager.destroy(entity)
         end
       end
+    end
+  end
+
+  def reset
+    each(CollisionComponent) do |entity|
+      manager.destroy(entity)
     end
   end
 end
