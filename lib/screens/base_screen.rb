@@ -18,11 +18,10 @@ class BaseScreen
   def show
     unless @is_setup
       @batch = SpriteBatch.new
-      @font = BitmapFont.new(load_asset("alterebro.fnt"), load_asset("alterebro.png"), false)
       @atlas = TextureAtlas.new(load_asset("sprites.pack"))
 
       @entity_manager = EntitySystem::Manager.new
-
+      @interface_system = InterfaceSystem.new(@entity_manager)
       @initialized_systems = @systems.map { |n|
         Object.const_get("#{n}System").new(@entity_manager) }
 
@@ -49,6 +48,7 @@ class BaseScreen
     Gdx.gl.gl_viewport(@viewport.x, @viewport.y, @viewport.width, @viewport.height)
 
     @buffer_object.begin
+
     @batch.begin
     if @shader_program
       @batch.shader = @original_shader
@@ -57,10 +57,13 @@ class BaseScreen
     @initialized_systems.each do |system|
       system.render(delta) unless @is_hidden
     end
-
     @batch.end
+
     @batch.get_projection_matrix.set_to_ortho2_d(0, 0, $game.width, $game.height)
-    render_debug if ENV['SCREEN']
+    @batch.begin
+    @interface_system.render(delta) unless @is_hidden
+    @batch.end
+
     @buffer_object.end
 
     Gdx.gl.gl_viewport(@viewport.x, @viewport.y, @viewport.width, @viewport.height)

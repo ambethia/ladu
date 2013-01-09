@@ -1,5 +1,4 @@
 class PlayerFactory < EntitySystem::Factory::Base
-  MAX_SHIELDS = 12
   INITIAL_SHIELDS = 6
 
   build :player
