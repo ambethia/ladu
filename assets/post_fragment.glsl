@@ -53,7 +53,7 @@ void main() {
 
   vec2 pixel = gl_FragCoord.xy;
   float grey = 1.0;
-  grey += ((mod(pixel.x, u_scaleFactor) + mod(pixel.y, u_scaleFactor)) / 16.0);
+  grey += ((mod(pixel.x, u_scaleFactor) + mod(pixel.y, u_scaleFactor)) / 8.0);
   vec4 gradient = squeeze(grey, 0.8);
 
   /*
