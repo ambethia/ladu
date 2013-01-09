@@ -129,24 +129,9 @@ class PlayerSystem < EntitySystem::System
 
     $game.screen.sprites[:player_bullets] = bullet_sprites
 
-    [:player_spawn, :player_bullet, :player_death, :shield_damage, :bullet_destruct].each do |sound|
+    [:player_spawn, :player_bullet, :player_death,
+     :shield_damage, :bullet_destruct, :pickup_gem].each do |sound|
       $game.screen.sounds[sound] = Gdx.audio.new_sound(load_asset("#{sound}.ogg"))
     end
-
-    reset
-  end
-
-  def reset
-    spawn_player($game.width / 2, $game.height / 2)
-  end
-
-  private
-
-  def spawn_player(x, y)
-    manager.factory.player do |player|
-      player.px = x
-      player.py = y
-    end
-    $game.screen.sounds[:player_spawn].play(2.0)
   end
 end

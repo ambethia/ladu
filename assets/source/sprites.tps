@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename>../sprites.txt</filename>
+        <filename>../sprites.pack</filename>
         <key>mainExtension</key>
         <string></string>
         <key>forceIdenticalLayout</key>
@@ -162,6 +162,23 @@
             <filename>images/enemy_a_7.png</filename>
             <filename>images/enemy_a_8.png</filename>
             <filename>images/explosion.png</filename>
+            <filename>images/bullet_1_1.png</filename>
+            <filename>images/bullet_1_2.png</filename>
+            <filename>images/bullet_1_3.png</filename>
+            <filename>images/bullet_1_4.png</filename>
+            <filename>images/bullet_1_5.png</filename>
+            <filename>images/bullet_1_6.png</filename>
+            <filename>images/bullet_1_7.png</filename>
+            <filename>images/bullet_1_8.png</filename>
+            <filename>images/gem_1.png</filename>
+            <filename>images/gem_2.png</filename>
+            <filename>images/gem_3.png</filename>
+            <filename>images/gem_4.png</filename>
+            <filename>images/gem_5.png</filename>
+            <filename>images/gem_6.png</filename>
+            <filename>images/gem_7.png</filename>
+            <filename>images/gem_8.png</filename>
+            <filename>images/shield.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

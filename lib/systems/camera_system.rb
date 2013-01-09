@@ -37,8 +37,8 @@ class CameraSystem < EntitySystem::System
     @x_offset = @player_x + (@x_vector * $game.width * 0.0035 * @speed)
     @y_offset = @player_y + (@y_vector * $game.height * 0.003 * @speed)
 
-    @spatial.px = follow(@spatial.px, @x_offset, CAMERA_TRACKING_SPEED)
-    @spatial.py = follow(@spatial.py, @y_offset, CAMERA_TRACKING_SPEED)
+    @spatial.px = lerp(@spatial.px, @x_offset, CAMERA_TRACKING_SPEED)
+    @spatial.py = lerp(@spatial.py, @y_offset, CAMERA_TRACKING_SPEED)
     @camera.object.position.set(@spatial.px, @spatial.py, 0)
     @camera.object.update
     $game.screen.batch.set_projection_matrix(@camera.object.combined)
@@ -46,11 +46,5 @@ class CameraSystem < EntitySystem::System
 
   def reset
     @speed = 120
-  end
-
-  private
-
-  def follow(a, b, m = 0.5)
-    (a * (1 - m) + b * m)
   end
 end

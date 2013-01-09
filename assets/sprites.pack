@@ -5,210 +5,266 @@ filter: Nearest,Nearest
 repeat: none
 bullet
   rotate: false
-  xy: 1, 109
+  xy: 1, 47
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 0
 bullet
   rotate: false
-  xy: 1, 91
+  xy: 1, 29
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
 bullet
   rotate: false
-  xy: 19, 109
+  xy: 19, 47
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
 enemy_a
   rotate: false
-  xy: 1, 73
+  xy: 1, 11
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
 enemy_a
   rotate: false
-  xy: 19, 91
+  xy: 19, 29
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
 enemy_a
   rotate: false
-  xy: 37, 109
+  xy: 37, 47
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
 enemy_a
   rotate: false
-  xy: 1, 55
+  xy: 19, 11
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 4
 enemy_a
   rotate: false
-  xy: 19, 73
+  xy: 37, 29
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 5
 enemy_a
   rotate: false
-  xy: 37, 91
+  xy: 55, 47
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 6
 enemy_a
   rotate: false
-  xy: 1, 37
+  xy: 37, 11
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 7
 enemy_a
   rotate: false
-  xy: 19, 55
+  xy: 55, 29
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 8
+gem
+  rotate: false
+  xy: 73, 47
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+gem
+  rotate: false
+  xy: 55, 11
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+gem
+  rotate: false
+  xy: 73, 29
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+gem
+  rotate: false
+  xy: 91, 47
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+gem
+  rotate: false
+  xy: 73, 11
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 5
+gem
+  rotate: false
+  xy: 91, 29
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 6
+gem
+  rotate: false
+  xy: 109, 47
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 7
+gem
+  rotate: false
+  xy: 91, 11
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 8
 player_a0
   rotate: false
-  xy: 37, 74
+  xy: 109, 30
   size: 14, 15
   orig: 14, 15
   offset: 0, 0
   index: -1
 player_a1
   rotate: false
-  xy: 1, 20
+  xy: 127, 48
   size: 14, 15
   orig: 14, 15
   offset: 0, 0
   index: -1
 player_c0
   rotate: false
-  xy: 19, 39
+  xy: 143, 49
+  size: 15, 14
+  orig: 15, 14
+  offset: 0, 0
+  index: -1
+player_c1
+  rotate: false
+  xy: 160, 49
   size: 15, 14
   orig: 15, 14
   offset: 0, 0
   index: -1
 player_b0
   rotate: false
-  xy: 37, 58
+  xy: 109, 14
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 player_b1
   rotate: false
-  xy: 1, 4
+  xy: 177, 49
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 explosion
   rotate: false
-  xy: 55, 117
+  xy: 1, 1
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
-player_c1
-  rotate: false
-  xy: 19, 23
-  size: 15, 14
-  orig: 15, 14
-  offset: 0, 0
-  index: -1
 shield
   rotate: false
-  xy: 55, 107
+  xy: 11, 1
   size: 6, 8
   orig: 6, 8
   offset: 0, 0
   index: -1
 bullet_1
   rotate: false
-  xy: 55, 99
+  xy: 193, 57
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: 1
 bullet_1
   rotate: false
-  xy: 55, 91
+  xy: 19, 3
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: 2
 bullet_1
   rotate: false
-  xy: 53, 83
+  xy: 193, 49
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: 3
 bullet_1
   rotate: false
-  xy: 53, 75
+  xy: 201, 57
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: 4
 bullet_1
   rotate: false
-  xy: 53, 67
+  xy: 27, 3
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: 5
 bullet_1
   rotate: false
-  xy: 53, 59
+  xy: 201, 49
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: 6
 bullet_1
   rotate: false
-  xy: 17, 15
+  xy: 209, 57
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: 7
 bullet_1
   rotate: false
-  xy: 17, 7
+  xy: 35, 3
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: 8
 star
   rotate: false
-  xy: 37, 55
+  xy: 109, 11
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: 0
 star
   rotate: false
-  xy: 36, 52
+  xy: 209, 54
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: 1
 star
   rotate: false
-  xy: 1, 1
+  xy: 217, 62
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

@@ -10,6 +10,7 @@ class CollisionSystem < EntitySystem::System
       player_id = manager.find(:player)
       case manager.tag(component.owner)
       when :player
+        # player bullets hitting enemies
         manager.all(:enemy).each do |enemy|
           enemy_s = manager.component(SpatialComponent, enemy)
           enemy_c = Circle.new(enemy_s.px, enemy_s.py, ENEMY_RADIUS)
@@ -26,6 +27,7 @@ class CollisionSystem < EntitySystem::System
             end
           end
         end
+        # player bullets hitting enemy bullets
         manager.all(:bullet).each do |bullet|
           # dont't destroy our own bullets
           next if manager.component(CollisionComponent, bullet).owner == player_id
@@ -33,6 +35,7 @@ class CollisionSystem < EntitySystem::System
           bullet_s = manager.component(SpatialComponent, bullet)
           bullet_c = Circle.new(bullet_s.px, bullet_s.py, component.radius)
           if Intersector.overlapCircles(bullet_c, collider_c)
+            puts "bullet collision"
             manager.factory.particle do |particle|
               particle.type = :bullet_destruct
               particle.px = bullet_s.px
@@ -44,6 +47,7 @@ class CollisionSystem < EntitySystem::System
           end
         end
       when :enemy
+        # enemy bullets hitting the player
         if player_id
           player_s = manager.component(SpatialComponent, player_id)
           player_c = Circle.new(player_s.px, player_s.py, PLAYER_RADIUS)
@@ -58,6 +62,32 @@ class CollisionSystem < EntitySystem::System
             manager.component(PlayerComponent, player_id).shields -= 1
             $game.screen.sounds[:shield_damage].play
             manager.destroy(entity)
+          end
+        end
+      when :gem
+        # player approaching a gem
+        if player_id
+          player_s = manager.component(SpatialComponent, player_id)
+          player_c = Circle.new(player_s.px, player_s.py, PLAYER_RADIUS)
+          if Intersector.overlapCircles(player_c, collider_c)
+            d = Vector2.new(player_s.px, player_s.py).dst(collider_s.px, collider_s.py)
+            # the gems will gravitate towards the player until they
+            # are close enough to be removed
+            if d > PLAYER_RADIUS * 1.2
+              p = [(component.radius - d).abs / component.radius, 1].min
+              tx = lerp(collider_s.px, player_s.px, p)
+              ty = lerp(collider_s.py, player_s.py, p)
+              collider_s.px += (tx - collider_s.px) * delta * 14
+              collider_s.py += (ty - collider_s.py) * delta * 14
+
+              # Spin faster approaching the player
+              collider_s.bearing += 15 * d * delta
+              collider_s.bearing %= 360
+            else
+              # collect the gem
+              $game.screen.sounds[:pickup_gem].play
+              manager.destroy(entity)
+            end
           end
         end
       end

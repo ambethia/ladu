@@ -96,11 +96,5 @@ class EnemySystem < EntitySystem::System
       manager.destroy(entity)
     end
   end
-
-  private
-
-  def weighted_average(v, w, n = 40)
-    ((v * (n - 1)) + w) / n;
-  end
 end
 

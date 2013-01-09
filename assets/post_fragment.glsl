@@ -60,7 +60,7 @@ void main() {
    * NOISE
    */
 
-  vec4 noise = squeeze(pseudoRand(v_texCoords * u_deltaTime * 1000.0), 0.2);
+  vec4 noise = squeeze(pseudoRand(v_texCoords * u_deltaTime * 1000.0), 0.3);
 
   gl_FragColor = bloom * gradient * noise;
 }
