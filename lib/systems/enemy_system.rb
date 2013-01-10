@@ -34,8 +34,8 @@ class EnemySystem < EntitySystem::System
         enemy_x = target_x + (Math.cos(component.data[:c_angle]) * ellipse_w)
         enemy_y = target_y + (Math.sin(component.data[:c_angle]) * ellipse_h)
 
-        enemy.px = weighted_average(enemy.px, enemy_x, 12)
-        enemy.py = weighted_average(enemy.py, enemy_y, 12)
+        enemy.px = weighted_average(enemy.px, enemy_x, 20)
+        enemy.py = weighted_average(enemy.py, enemy_y, 20)
 
         # face player
         angle = (Math.atan2(delta_y , delta_x) * 180 / Math::PI) % 360

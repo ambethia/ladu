@@ -31,11 +31,9 @@ class CollisionSystem < EntitySystem::System
         manager.all(:bullet).each do |bullet|
           # dont't destroy our own bullets
           next if manager.component(CollisionComponent, bullet).owner == player_id
-
           bullet_s = manager.component(SpatialComponent, bullet)
           bullet_c = Circle.new(bullet_s.px, bullet_s.py, component.radius)
           if Intersector.overlapCircles(bullet_c, collider_c)
-            puts "bullet collision"
             manager.factory.particle do |particle|
               particle.type = :bullet_destruct
               particle.px = bullet_s.px
@@ -59,13 +57,13 @@ class CollisionSystem < EntitySystem::System
               particle.py = player_s.py
             end
             # sustain damage
-            manager.component(PlayerComponent, player_id).shields -= 1
+            manager.component(PlayerComponent, player_id).shields -= 1 unless ENV['INVINCIBLE']
             $game.screen.sounds[:shield_damage].play
             manager.destroy(entity)
           end
         end
-      when :gem
-        # player approaching a gem
+      when :item
+        # player approaching an item (gem, power up, etc)
         if player_id
           player_s = manager.component(SpatialComponent, player_id)
           player_c = Circle.new(player_s.px, player_s.py, PLAYER_RADIUS)

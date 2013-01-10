@@ -7,7 +7,10 @@ class ItemFactory < EntitySystem::Factory::Base
   }
 
   def construct
-    entity = manager.create(type)
+    entity = manager.create(:item)
+    manager.attach(entity, ItemComponent.new({
+      type: type,
+    }))
     manager.attach(entity, CollisionComponent.new({
       owner: entity,
       radius: RADIUS[type]

@@ -6,7 +6,9 @@ $: << ROOT_DIR + '/lib/factories'
 $: << ROOT_DIR + '/lib/systems'
 $: << ROOT_DIR + '/vendor'
 
-RELATIVE_ROOT = $0['<'] ? 'lucky_princess_nitro/' : ''
+DEBUG = !$0['<']
+
+RELATIVE_ROOT = DEBUG ? '' : 'lucky_princess_nitro/'
 
 require 'java'
 require 'gdx-backend-lwjgl-natives.jar'
@@ -31,6 +33,7 @@ java_import com.badlogic.gdx.graphics.GL20
 java_import com.badlogic.gdx.graphics.Pixmap
 java_import com.badlogic.gdx.math.Circle
 java_import com.badlogic.gdx.math.Intersector
+java_import com.badlogic.gdx.math.MathUtils
 java_import com.badlogic.gdx.math.Rectangle
 java_import com.badlogic.gdx.math.Vector2
 java_import com.badlogic.gdx.math.Vector3
@@ -40,6 +43,12 @@ java_import com.badlogic.gdx.Game
 java_import com.badlogic.gdx.Gdx
 java_import com.badlogic.gdx.Input
 java_import com.badlogic.gdx.Screen
+
+if DEBUG
+  require ROOT_DIR + '/tools/gdx-tools.jar'
+  java_import com.badlogic.gdx.tools.imagepacker.TexturePacker2
+  TexturePacker2.process("#{ROOT_DIR}/assets/source/images", "#{ROOT_DIR}/assets", "sprites");
+end
 
 require 'lucky_princess_nitro'
 

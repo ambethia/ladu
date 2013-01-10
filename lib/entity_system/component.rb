@@ -1,5 +1,7 @@
 class EntitySystem::Component
 
+  attr_accessor :entity
+
   def self.provides(*attribute_list)
     attribute_list.each do |key|
       attr_accessor key

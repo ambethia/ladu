@@ -18,7 +18,7 @@ class BaseScreen
   def show
     unless @is_setup
       @batch = SpriteBatch.new
-      @atlas = TextureAtlas.new(load_asset("sprites.pack"))
+      @atlas = TextureAtlas.new(load_asset("sprites.atlas"))
 
       @entity_manager = EntitySystem::Manager.new
       @interface_system = InterfaceSystem.new(@entity_manager)

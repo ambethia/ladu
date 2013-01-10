@@ -40,11 +40,13 @@ class EntitySystem::Manager
 
   def attach(entity, component)
     store = component_store(component.class)
+    component.entity = entity
     store[entity] = component
   end
 
   def remove(entity, component)
     store = component_store(component.class)
+    component.entity = nil
     store[entity] = nil
   end
 

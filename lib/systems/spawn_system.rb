@@ -1,7 +1,7 @@
 class SpawnSystem < EntitySystem::System
   SPAWN_TIME = 1
   MAX_ENEMIES = 5
-  GEM_AREA = 512
+  GEM_AREA = 4096
   NUM_GEMS = 12
 
   def update(delta)
@@ -39,7 +39,10 @@ class SpawnSystem < EntitySystem::System
   def reset
     spawn_player($game.width / 2, $game.height / 2)
     NUM_GEMS.times do
-      spawn_gem(rand(GEM_AREA), rand(GEM_AREA))
+      spawn_gem(
+        rand(GEM_AREA) - GEM_AREA/2,
+        rand(GEM_AREA) - GEM_AREA/2
+      )
     end
   end
 
