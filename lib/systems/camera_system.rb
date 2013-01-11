@@ -17,7 +17,7 @@ class CameraSystem < EntitySystem::System
 
   def update(delta)
     player_id = manager.find(:player)
-    if player_id
+    if player_id && !$game.did_we_win_yet?
       player = manager.component(SpatialComponent, player_id)
       @speed = player.speed.abs
       @player_x = player.px
@@ -30,7 +30,11 @@ class CameraSystem < EntitySystem::System
       @player_y += @y_vector * delta * @speed
       @speed -= @speed * delta * 0.5
       if @speed && @speed < 12
-        $game.game_over
+        if $game.did_we_win_yet?
+          $game.victory
+        else
+          $game.game_over
+        end
       end
     end
 

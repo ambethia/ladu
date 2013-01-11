@@ -8,6 +8,7 @@ class InterfaceSystem < EntitySystem::System
     when GameScreen
       draw_shields
       draw_radar
+      draw_gems_collected
       draw_debug if DEBUG
     end
     @elapsed += delta
@@ -50,7 +51,7 @@ class InterfaceSystem < EntitySystem::System
         item_s = manager.component(SpatialComponent, i.entity)
         item_v = Vector2.new(item_s.px, item_s.py)
         player_v.dst(item_v)
-      }.first.entity
+      }.map(&:entity).first
 
       manager.entities(ItemComponent).each_with_index do |item_id, i|
         item_s = manager.component(SpatialComponent, item_id)
@@ -58,10 +59,6 @@ class InterfaceSystem < EntitySystem::System
 
         # if in range draw on radar, else draw the closest along the border
         distance = player_v.dst(item_v)
-
-        if item_id == closest_gem_id
-          @nearest_gem_distance = distance
-        end
 
         if distance < RADAR_RANGE
           vector = item_v.sub(player_v).mul(RADAR_SCALE)
@@ -78,14 +75,20 @@ class InterfaceSystem < EntitySystem::System
             @radar_center_x + (30 * MathUtils.cos_deg(angle)) - 1.5,
             @radar_center_y + (30 * MathUtils.sin_deg(angle)) - 1.5
           )
+          # write text for distance to nearest gem
+          @font.draw(@batch, (distance/10).round.to_s, $game.width - 24, 12)
         end
-
-        # write text for distance to nearest gem
-        @font.draw(@batch, (distance/10).round.to_s, $game.width - 24, 12)
       end
     end
     @batch.draw($game.screen.sprites[:radar],
       @radar_center_x - 32, @radar_center_y - 32)
+  end
+
+  def draw_gems_collected
+    remaining = manager.components(ItemComponent).select { |i| i.type == :gem }.size
+    collected = SpawnSystem::NUM_GEMS - remaining
+    text = "#{collected}/#{SpawnSystem::NUM_GEMS}"
+    @font.draw(@batch, text, $game.width - 20, $game.height - 20)
   end
 
   def draw_debug
@@ -107,6 +110,6 @@ class InterfaceSystem < EntitySystem::System
     @radar_center_x = $game.width - (64/2) - 8
     @radar_center_y = (64/2) + 8
 
-    @font = BitmapFont.new(load_asset("alterebro.fnt"), load_asset("alterebro.png"), false)
+    @font = BitmapFont.new(load_asset("04b03.fnt"), load_asset("04b03.png"), false)
   end
 end

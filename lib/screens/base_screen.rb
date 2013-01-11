@@ -2,7 +2,7 @@ class BaseScreen
   include Screen
   include GameHelpers
 
-  attr :atlas, :batch, :sprites, :sounds, :systems
+  attr :atlas, :batch, :sprites, :sounds, :systems, :entity_manager
 
   def initialize
     @sprites = {}

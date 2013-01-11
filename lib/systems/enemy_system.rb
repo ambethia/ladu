@@ -1,6 +1,6 @@
 class EnemySystem < EntitySystem::System
   RATE_OF_FIRE = 0.33
-  MIN_FIRE_DISTANCE = 100
+  MIN_FIRE_DISTANCE = 120
   MAX_FIRE_DISTANCE = 180
 
   def update(delta)
@@ -10,7 +10,7 @@ class EnemySystem < EntitySystem::System
 
       player_id = manager.find(:player)
 
-      if player_id
+      if player_id && !$game.did_we_win_yet?
         player_s = manager.component(SpatialComponent, player_id)
         player_c = manager.component(PlayerComponent, manager.find(:player))
 

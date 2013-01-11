@@ -18,6 +18,7 @@ class LuckyPrincessNitro < Game
     :game_screen,
     :splash_screen,
     :game_over_screen,
+    :victory_screen,
     :test_screen
 
   def initialize
@@ -29,6 +30,7 @@ class LuckyPrincessNitro < Game
     @game_screen = GameScreen.new
     @splash_screen = SplashScreen.new
     @game_over_screen = GameOverScreen.new
+    @victory_screen = VictoryScreen.new
     @test_screen = TestScreen.new
 
     if ENV['SCREEN']
@@ -63,6 +65,16 @@ class LuckyPrincessNitro < Game
 
   def game_menu
     set_screen(splash_screen)
+  end
+
+  def victory
+    set_screen(victory_screen)
+  end
+
+  def did_we_win_yet?
+    screen.entity_manager.components(ItemComponent).select { |i|
+      i.type == :gem
+    }.size == 0
   end
 
   def width

@@ -20,7 +20,7 @@ class InputSystem < EntitySystem::System
         player.is_turning_left = Gdx.input.is_key_pressed(Input::Keys::LEFT)
         player.is_firing = (Gdx.input.is_key_pressed(Input::Keys::SPACE) || Gdx.input.is_key_pressed(Input::Keys::UP))
       end
-    when GameOverScreen
+    when GameOverScreen, VictoryScreen
       if Gdx.input.is_key_pressed(Input::Keys::SPACE)
         $game.game_begin
       end
