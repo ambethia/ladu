@@ -27,8 +27,12 @@ class InterfaceSystem < EntitySystem::System
   end
 
   def draw_radar
+    @batch.draw($game.screen.sprites[:radar],
+      @radar_center_x - 32, @radar_center_y - 32)
+
     player_id = manager.find(:player)
     if player_id
+
       player_s = manager.component(SpatialComponent, player_id)
       player_v = Vector2.new(player_s.px, player_s.py)
       manager.entities(EnemyComponent).each_with_index do |enemy_id, i|
@@ -80,15 +84,13 @@ class InterfaceSystem < EntitySystem::System
         end
       end
     end
-    @batch.draw($game.screen.sprites[:radar],
-      @radar_center_x - 32, @radar_center_y - 32)
   end
 
   def draw_gems_collected
     remaining = manager.components(ItemComponent).select { |i| i.type == :gem }.size
     collected = SpawnSystem::NUM_GEMS - remaining
     text = "#{collected}/#{SpawnSystem::NUM_GEMS}"
-    @font.draw(@batch, text, $game.width - 20, $game.height - 20)
+    @font.draw(@batch, text, $game.width - 26, $game.height - 6)
   end
 
   def draw_debug
