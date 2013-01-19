@@ -57,8 +57,8 @@ class EnemySystem < EntitySystem::System
         end
       else
         # Fly away if the player is dead
-        enemy.px += (Math.cos(enemy.bearing * Math::PI/180) * 220) * delta
-        enemy.py += (Math.sin(enemy.bearing * Math::PI/180) * 220) * delta
+        enemy.speed = 100
+        manager.attach(entity, MotionComponent.new)
       end
     end
   end
