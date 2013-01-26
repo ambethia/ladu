@@ -1,0 +1,8 @@
+d:
+d:data
+i:data/libgdx.png
+d:maps
+b:maps/.DS_Store
+b:maps/test-level.tmx
+b:maps/test-tiles packfile
+i:maps/test-tiles1.png
