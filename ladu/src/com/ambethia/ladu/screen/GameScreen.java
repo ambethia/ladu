@@ -4,98 +4,68 @@ import java.util.ArrayList;
 
 import com.ambethia.ladu.Block;
 import com.ambethia.ladu.Direction;
+import com.ambethia.ladu.GameRenderer;
 import com.ambethia.ladu.Player;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen extends LaduScreen {
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private TiledMap tiledMap;
-	private TileAtlas tileAtlas;
-	private TileMapRenderer tileMapRenderer;
-	private TextureRegion playerTexture;
-	private TextureRegion blockTexture;
-	private final Player player = new Player();	
-	
+	private GameRenderer renderer;
+	public final Player player = new Player();	
 	public ArrayList<Block> blocks = new ArrayList<Block>();
 
-	public static int ROOM_LAYER = 0;
-	public static int PIXELS_PER_METER = 64;
-
+	public int numActiveBlocks = 0;
+	public int numGoals = 0;
+	
 	public GameScreen (Game game) {
 		super(game);
+		renderer = new GameRenderer(this);
 	}
 	
 	@Override
 	public void render(float delta) {
 		handleInput();
-		
 		player.update(delta);
-		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-		camera.update();
-		batch.setProjectionMatrix(camera.combined);
+		renderer.update(delta);
+		updateBlocks();
+		checkForWinCondition();
+	}
 
-		tileMapRenderer.render(camera);
-
-		batch.begin();
-
+	private void updateBlocks() {
+		int count = 0;
 		for (Block block : blocks) {
-			float x = block.position.x * PIXELS_PER_METER;
-			float y = block.position.y * PIXELS_PER_METER;
-			batch.draw(blockTexture, x, y);
+			int x = Math.round(block.position.x);
+			int y = Math.round(block.position.y);
+			if (tilePropertyAt(x, y, "goal", "1")) {
+				block.activate();
+				count++;
+			} else {
+				if (block.isActive) {
+					block.deactivate();
+				}
+			}
 		}
+		numActiveBlocks = count;
+	}
 
-		float x = player.position.x * PIXELS_PER_METER;
-		float y = player.position.y * PIXELS_PER_METER;
-		batch.draw(playerTexture, x, y);
-
-		batch.end();
+	private void checkForWinCondition() {
+		if (numGoals > 0 && numActiveBlocks >= numGoals) {
+			levelCompleted();
+		}
+	}
+	
+	private void levelCompleted() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void show() {
-		batch = new SpriteBatch();		
-
-		tiledMap = TiledLoader.createMap(Gdx.files.internal("maps/test-level.tmx"));
-		tileAtlas = new TileAtlas(tiledMap, Gdx.files.internal("maps"));
-		tileMapRenderer = new TileMapRenderer(tiledMap, tileAtlas, 8, 8);
-
-		playerTexture = tileAtlas.getRegion(6);
-		blockTexture = tileAtlas.getRegion(4);
-		
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(tileMapRenderer.getMapWidthUnits() / 2, tileMapRenderer.getMapHeightUnits() / 2, 0);
-
-		for (TiledObjectGroup group : tiledMap.objectGroups) {
-			for (TiledObject object : group.objects) {
-				if (object.type.equals("Player")) {
-					int x = object.x / PIXELS_PER_METER;
-					int y = (tileMapRenderer.getMapHeightUnits() - object.y) / PIXELS_PER_METER;
-					player.position.set(x, y);
-				}
-				if (object.type.equals("Block")) {
-					int x = object.x / PIXELS_PER_METER;
-					int y = (tileMapRenderer.getMapHeightUnits() - object.y) / PIXELS_PER_METER;
-					blocks.add(new Block(x, y));
-				}
-			}
-		}
+		loadMapObjects();
 	}
 
 	@Override
@@ -116,9 +86,7 @@ public class GameScreen extends LaduScreen {
 
 	@Override
 	public void dispose() {
-		tileMapRenderer.dispose();
-		tileAtlas.dispose();
-		batch.dispose();
+		renderer.dispose();
 	}
 
 	private void handleInput() {
@@ -158,8 +126,7 @@ public class GameScreen extends LaduScreen {
 	}
 	
 	private boolean isWalkable(int x, int y) {
-		int tileType = tiledMap.layers.get(ROOM_LAYER).tiles[tiledMap.height - y - 1][x];
-		if (tiledMap.getTileProperty(tileType, "obstacle").equals("1")) {
+		if (tilePropertyAt(x, y, "obstacle", "1")) {
 			return false;
 		} else {
 			if (isBlocked(x, y)) {
@@ -184,5 +151,35 @@ public class GameScreen extends LaduScreen {
 			}
 		}
 		return null;
+	}
+	
+	private boolean tilePropertyAt(int x, int y, String property, String value) {
+		int tileType = renderer.tiledMap.layers.get(GameRenderer.ROOM_LAYER).tiles[renderer.tiledMap.height - y - 1][x];
+		return value.equals(renderer.tiledMap.getTileProperty(tileType, property));
+	}
+	
+	private void loadMapObjects() {
+		// Load the Player and Block objects		
+		for (TiledObjectGroup group : renderer.tiledMap.objectGroups) {
+			for (TiledObject object : group.objects) {
+				int x = object.x / GameRenderer.PIXELS_PER_METER;
+				int y = (renderer.tileMapRenderer.getMapHeightUnits() - object.y) / GameRenderer.PIXELS_PER_METER;
+				if (object.type.equals("Player")) {
+					player.position.set(x, y);
+				}
+				if (object.type.equals("Block")) {
+					blocks.add(new Block(x, y));
+				}
+			}
+		}
+		// Set the number of goals in the map
+		numGoals = 0;
+		for (int x = 0; x < renderer.tiledMap.width; x++) {
+			for (int y = 0; y < renderer.tiledMap.height; y++) {
+				if (tilePropertyAt(x, y, "goal", "1")) {
+					numGoals++;
+				}
+			}
+		}
 	}
 }

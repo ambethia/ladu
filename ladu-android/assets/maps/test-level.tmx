@@ -8,6 +8,7 @@
   </tile>
   <tile id="1">
    <properties>
+    <property name="goal" value="1"/>
     <property name="obstacle" value="0"/>
    </properties>
   </tile>

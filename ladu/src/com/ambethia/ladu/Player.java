@@ -32,7 +32,7 @@ public class Player {
 		if (!isMoving) {
 			float x = position.x + direction.x;
 			float y = position.y + direction.y;
-			Tween.to(this, PlayerTween.POSITION_XY, 0.5f)
+			Tween.to(this, PlayerTween.POSITION_XY, 0.33f)
 				.target(x, y)
 				.ease(Cubic.INOUT)
 				.setCallback(moveEndCallback)
