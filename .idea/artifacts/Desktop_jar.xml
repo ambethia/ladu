@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact name="Desktop:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Desktop_jar</output-path>
+    <root id="root">
+      <element id="archive" name="Desktop.jar">
+        <element id="module-output" name="Desktop" />
+        <element id="module-output" name="Main" />
+        <element id="directory" name="data">
+          <element id="dir-copy" path="$PROJECT_DIR$/Main/data" />
+        </element>
+      </element>
+      <element id="library" level="project" name="Main libs" />
+      <element id="library" level="project" name="Desktop libs" />
+    </root>
+  </artifact>
+</component>

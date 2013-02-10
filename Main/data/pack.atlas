@@ -1,0 +1,89 @@
+
+pack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+btfr
+  rotate: false
+  xy: 1, 255
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+splash
+  rotate: false
+  xy: 1, 22
+  size: 161, 231
+  orig: 161, 231
+  offset: 0, 0
+  index: -1
+menu-credits
+  rotate: false
+  xy: 259, 472
+  size: 174, 39
+  orig: 174, 39
+  offset: 0, 0
+  index: -1
+menu-ladu
+  rotate: false
+  xy: 164, 163
+  size: 90, 90
+  orig: 90, 90
+  offset: 0, 0
+  index: -1
+menu-title
+  rotate: false
+  xy: 164, 98
+  size: 320, 63
+  orig: 320, 63
+  offset: 0, 0
+  index: -1
+menu-play
+  rotate: false
+  xy: 259, 421
+  size: 101, 49
+  orig: 101, 49
+  offset: 0, 0
+  index: -1
+menu-quit
+  rotate: false
+  xy: 164, 60
+  size: 105, 36
+  orig: 105, 36
+  offset: 0, 0
+  index: -1
+icon-back
+  rotate: false
+  xy: 1, 1
+  size: 26, 19
+  orig: 26, 19
+  offset: 0, 0
+  index: -1
+icon-reset
+  rotate: false
+  xy: 435, 485
+  size: 27, 26
+  orig: 27, 26
+  offset: 0, 0
+  index: -1
+level-locked
+  rotate: false
+  xy: 259, 395
+  size: 17, 24
+  orig: 17, 24
+  offset: 0, 0
+  index: -1
+level-cleared
+  rotate: false
+  xy: 362, 452
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: -1
+modal
+  rotate: false
+  xy: 164, 50
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1

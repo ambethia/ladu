@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jnlp spec='1.0+' codebase='http://table-layout.googlecode.com/' href='svn/wiki/jws/editor.jnlp'>
+<information>
+	<title>TableLayout Editor</title>
+	<vendor>Esoteric Software</vendor>
+	<homepage href='http://table-layout.googlecode.com/'/>
+	<description>TableLayout Editor</description>
+	<description kind='short'>TableLayout Editor</description>
+</information>
+<resources>
+	<j2se href='http://java.sun.com/products/autodl/j2se' version='1.5+' max-heap-size='128m'/>
+	<jar href='svn/wiki/jws/tablelayout-editor.jar'/>
+	<jar href='svn/wiki/jws/rsyntaxtextarea-r303-mod.jar'/>
+	<jar href='svn/wiki/jws/autocomplete-r302.jar'/>
+</resources>
+<security><all-permissions/></security>
+<application-desc main-class='com.esotericsoftware.tablelayout.swing.TableLayoutEditor'/>
+</jnlp>
