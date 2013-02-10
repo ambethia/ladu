@@ -28,7 +28,7 @@
     <file path="/GameScreen.java" changelist="c21251cd-4ee2-442e-b98f-ffb5613df405" time="1360509955502" ignored="false" />
     <file path="$PROJECT_DIR$/Main/src/com/ambethia/ladu/LaduDesktop.java" changelist="c21251cd-4ee2-442e-b98f-ffb5613df405" time="1359266255206" ignored="false" />
     <file path="/README.md" changelist="c21251cd-4ee2-442e-b98f-ffb5613df405" time="1360533553552" ignored="false" />
-    <file path="/GameRenderer.java" changelist="c21251cd-4ee2-442e-b98f-ffb5613df405" time="1360521995732" ignored="false" />
+    <file path="/GameRenderer.java" changelist="c21251cd-4ee2-442e-b98f-ffb5613df405" time="1360539714791" ignored="false" />
     <file path="/SplashScreen.java" changelist="c21251cd-4ee2-442e-b98f-ffb5613df405" time="1359321926636" ignored="false" />
     <file path="/LaduScreen.java" changelist="c21251cd-4ee2-442e-b98f-ffb5613df405" time="1359534054575" ignored="false" />
     <file path="/MenuScreen.java" changelist="c21251cd-4ee2-442e-b98f-ffb5613df405" time="1360480127000" ignored="false" />
@@ -141,10 +141,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameRenderer.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="GameRenderer.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/GameRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="87" selection-start="4447" selection-end="4447" vertical-scroll-proportion="0.0">
+            <state line="122" column="29" selection-start="5056" selection-end="5056" vertical-scroll-proportion="0.5103448">
               <folding />
             </state>
           </provider>
@@ -159,10 +159,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="25" selection-start="318" selection-end="318" vertical-scroll-proportion="0.73660713">
+            <state line="11" column="0" selection-start="99" selection-end="99" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -175,15 +175,6 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SplashScreen.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/screen/SplashScreen.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="13" selection-start="563" selection-end="563" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -215,6 +206,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="LaduDesktop.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Desktop/src/com/ambethia/ladu/LaduDesktop.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="55" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -238,9 +238,9 @@
         <option value="$PROJECT_DIR$/Main/src/com/ambethia/ladu/screen/MenuScreen.java" />
         <option value="$PROJECT_DIR$/Main/src/com/ambethia/ladu/screen/GameScreen.java" />
         <option value="$PROJECT_DIR$/Main/src/com/ambethia/ladu/Ladu.java" />
-        <option value="$PROJECT_DIR$/Main/src/com/ambethia/ladu/GameRenderer.java" />
         <option value="$PROJECT_DIR$/Main/src/com/ambethia/ladu/Player.java" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Main/src/com/ambethia/ladu/GameRenderer.java" />
       </list>
     </option>
   </component>
@@ -821,13 +821,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Desktop/src/com/ambethia/ladu/LaduDesktop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="55" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/screen/LevelsScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="51" column="37" selection-start="2051" selection-end="2051" vertical-scroll-proportion="0.0">
@@ -874,13 +867,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/Ladu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="33" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/screen/LaduScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="97" column="32" selection-start="3187" selection-end="3187" vertical-scroll-proportion="0.0">
@@ -895,13 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/GameRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="87" selection-start="4447" selection-end="4447" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/Player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="89" column="64" selection-start="2903" selection-end="2903" vertical-scroll-proportion="0.0">
@@ -911,7 +890,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="25" selection-start="318" selection-end="318" vertical-scroll-proportion="0.73660713">
+        <state line="11" column="0" selection-start="99" selection-end="99" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/Ladu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="33" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Desktop/src/com/ambethia/ladu/LaduDesktop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="55" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main/src/com/ambethia/ladu/GameRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="122" column="29" selection-start="5056" selection-end="5056" vertical-scroll-proportion="0.5103448">
           <folding />
         </state>
       </provider>

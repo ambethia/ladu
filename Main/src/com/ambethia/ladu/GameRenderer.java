@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
@@ -28,8 +30,11 @@ public class GameRenderer {
     private Texture heightMap;
     private ShaderProgram shader;
     private boolean isShaderEnabled = false;
-
+    private static final float VIRTUAL_WIDTH = 24f;
+    private static final float VIRTUAL_HEIGHT = 13.5f;
+    private static final float ASPECT_RATIO = VIRTUAL_WIDTH / VIRTUAL_HEIGHT;
     public static final Color AMBIENT_LIGHT = new Color(0.6f, 0.6f, 0.6f, 0.6f);
+    private Rectangle viewport;
 
     public GameRenderer(GameScreen gameScreen) {
         screen = gameScreen;
@@ -53,7 +58,7 @@ public class GameRenderer {
 
         screen.player.setupAnimation(tileAtlas);
 
-        camera = new OrthographicCamera(24 * PIXELS_PER_METER, 13.5f * PIXELS_PER_METER);
+        camera = new OrthographicCamera(VIRTUAL_WIDTH * PIXELS_PER_METER, VIRTUAL_HEIGHT * PIXELS_PER_METER);
         camera.position.set(tileMapRenderer.getMapWidthUnits() / 2, tileMapRenderer.getMapHeightUnits() / 2, 0);
     }
 
@@ -74,6 +79,8 @@ public class GameRenderer {
 
     public void draw(float delta) {
         camera.update();
+        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+
         screen.batch.begin(); // Beginning this batch here lets me use the shader in the tileMapRenderer.
         screen.batch.setProjectionMatrix(camera.combined);
 
@@ -119,6 +126,10 @@ public class GameRenderer {
         screen.player.draw(screen.batch, PIXELS_PER_METER, elapsedTime);
 
         screen.batch.end();
+
+        // Restore viewport for GUI stuff
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         elapsedTime += delta;
     }
 
@@ -134,6 +145,25 @@ public class GameRenderer {
     }
 
     public void resize(int width, int height) {
+        float aspectRatio = (float) width / (float) height;
+        float scale;
+        Vector2 crop = new Vector2(0f, 0f);
+
+        if (aspectRatio > ASPECT_RATIO) {
+            scale = (float) height / VIRTUAL_HEIGHT;
+            crop.x = (width - VIRTUAL_WIDTH * scale) / 2f;
+        } else if (aspectRatio < ASPECT_RATIO) {
+            scale = (float) width / VIRTUAL_WIDTH;
+            crop.y = (height - VIRTUAL_HEIGHT * scale) / 2f;
+        } else {
+            scale = (float) width / VIRTUAL_WIDTH;
+        }
+
+        float w = VIRTUAL_WIDTH * scale;
+        float h = VIRTUAL_HEIGHT * scale;
+        viewport = new Rectangle(crop.x, crop.y, w, h);
+
+
         if (isShaderEnabled) {
             shader.begin();
             shader.setUniformf("resolution", width, height);
