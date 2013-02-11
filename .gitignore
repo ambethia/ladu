@@ -1,2 +1,6 @@
 /out
 /Icon*
+*.iml
+*.ipr
+*.iws
+.idea/

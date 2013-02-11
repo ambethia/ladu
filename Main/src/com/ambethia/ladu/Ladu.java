@@ -1,9 +1,10 @@
 package com.ambethia.ladu;
 
 import com.ambethia.ladu.screen.*;
-import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.Action;
 
@@ -30,6 +31,17 @@ public class Ladu extends Game {
                 return true;
             }
         }));
+    }
+
+    public static void toggleFullscreen() {
+        if (Gdx.app.getType() == ApplicationType.Desktop) {
+            if (Gdx.graphics.isFullscreen()) {
+                Gdx.graphics.setDisplayMode(768, 432, false);
+            } else {
+                Graphics.DisplayMode displayMode = Gdx.graphics.getDesktopDisplayMode();
+                Gdx.graphics.setDisplayMode(displayMode.width, displayMode.height, true);
+            }
+        }
     }
 
     public enum Screens {
@@ -71,7 +83,6 @@ public class Ladu extends Game {
     @Override
     public void create() {
         prefs = Gdx.app.getPreferences("Ladu");
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
         restoreLevel();
 //        transitionTo(Screens.SPLASH);
         transitionTo(Screens.GAME);

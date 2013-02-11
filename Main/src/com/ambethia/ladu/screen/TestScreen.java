@@ -3,7 +3,6 @@ package com.ambethia.ladu.screen;
 import com.ambethia.ladu.Ladu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -95,6 +94,7 @@ public class TestScreen extends LaduScreen {
 
     @Override
     public boolean keyUp(int keycode) {
+        super.keyUp(keycode);
         if (keycode == Input.Keys.ESCAPE)
         {
             game.transitionTo(Ladu.Screens.MENU);

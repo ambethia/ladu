@@ -60,6 +60,7 @@ public class LevelsScreen extends LaduScreen {
 
     @Override
     public boolean keyUp(int keycode) {
+        super.keyUp(keycode);
         switch (keycode) {
             case Input.Keys.ESCAPE:
                 game.transitionTo(Ladu.Screens.MENU);

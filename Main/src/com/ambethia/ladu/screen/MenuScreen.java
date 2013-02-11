@@ -90,6 +90,7 @@ public class MenuScreen extends LaduScreen {
 
     @Override
     public boolean keyUp(int keycode) {
+        super.keyUp(keycode);
         switch (keycode) {
             case Keys.ESCAPE:
                 game.quit();

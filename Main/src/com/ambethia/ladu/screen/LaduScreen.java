@@ -2,10 +2,7 @@ package com.ambethia.ladu.screen;
 
 import com.ambethia.ladu.Ladu;
 import com.ambethia.ladu.MenuButton;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -135,6 +132,10 @@ public class LaduScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+        if (Input.Keys.F == keycode) {
+            Ladu.toggleFullscreen();
+        }
+
         return false;
     }
 
