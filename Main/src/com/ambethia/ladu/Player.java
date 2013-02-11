@@ -8,7 +8,6 @@ import aurelienribon.tweenengine.equations.Cubic;
 
 import aurelienribon.tweenengine.equations.Quad;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
@@ -42,13 +41,28 @@ public class Player {
 		if (!isMoving) {
 			float x = position.x + direction.x;
 			float y = position.y + direction.y;
-			Tween.to(this, PlayerTween.POSITION_XY, 0.33f)
+            float newRotation = (direction.angle() + 90) % 360;
+            // Some special cases to make sure he always turns in a logical manner
+            // (1/4 turn instead of whipping around 3/4 turns)
+            if (rotation == 270 && newRotation == 0) {
+                newRotation = 360;
+            }
+            if (rotation == 360 && newRotation == 90) {
+                rotation = 0;
+            }
+            if (rotation == 0 && newRotation == 270) {
+                rotation = 360;
+            }
+
+            System.out.println("old: " + rotation + ", new: " + newRotation);
+
+            Tween.to(this, PlayerTween.POSITION_XY, 0.33f)
 				.target(x, y)
 				.ease(Cubic.INOUT)
 				.setCallback(moveEndCallback)
 				.start(manager);
             Tween.to(this, PlayerTween.ROTATION, 0.2f)
-                    .target((direction.angle() + 90) % 360)
+                    .target(newRotation)
                     .ease(Quad.INOUT)
                     .start(manager);
 			isMoving = true;
