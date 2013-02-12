@@ -59,30 +59,37 @@ icon-back
   orig: 26, 19
   offset: 0, 0
   index: -1
+particle
+  rotate: false
+  xy: 435, 479
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 icon-reset
   rotate: false
-  xy: 435, 485
+  xy: 259, 393
   size: 27, 26
   orig: 27, 26
   offset: 0, 0
   index: -1
 level-locked
   rotate: false
-  xy: 259, 395
+  xy: 362, 446
   size: 17, 24
   orig: 17, 24
   offset: 0, 0
   index: -1
 level-cleared
   rotate: false
-  xy: 362, 452
+  xy: 164, 40
   size: 17, 18
   orig: 17, 18
   offset: 0, 0
   index: -1
 modal
   rotate: false
-  xy: 164, 50
+  xy: 271, 88
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
