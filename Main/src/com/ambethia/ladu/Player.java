@@ -8,6 +8,7 @@ import aurelienribon.tweenengine.equations.Cubic;
 
 import aurelienribon.tweenengine.equations.Quad;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -25,6 +26,9 @@ public class Player {
     private ParticleEffect effect;
     private ParticleEmitter emitter;
     private boolean isSparking = false;
+    private long moveSoundId = 0;
+    private long pushSoundId = 0;
+    private float idleTime = 0;
 
     public Player(TextureAtlas atlas) {
         Tween.registerAccessor(Player.class, new PlayerTween());
@@ -36,6 +40,32 @@ public class Player {
 
     public void update(float delta) {
         manager.update(delta);
+
+        // Sound
+        Sound move = Ladu.getInstance().getSound("move");
+        Sound push = Ladu.getInstance().getSound("push");
+        if (isMoving) {
+            idleTime = 0;
+            if (0 == moveSoundId)
+                moveSoundId = move.loop();
+            if (pushSoundId == 0 && isSparking)
+                pushSoundId = push.loop();
+            if (pushSoundId != 0 && !isSparking) {
+                push.stop(pushSoundId);
+                pushSoundId = 0;
+            }
+        } else {
+            idleTime += Gdx.graphics.getDeltaTime();
+            if (0 != moveSoundId && idleTime > 0.2f) {
+                move.stop(moveSoundId);
+                moveSoundId = 0;
+            }
+            if (pushSoundId != 0 && idleTime > 0.05f) {
+                push.stop(pushSoundId);
+                pushSoundId = 0;
+            }
+        }
+
         if (pushedBlock != null) {
             pushedBlock.position.set(position.cpy().add(direction));
             if (!isSparking) {
@@ -75,6 +105,13 @@ public class Player {
                     .target(newRotation)
                     .ease(Quad.INOUT)
                     .start(manager);
+
+            // Sounds
+            if (rotation > newRotation) {
+                Ladu.getInstance().getSound("turn_a").play();
+            } else if (rotation < newRotation) {
+                Ladu.getInstance().getSound("turn_b").play();
+            }
 
             isMoving = true;
         }

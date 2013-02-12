@@ -36,8 +36,8 @@ public class GameScreen extends LaduScreen {
     private final int buttonPadding = 20;
     private InputIntent inputIntent;
 
-    public GameScreen(Ladu game) {
-        super(game);
+    public GameScreen() {
+        super();
         super.fadeInDelay = 2f;
         super.fadeOutDelay = 1f;
         player = new Player(getAtlas());
@@ -84,6 +84,7 @@ public class GameScreen extends LaduScreen {
     }
 
     private void levelCompleted() {
+        Ladu.getInstance().getSound("bell").play();
         if (!isLevelComplete) {
             isLevelComplete = true;
             if (game.currentLevel < game.numLevels) {
@@ -276,6 +277,7 @@ public class GameScreen extends LaduScreen {
 
     private void resetLevel() {
         isLevelComplete = true;
+        Ladu.getInstance().getSound("die").play();
         game.transitionTo(Ladu.Screens.GAME);
     }
 

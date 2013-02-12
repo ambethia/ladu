@@ -27,12 +27,18 @@ public class Block {
     }
 
 	public void activate() {
+        if (!isActive) {
+            light.color = ACTIVE_COLOR;
+            Ladu.getInstance().getSound("activate").play();
+        }
 		isActive = true;
-        light.color = ACTIVE_COLOR;
 	}
 	
 	public void deactivate() {
-		isActive = false;
-        light.color = INACTIVE_COLOR;
+		if (isActive) {
+            light.color = INACTIVE_COLOR;
+            Ladu.getInstance().getSound("deactivate").play();
+        }
+        isActive = false;
 	}
 }

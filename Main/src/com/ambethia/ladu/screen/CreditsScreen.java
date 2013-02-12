@@ -13,10 +13,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 public class CreditsScreen extends LaduScreen {
     private Label creditsLabel;
 
-    public CreditsScreen(Ladu game) {
-        super(game);
-    }
-
     @Override
     public void show() {
         super.show();

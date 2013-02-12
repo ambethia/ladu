@@ -13,10 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class MenuScreen extends LaduScreen {
 
-    public MenuScreen(Ladu game) {
-        super(game);
-    }
-
     @Override
     public void show() {
         super.show();
@@ -101,11 +97,11 @@ public class MenuScreen extends LaduScreen {
                 break;
             case Keys.LEFT:
             case Keys.DOWN:
-                selectNextMenuItem();
+                selectPreviousMenuItem();
                 break;
             case Keys.RIGHT:
             case Keys.UP:
-                selectPreviousMenuItem();
+                selectNextMenuItem();
                 break;
             case Keys.T:
                 game.transitionTo(Ladu.Screens.TEST);

@@ -12,6 +12,6 @@ public class LaduAndroid extends AndroidApplication {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = false;
 
-        initialize(new Ladu(), cfg);
+        initialize(Ladu.getInstance(), cfg);
     }
 }

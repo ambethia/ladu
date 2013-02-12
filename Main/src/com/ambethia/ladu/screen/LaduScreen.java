@@ -33,9 +33,9 @@ public class LaduScreen implements Screen, InputProcessor {
     public Array<MenuButton> buttons = new Array();
     public MenuButton selectedButton;
 
-    public LaduScreen(Ladu game) {
+    public LaduScreen() {
         inputMultiplexer = new InputMultiplexer(this);
-        this.game = game;
+        this.game = Ladu.getInstance();
         this.stage = new Stage(0, 0, true);
         Drawable modalDrawable = new TextureRegionDrawable(getAtlas().findRegion("modal"));
         this.modal = new Image(modalDrawable, Scaling.stretch);
@@ -136,7 +136,7 @@ public class LaduScreen implements Screen, InputProcessor {
             Ladu.toggleFullscreen();
         }
 
-        return false;
+        return true;
     }
 
     @Override

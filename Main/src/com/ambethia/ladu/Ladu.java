@@ -5,8 +5,12 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.Preferences ;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Action;
+
+import java.util.HashMap;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
@@ -16,8 +20,18 @@ public class Ladu extends Game {
     public int unlockedLevel;
     public int numLevels = 3;
     private Preferences prefs;
+    private final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
+    private static Ladu instance;
+    private boolean soundsLoaded = false;
 
     public Ladu() {
+    }
+
+    public static Ladu getInstance() {
+        if (null == instance) {
+            instance = new Ladu();
+        }
+        return instance;
     }
 
     public void quit() {
@@ -53,25 +67,26 @@ public class Ladu extends Game {
         LaduScreen nextScreen;
         switch (screenId) {
             case SPLASH:
-                nextScreen = new SplashScreen(this);
+                nextScreen = new SplashScreen();
                 break;
             case MENU:
-                nextScreen = new MenuScreen(this);
+                nextScreen = new MenuScreen();
+                loadSounds();
                 break;
             case LEVELS:
-                nextScreen = new LevelsScreen(this);
+                nextScreen = new LevelsScreen();
                 break;
             case GAME:
-                nextScreen = new GameScreen(this);
+                nextScreen = new GameScreen();
                 break;
             case CREDITS:
-                nextScreen = new CreditsScreen(this);
+                nextScreen = new CreditsScreen();
                 break;
             case TEST:
-                nextScreen = new TestScreen(this);
+                nextScreen = new TestScreen();
                 break;
             default:
-                nextScreen = new SplashScreen(this);
+                nextScreen = new SplashScreen();
         }
         if (currentScreen != null) {
             currentScreen.transitionTo(nextScreen);
@@ -80,12 +95,30 @@ public class Ladu extends Game {
         }
     }
 
+    private void loadSounds() {
+        if (!soundsLoaded) {
+            sounds.put("activate", Gdx.audio.newSound(Gdx.files.internal("data/sound/activate.ogg")));
+            sounds.put("bell", Gdx.audio.newSound(Gdx.files.internal("data/sound/bell.ogg")));
+            sounds.put("deactivate", Gdx.audio.newSound(Gdx.files.internal("data/sound/deactivate.ogg")));
+            sounds.put("die", Gdx.audio.newSound(Gdx.files.internal("data/sound/die.ogg")));
+            sounds.put("move", Gdx.audio.newSound(Gdx.files.internal("data/sound/move.ogg")));
+            sounds.put("push", Gdx.audio.newSound(Gdx.files.internal("data/sound/push.ogg")));
+            sounds.put("turn_a", Gdx.audio.newSound(Gdx.files.internal("data/sound/turn_a.ogg")));
+            sounds.put("turn_b", Gdx.audio.newSound(Gdx.files.internal("data/sound/turn_b.ogg")));
+            soundsLoaded = true;
+        }
+    }
+
+    public Sound getSound(String name) {
+        return sounds.get(name);
+    }
+
     @Override
     public void create() {
         prefs = Gdx.app.getPreferences("Ladu");
         restoreLevel();
-//        transitionTo(Screens.SPLASH);
-        transitionTo(Screens.GAME);
+        transitionTo(Screens.SPLASH);
+//        transitionTo(Screens.GAME);
     }
 
     public void restoreLevel() {
@@ -112,5 +145,13 @@ public class Ladu extends Game {
         prefs.putInteger("currentLevel", currentLevel);
         prefs.putInteger("unlockedLevel", unlockedLevel);
         prefs.flush();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        for (Sound sound : sounds.values()) {
+            sound.dispose();
+        }
     }
 }

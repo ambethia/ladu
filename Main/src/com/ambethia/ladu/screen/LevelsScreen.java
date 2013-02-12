@@ -16,10 +16,6 @@ import com.badlogic.gdx.utils.Array;
 public class LevelsScreen extends LaduScreen {
     private int selectedLevel = 1;
 
-    public LevelsScreen(Ladu game) {
-        super(game);
-    }
-
     @Override
     public void show() {
         super.show();

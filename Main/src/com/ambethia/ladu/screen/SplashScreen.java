@@ -15,10 +15,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 public class SplashScreen extends LaduScreen {
     private Image splashImage;
 
-    public SplashScreen(Ladu game) {
-        super(game);
-    }
-
     @Override
     public void show() {
         super.show();

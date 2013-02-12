@@ -31,10 +31,6 @@ public class TestScreen extends LaduScreen {
     //Attenuation coefficients for light falloff
     public static final Vector3 FALLOFF = new Vector3(.4f, 3f, 20f);
 
-    public TestScreen(Ladu game) {
-        super(game);
-    }
-
     @Override
     public void show() {
         super.show();
@@ -99,6 +95,6 @@ public class TestScreen extends LaduScreen {
         {
             game.transitionTo(Ladu.Screens.MENU);
         }
-        return false;
+        return true;
     }
 }
