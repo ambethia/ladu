@@ -17,13 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.sun.javaws.ui.LaunchErrorDialog;
+import com.moribitotech.mtx.InputIntent;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class GameScreen extends LaduScreen {
     private GameRenderer renderer;
-    public final Player player = new Player();
+    public final Player player;
     public ArrayList<Block> blocks = new ArrayList<Block>();
     public ArrayList<Light> lights = new ArrayList<Light>();
     public int numActiveBlocks = 0;
@@ -34,12 +34,15 @@ public class GameScreen extends LaduScreen {
     private Image backButton;
     private Image resetButton;
     private final int buttonPadding = 20;
+    private InputIntent inputIntent;
 
     public GameScreen(Ladu game) {
         super(game);
         super.fadeInDelay = 2f;
         super.fadeOutDelay = 1f;
+        player = new Player(getAtlas());
         renderer = new GameRenderer(this);
+        inputIntent = new InputIntent();
     }
 
     public void update(float delta) {
@@ -157,16 +160,17 @@ public class GameScreen extends LaduScreen {
 
     private void handleInput() {
         if (!player.isMoving) {
-            if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+            if (Gdx.input.isKeyPressed(Keys.RIGHT) ||
+                    inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_RIGHT) {
                 move(Direction.EAST);
-            }
-            if (Gdx.input.isKeyPressed(Keys.UP)) {
+            } else if (Gdx.input.isKeyPressed(Keys.UP) ||
+                    inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_DOWN) {
                 move(Direction.NORTH);
-            }
-            if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+            } else if (Gdx.input.isKeyPressed(Keys.LEFT) ||
+                    inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_LEFT) {
                 move(Direction.WEST);
-            }
-            if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+            } else if (Gdx.input.isKeyPressed(Keys.DOWN) ||
+                    inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_UP) {
                 move(Direction.SOUTH);
             }
         }
@@ -252,6 +256,24 @@ public class GameScreen extends LaduScreen {
         return true;
     }
 
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        inputIntent.setTouchInitials(screenX, screenY);
+        return super.touchDown(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        inputIntent.reset();
+        return super.touchUp(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        inputIntent.setTouchCurrents(screenX, screenY);
+        return super.touchDragged(screenX, screenY, pointer);
+    }
+
     private void resetLevel() {
         isLevelComplete = true;
         game.transitionTo(Ladu.Screens.GAME);
@@ -285,19 +307,12 @@ public class GameScreen extends LaduScreen {
         if (tilePropertyAt(x, y, "obstacle", "1")) {
             return false;
         } else {
-            if (isBlocked(x, y)) {
-                return false;
-            }
-            return true;
+            return !isBlocked(x, y);
         }
     }
 
     private boolean isBlocked(int x, int y) {
-        if (null == blockAt(x, y)) {
-            return false;
-        } else {
-            return true;
-        }
+        return null != blockAt(x, y);
     }
 
     private Block blockAt(int x, int y) {
