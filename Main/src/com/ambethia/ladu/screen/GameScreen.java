@@ -140,7 +140,7 @@ public class GameScreen extends LaduScreen {
 
         // Center Light
         mainLight = new Light(new Vector3(11f, 6.75f, 0.2f), new Color(1.0f, 1.0f, 1.0f, 1.0f), new Vector3(0.4f, 3f, 30f));
-        lights.add(mainLight);
+//        lights.add(mainLight);
     }
 
     @Override
@@ -186,70 +186,6 @@ public class GameScreen extends LaduScreen {
                 break;
             case Keys.X:
                 resetLevel();
-                break;
-            case Keys.Q:
-                mainLight.color.r -= 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.W:
-                mainLight.color.r += 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.E:
-                mainLight.color.g -= 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.R:
-                mainLight.color.g += 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.T:
-                mainLight.color.b -= 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.Y:
-                mainLight.color.b += 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.U:
-                mainLight.color.a -= 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.I:
-                mainLight.color.a += 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.A:
-                mainLight.falloff.x -= 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.S:
-                mainLight.falloff.x += 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.D:
-                mainLight.falloff.y -= 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.F:
-                mainLight.falloff.y += 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.G:
-                mainLight.falloff.z -= 1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.H:
-                mainLight.falloff.z += 1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.J:
-                mainLight.position.z -= 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
-                break;
-            case Keys.K:
-                mainLight.position.z += 0.1f;
-                Gdx.app.log("Light", mainLight.toString());
                 break;
             default:
                 break;

@@ -95,6 +95,72 @@ public class TestScreen extends LaduScreen {
         {
             game.transitionTo(Ladu.Screens.MENU);
         }
+
+//        case Input.Keys.Q:
+//        mainLight.color.r -= 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.W:
+//        mainLight.color.r += 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.E:
+//        mainLight.color.g -= 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.R:
+//        mainLight.color.g += 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.T:
+//        mainLight.color.b -= 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.Y:
+//        mainLight.color.b += 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.U:
+//        mainLight.color.a -= 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.I:
+//        mainLight.color.a += 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.A:
+//        mainLight.falloff.x -= 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.S:
+//        mainLight.falloff.x += 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.D:
+//        mainLight.falloff.y -= 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.F:
+//        mainLight.falloff.y += 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.G:
+//        mainLight.falloff.z -= 1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.H:
+//        mainLight.falloff.z += 1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.J:
+//        mainLight.position.z -= 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+//        case Input.Keys.K:
+//        mainLight.position.z += 0.1f;
+//        Gdx.app.log("Light", mainLight.toString());
+//        break;
+
         return true;
     }
 }
