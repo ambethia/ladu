@@ -13,6 +13,5 @@ public class LaduDesktop {
         cfg.resizable = true;
 
         new LwjglApplication(Ladu.getInstance(), cfg);
-        Ladu.toggleFullscreen();
     }
 }

@@ -43,11 +43,12 @@ public class GameScreen extends LaduScreen {
         player = new Player(getAtlas());
         renderer = new GameRenderer(this);
         inputIntent = new InputIntent();
+        inputIntent.setTouchDragIntervalRange(GameRenderer.PIXELS_PER_METER / 2);
     }
 
     public void update(float delta) {
         if (!isLevelComplete) {
-            handleInput();
+            handleKeyboardInput();
             updateBlocks();
             checkForWinCondition();
         }
@@ -159,23 +160,34 @@ public class GameScreen extends LaduScreen {
         renderer.dispose();
     }
 
-    private void handleInput() {
+    private void handleKeyboardInput() {
         if (!player.isMoving) {
-            if (Gdx.input.isKeyPressed(Keys.RIGHT) ||
-                    inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_RIGHT) {
+            if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
                 move(Direction.EAST);
-            } else if (Gdx.input.isKeyPressed(Keys.UP) ||
-                    inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_DOWN) {
+            } else if (Gdx.input.isKeyPressed(Keys.UP)) {
                 move(Direction.NORTH);
-            } else if (Gdx.input.isKeyPressed(Keys.LEFT) ||
-                    inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_LEFT) {
+            } else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
                 move(Direction.WEST);
-            } else if (Gdx.input.isKeyPressed(Keys.DOWN) ||
-                    inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_UP) {
+            } else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
                 move(Direction.SOUTH);
             }
         }
     }
+
+    private void handleTouchInput() {
+        if (!player.isMoving && inputIntent.isTouchDragInterval()) {
+            if (inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_RIGHT) {
+                move(Direction.EAST);
+            } else if (inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_DOWN) {
+                move(Direction.NORTH);
+            } else if (inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_LEFT) {
+                move(Direction.WEST);
+            } else if (inputIntent.getDirectionIntent() == InputIntent.DirectionIntent.TOUCH_D_UP) {
+                move(Direction.SOUTH);
+            }
+        }
+    }
+
 
     @Override
     public boolean keyUp(int keycode) {
@@ -188,6 +200,7 @@ public class GameScreen extends LaduScreen {
                 resetLevel();
                 break;
             default:
+                player.unstuck();
                 break;
         }
         return true;
@@ -196,19 +209,21 @@ public class GameScreen extends LaduScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         inputIntent.setTouchInitials(screenX, screenY);
-        return super.touchDown(screenX, screenY, pointer, button);
+        return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         inputIntent.reset();
-        return super.touchUp(screenX, screenY, pointer, button);
+        player.unstuck();
+        return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         inputIntent.setTouchCurrents(screenX, screenY);
-        return super.touchDragged(screenX, screenY, pointer);
+        handleTouchInput();
+        return true;
     }
 
     private void resetLevel() {
@@ -236,7 +251,11 @@ public class GameScreen extends LaduScreen {
                 if (isWalkable(x + (int) direction.x, y + (int) direction.y)) {
                     Block block = blockAt(x, y);
                     player.push(block, direction);
+                } else {
+                    player.stuck(direction);
                 }
+            } else {
+                player.stuck(direction);
             }
         }
     }

@@ -71,12 +71,12 @@ public class Ladu extends Game {
                 break;
             case MENU:
                 nextScreen = new MenuScreen();
-                loadSounds();
                 break;
             case LEVELS:
                 nextScreen = new LevelsScreen();
                 break;
             case GAME:
+                loadSounds();
                 nextScreen = new GameScreen();
                 break;
             case CREDITS:
@@ -105,6 +105,7 @@ public class Ladu extends Game {
             sounds.put("push", Gdx.audio.newSound(Gdx.files.internal("data/sound/push.ogg")));
             sounds.put("turn_a", Gdx.audio.newSound(Gdx.files.internal("data/sound/turn_a.ogg")));
             sounds.put("turn_b", Gdx.audio.newSound(Gdx.files.internal("data/sound/turn_b.ogg")));
+            sounds.put("bump", Gdx.audio.newSound(Gdx.files.internal("data/sound/bump.ogg")));
             soundsLoaded = true;
         }
     }

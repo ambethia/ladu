@@ -26,6 +26,7 @@ public class Player {
     private ParticleEffect effect;
     private ParticleEmitter emitter;
     private boolean isSparking = false;
+    private boolean isStuck = false;
     private long moveSoundId = 0;
     private long pushSoundId = 0;
     private float idleTime = 0;
@@ -85,15 +86,6 @@ public class Player {
         if (!isMoving) {
             float x = position.x + direction.x;
             float y = position.y + direction.y;
-            float newRotation = (direction.angle() + 90) % 360;
-            // Some special cases to make sure he always turns in a logical manner
-            // (1/4 turn instead of whipping around 3/4 turns)
-            if (rotation == 270 && newRotation == 0)
-                newRotation = 360;
-            if (rotation == 360 && newRotation == 90)
-                rotation = 0;
-            if (rotation == 0 && newRotation == 270)
-                rotation = 360;
 
             Tween.to(this, PlayerTween.POSITION_XY, 0.33f)
                     .target(x, y)
@@ -101,19 +93,35 @@ public class Player {
                     .setCallback(moveEndCallback)
                     .start(manager);
 
-            Tween.to(this, PlayerTween.ROTATION, 0.2f)
-                    .target(newRotation)
-                    .ease(Quad.INOUT)
-                    .start(manager);
-
-            // Sounds
-            if (rotation > newRotation) {
-                Ladu.getInstance().getSound("turn_a").play();
-            } else if (rotation < newRotation) {
-                Ladu.getInstance().getSound("turn_b").play();
-            }
+            solveRotation();
 
             isMoving = true;
+        }
+    }
+
+    private void solveRotation() {
+        float newRotation = (direction.angle() + 90) % 360;
+        // Some special cases to make sure he always turns in a logical manner
+        // (1/4 turn instead of whipping around 3/4 turns)
+        if (rotation == 270 && newRotation == 0)
+            newRotation = 360;
+        if (rotation == 360 && newRotation == 90)
+            rotation = 0;
+        if (rotation == 0 && newRotation == 270)
+            rotation = 360;
+        if (rotation == 360 && newRotation == 0)
+            rotation = 0;
+
+        Tween.to(this, PlayerTween.ROTATION, 0.2f)
+                .target(newRotation)
+                .ease(Quad.INOUT)
+                .start(manager);
+
+        // Sounds
+        if (rotation > newRotation) {
+            Ladu.getInstance().getSound("turn_a").play();
+        } else if (rotation < newRotation) {
+            Ladu.getInstance().getSound("turn_b").play();
         }
     }
 
@@ -142,15 +150,85 @@ public class Player {
                 atlas.getRegion(8),
         };
 
-        idleAnimation = new Animation(2f, animationFrames[0], animationFrames[2], animationFrames[1]);
-        walkAnimation = new Animation(0.2f, animationFrames[0], animationFrames[1], animationFrames[0], animationFrames[2]);
+        // TODO: Refactor this twitch animation?
+        idleAnimation = new Animation(0.1f,
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[2],
+                animationFrames[0],
+                animationFrames[1],
+                animationFrames[0],
+                animationFrames[2],
+                animationFrames[0],
+                animationFrames[1],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[0],
+                animationFrames[2],
+                animationFrames[0],
+                animationFrames[1]);
+        walkAnimation = new Animation(0.1f, animationFrames[0], animationFrames[1], animationFrames[0], animationFrames[2]);
     }
 
     public void draw(SpriteBatch batch, int scale, float elapsedTime) {
         Animation currentAnimation;
         float x = position.x * scale;
         float y = position.y * scale;
-        currentAnimation = isMoving ? walkAnimation : idleAnimation;
+        currentAnimation = (isMoving || isStuck) ? walkAnimation : idleAnimation;
         TextureRegion playerSprite = currentAnimation.getKeyFrame(elapsedTime, true);
         batch.draw(playerSprite, x, y,
                 playerSprite.getRegionWidth() / 2,
@@ -183,5 +261,19 @@ public class Player {
             effect.setPosition(offset.x + x, offset.y + y);
             effect.draw(batch, Gdx.graphics.getDeltaTime());
         }
+    }
+
+    public void stuck(Vector2 direction) {
+        if (!isStuck) {
+            Ladu.getInstance().getSound("bump").play();
+            this.direction = direction;
+            solveRotation();
+            isStuck = true;
+        }
+
+    }
+
+    public void unstuck() {
+        isStuck = false;
     }
 }
