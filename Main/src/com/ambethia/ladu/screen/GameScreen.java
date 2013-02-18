@@ -30,7 +30,6 @@ public class GameScreen extends LaduScreen {
     public int numGoals = 0;
     private Label levelLabel;
     private boolean isLevelComplete = false;
-    private Light mainLight;
     private Image backButton;
     private Image resetButton;
     private final int buttonPadding = 20;
@@ -138,10 +137,6 @@ public class GameScreen extends LaduScreen {
             }
         });
         stage.addActor(resetButton);
-
-        // Center Light
-        mainLight = new Light(new Vector3(11f, 6.75f, 0.2f), new Color(1.0f, 1.0f, 1.0f, 1.0f), new Vector3(0.4f, 3f, 30f));
-//        lights.add(mainLight);
     }
 
     @Override
