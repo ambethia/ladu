@@ -69,6 +69,7 @@ public class Player {
 
         if (pushedBlock != null) {
             pushedBlock.position.set(position.cpy().add(direction));
+            pushedBlock.update();
             if (!isSparking) {
                 emitter.start();
                 isSparking = true;

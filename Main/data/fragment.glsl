@@ -22,6 +22,7 @@ uniform sampler2D u_heightMap;
 
 uniform vec2 resolution;        // resolution of screen
 uniform LOWP vec4 ambientLight; // alpha is intensity
+uniform float zoom;
 
 uniform Light lights[MAX_LIGHTS];
 
@@ -35,12 +36,13 @@ void main() {
             vec3 delta = vec3(lights[i].position.xy - (gl_FragCoord.xy / resolution.xy), lights[i].position.z);
             delta.x *= resolution.x / resolution.y; // Correct for aspect ratio
 
-            float D = length(delta);
+            float D = length(delta) * zoom;
             vec3 N = normalize(normal * 2.0 - 1.0);
             vec3 L = normalize(delta);
 
             vec3 diffuse = (lights[i].color.rgb * lights[i].color.a) * max(dot(N, L), 0.0);
             float attenuation = 1.0 / (lights[i].falloff.x + (lights[i].falloff.y * D) + (lights[i].falloff.z * D * D));
+
             vec3 intensity = diffuse * attenuation;
 
             float height = texture2D(u_heightMap, v_texCoords).r;

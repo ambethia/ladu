@@ -35,6 +35,8 @@ public class GameRenderer {
     private static final float ASPECT_RATIO = VIRTUAL_WIDTH / VIRTUAL_HEIGHT;
     public static final Color AMBIENT_LIGHT = new Color(0.6f, 0.6f, 0.6f, 0.6f);
     private Rectangle viewport;
+    private float zoom;
+    private final Vector3 levelCenter;
 
     public GameRenderer(GameScreen gameScreen) {
         screen = gameScreen;
@@ -59,7 +61,11 @@ public class GameRenderer {
         screen.player.setupAnimation(tileAtlas);
 
         camera = new OrthographicCamera(VIRTUAL_WIDTH * PIXELS_PER_METER, VIRTUAL_HEIGHT * PIXELS_PER_METER);
-        camera.position.set(tileMapRenderer.getMapWidthUnits() / 2, tileMapRenderer.getMapHeightUnits() / 2, 0);
+
+        levelCenter = new Vector3(tileMapRenderer.getMapWidthUnits() / 2, tileMapRenderer.getMapHeightUnits() / 2, 0);
+
+        camera.position.set(levelCenter.x, levelCenter.y, 0);
+        zoom = camera.zoom;
     }
 
     private ShaderProgram createShader() {
@@ -77,18 +83,35 @@ public class GameRenderer {
         return shader;
     }
 
-    public void draw(float delta) {
+    public void setZoom(float newZoom) {
+        zoom = newZoom;
+        camera.zoom = zoom;
+    }
+
+    private void updateCamera() {
+        Vector2 pp = screen.player.position;
+        Vector3 ppp = new Vector3(pp.x * PIXELS_PER_METER, pp.y * PIXELS_PER_METER, 0);
+        Vector3 cameraTranslate = ppp.lerp(levelCenter, zoom).sub(camera.position);
+        camera.translate(cameraTranslate);
         camera.update();
         Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+    }
+
+    public float getZoom() {
+        return zoom;
+    }
+
+    public void draw(float delta) {
+        updateCamera();
 
         screen.batch.begin(); // Beginning this batch here lets me use the shader in the tileMapRenderer.
         screen.batch.setProjectionMatrix(camera.combined);
 
         if (isShaderEnabled) {
-
             shader.setUniformi("u_normalMap", 1);
             shader.setUniformi("u_heightMap", 2);
             shader.setUniformf("ambientLight", AMBIENT_LIGHT.r, AMBIENT_LIGHT.g, AMBIENT_LIGHT.b, AMBIENT_LIGHT.a);
+            shader.setUniformf("zoom", zoom);
 
             for (int i = 0; i < screen.lights.size(); i++) {
                 Light light = screen.lights.get(i);

@@ -118,8 +118,8 @@ public class Ladu extends Game {
     public void create() {
         prefs = Gdx.app.getPreferences("Ladu");
         restoreLevel();
-        transitionTo(Screens.SPLASH);
-//        transitionTo(Screens.GAME);
+//        transitionTo(Screens.SPLASH);
+        transitionTo(Screens.GAME);
     }
 
     public void restoreLevel() {

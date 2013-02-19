@@ -35,6 +35,14 @@ public class GameScreen extends LaduScreen {
     private final int buttonPadding = 20;
     private InputIntent inputIntent;
 
+    // Pinch/Zoom stuff
+    int numberOfFingers = 0;
+    int fingerOnePointer;
+    int fingerTwoPointer;
+    float lastDistance = 0;
+    Vector3 fingerOne = new Vector3();
+    Vector3 fingerTwo = new Vector3();
+
     public GameScreen() {
         super();
         super.fadeInDelay = 2f;
@@ -42,7 +50,7 @@ public class GameScreen extends LaduScreen {
         player = new Player(getAtlas());
         renderer = new GameRenderer(this);
         inputIntent = new InputIntent();
-        inputIntent.setTouchDragIntervalRange(GameRenderer.PIXELS_PER_METER / 2);
+        inputIntent.setTouchDragIntervalRange(GameRenderer.PIXELS_PER_METER);
     }
 
     public void update(float delta) {
@@ -155,6 +163,12 @@ public class GameScreen extends LaduScreen {
         renderer.dispose();
     }
 
+    @Override
+    public void pause() {
+        super.pause();
+        numberOfFingers = 0;
+    }
+
     private void handleKeyboardInput() {
         if (!player.isMoving) {
             if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -183,7 +197,6 @@ public class GameScreen extends LaduScreen {
         }
     }
 
-
     @Override
     public boolean keyUp(int keycode) {
         super.keyUp(keycode);
@@ -204,6 +217,22 @@ public class GameScreen extends LaduScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         inputIntent.setTouchInitials(screenX, screenY);
+
+        numberOfFingers++;
+        if(numberOfFingers == 1)
+        {
+            fingerOnePointer = pointer;
+            fingerOne.set(screenX, screenY, 0);
+        }
+        else if(numberOfFingers == 2)
+        {
+            fingerTwoPointer = pointer;
+            fingerTwo.set(screenX, screenY, 0);
+
+            float distance = fingerOne.dst(fingerTwo);
+            lastDistance = distance;
+        }
+
         return true;
     }
 
@@ -211,13 +240,50 @@ public class GameScreen extends LaduScreen {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         inputIntent.reset();
         player.unstuck();
+
+        numberOfFingers--;
+        if(numberOfFingers < 0){
+            numberOfFingers = 0;
+        }
+
+        lastDistance = 0;
+
         return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        inputIntent.setTouchCurrents(screenX, screenY);
-        handleTouchInput();
+        // for pinch-to-zoom
+        if (pointer == fingerOnePointer) {
+            fingerOne.set(screenX, screenY, 0);
+        }
+        if (pointer == fingerTwoPointer) {
+            fingerTwo.set(screenX, screenY, 0);
+        }
+
+        if (numberOfFingers > 1) {
+            float distance = fingerOne.dst(fingerTwo);
+            float factor = distance / lastDistance;
+            if (lastDistance > distance) {
+                float zoom = renderer.getZoom() + (factor * Gdx.graphics.getDeltaTime() / 2);
+                renderer.setZoom(Math.max(Math.min(zoom, 1.0f), 0.25f));
+            } else if (lastDistance < distance) {
+                float zoom = renderer.getZoom() - (factor * Gdx.graphics.getDeltaTime() / 2);
+                renderer.setZoom(Math.max(Math.min(zoom, 1.0f), 0.25f));
+            }
+            lastDistance = distance;
+        } else {
+            inputIntent.setTouchCurrents(screenX, screenY);
+            handleTouchInput();
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        float zoom = renderer.getZoom() + (amount * Gdx.graphics.getDeltaTime()) / 2;
+        renderer.setZoom(Math.max(Math.min(zoom, 1.0f), 0.25f));
         return true;
     }
 
