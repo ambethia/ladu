@@ -47,7 +47,7 @@ public class LevelsScreen extends LaduScreen {
                     button = createButton("level-locked", new MenuInputListener(this));
                     button.disable();
                 }
-                table.add(button).expand();
+                table.add(button).pad(10f).expand();
             }
             table.row();
         }

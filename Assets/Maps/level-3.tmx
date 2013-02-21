@@ -24,6 +24,16 @@
     <property name="height" value="0"/>
    </properties>
   </tile>
+  <tile id="10">
+   <properties>
+    <property name="obstacle" value="1"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="obstacle" value="1"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Background" width="24" height="14">
   <data encoding="base64" compression="zlib">
@@ -32,7 +42,7 @@
  </layer>
  <layer name="Room" width="24" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF5ABmMjCp5jOSgEfNx24mEwPp4Y8t7hhxsGHmk+p2JiLcT0nY0DJtjgIEAAAQGgDM
+   eJxjYBgF5AAeIGYmAfOQaD5IDyMJmHmIm89Novk8RLqZCaqWlPCHqWeGugvmF1g8IrOZGMgLGyYi3E9u2JOSNrkZSE+bowABACx1AUc=
   </data>
  </layer>
  <objectgroup name="Objects" width="24" height="14">

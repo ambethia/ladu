@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.moribitotech.mtx.InputIntent;
 
@@ -120,28 +121,18 @@ public class GameScreen extends LaduScreen {
         }));
         loadMapObjects();
 
-        backButton = createButton("icon-back", new InputListener() {
+        backButton = createButton("icon-back", new ClickListener() {
             @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            public void clicked(InputEvent event, float x, float y) {
                 exitLevel();
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
             }
         });
         stage.addActor(backButton);
 
-        resetButton = createButton("icon-reset", new InputListener() {
+        resetButton = createButton("icon-reset", new ClickListener() {
             @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            public void clicked(InputEvent event, float x, float y) {
                 resetLevel();
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
             }
         });
         stage.addActor(resetButton);
@@ -216,24 +207,29 @@ public class GameScreen extends LaduScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        inputIntent.setTouchInitials(screenX, screenY);
+        if ((screenX < (resetButton.getX() + resetButton.getWidth() + buttonPadding)) &&
+           (Gdx.graphics.getHeight() - screenY > resetButton.getY())) {
+            return false;
+        } else {
+            inputIntent.setTouchInitials(screenX, screenY);
 
-        numberOfFingers++;
-        if(numberOfFingers == 1)
-        {
-            fingerOnePointer = pointer;
-            fingerOne.set(screenX, screenY, 0);
+            numberOfFingers++;
+            if(numberOfFingers == 1)
+            {
+                fingerOnePointer = pointer;
+                fingerOne.set(screenX, screenY, 0);
+            }
+            else if(numberOfFingers == 2)
+            {
+                fingerTwoPointer = pointer;
+                fingerTwo.set(screenX, screenY, 0);
+
+                float distance = fingerOne.dst(fingerTwo);
+                lastDistance = distance;
+            }
+
+            return true;
         }
-        else if(numberOfFingers == 2)
-        {
-            fingerTwoPointer = pointer;
-            fingerTwo.set(screenX, screenY, 0);
-
-            float distance = fingerOne.dst(fingerTwo);
-            lastDistance = distance;
-        }
-
-        return true;
     }
 
     @Override
@@ -248,7 +244,7 @@ public class GameScreen extends LaduScreen {
 
         lastDistance = 0;
 
-        return true;
+        return false;
     }
 
     @Override
@@ -277,14 +273,14 @@ public class GameScreen extends LaduScreen {
             handleTouchInput();
         }
 
-        return true;
+        return false;
     }
 
     @Override
     public boolean scrolled(int amount) {
         float zoom = renderer.getZoom() + (amount * Gdx.graphics.getDeltaTime()) / 2;
         renderer.setZoom(Math.max(Math.min(zoom, 1.0f), 0.25f));
-        return true;
+        return false;
     }
 
     private void resetLevel() {

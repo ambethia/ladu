@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><map height="14" orientation="orthogonal" tileheight="128" tilewidth="128" version="1.0" width="24"><properties><property name="blended tiles" value="1,2,4,7,8,10,11,12,13,14,15,16"/></properties>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><map height="14" orientation="orthogonal" tileheight="128" tilewidth="128" version="1.0" width="24"><properties><property name="blended tiles" value="1,2,4,7,8,10,13,14,15,16"/></properties>
  <tileset firstgid="1" name="Tiles" tileheight="128" tilewidth="128">
   <image height="512" source="tiles.png" width="512"/>
   <tile id="0">
@@ -23,6 +23,16 @@
     <property name="height" value="0"/>
    </properties>
   </tile>
+  <tile id="10">
+   <properties>
+    <property name="obstacle" value="1"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="obstacle" value="1"/>
+   </properties>
+  </tile>
  </tileset>
  <layer height="14" name="Background" width="24">
   <data compression="zlib" encoding="base64">
@@ -31,7 +41,7 @@
  </layer>
  <layer height="14" name="Room" width="24">
   <data compression="zlib" encoding="base64">
-   eJxjYBhegBkPppa5jFgwJebjMxfdfHL8R8hsmPnY3MFEhP9wmc+EQ5yQ/ej+Icb9pOKBNh/dr5Saj24ONnlS7MYW3/jSG764w2YPpfmRkNuobT4uAAD8XgFC
+   eJy9k9sKACEIRG19rP//3n1ZwQ6zUuxFkMDszGBl9l8MpF+r6vG0z5o6Z6nehdZAj6NfaZEdPU1k8LP+qv+oKS75DnbWqOZSsRu85fqR9Ct+niXPriTn5uCvcnb0Iu7u9C2+8s+3+dQ/OWqfd11puzjfbX4nOdzmf1R5o7/oo6+d4B+mv6/iBAcTBI4=
   </data>
  </layer>
  <objectgroup height="14" name="Objects" width="24">

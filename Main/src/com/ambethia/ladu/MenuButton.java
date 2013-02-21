@@ -14,6 +14,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.scaleTo;
 public class MenuButton extends Image {
     private RepeatAction animationAction;
     private boolean isAnimating = false;
+    private boolean isEnabled = true;
 
     private Color focusedColor;
     private Color enabledColor;
@@ -37,12 +38,14 @@ public class MenuButton extends Image {
     }
 
     public void startAnimation() {
-        if (!isAnimating) {
-            animationAction = forever(sequence(scaleTo(1.2f, 1.2f, 1f, Interpolation.bounceIn), scaleTo(1, 1, 1f, Interpolation.bounceOut)));
-            addAction(animationAction);
-            addAction(color(focusedColor, 0.25f));
+        if (isEnabled) {
+            if (!isAnimating) {
+                animationAction = forever(sequence(scaleTo(1.2f, 1.2f, 1f, Interpolation.bounceIn), scaleTo(1, 1, 1f, Interpolation.bounceOut)));
+                addAction(animationAction);
+                addAction(color(focusedColor, 0.25f));
+            }
+            isAnimating = true;
         }
-        isAnimating = true;
     }
 
     public void focus() {
@@ -55,6 +58,7 @@ public class MenuButton extends Image {
 
     public void disable() {
         setColor(disabledColor);
+        isEnabled = false;
     }
 
     public void call() {
