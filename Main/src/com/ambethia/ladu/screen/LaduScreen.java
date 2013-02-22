@@ -3,6 +3,7 @@ package com.ambethia.ladu.screen;
 import com.ambethia.ladu.Ladu;
 import com.ambethia.ladu.MenuButton;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,6 +33,7 @@ public class LaduScreen implements Screen, InputProcessor {
     protected float fadeOutDelay = 0.0f;
     public Array<MenuButton> buttons = new Array();
     public MenuButton selectedButton;
+    protected boolean playMusic = true;
 
     public LaduScreen() {
         inputMultiplexer = new InputMultiplexer(this);
@@ -81,6 +83,13 @@ public class LaduScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
+        Music music = Ladu.getInstance().music;
+        if (!music.isPlaying() && playMusic) {
+            music.setVolume(0.6f);
+            music.setLooping(true);
+            music.play();
+        }
+
         inputMultiplexer.addProcessor(stage);
         inputMultiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(inputMultiplexer);

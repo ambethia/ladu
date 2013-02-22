@@ -6,8 +6,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Preferences ;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Action;
 
 import java.util.HashMap;
@@ -23,6 +23,10 @@ public class Ladu extends Game {
     private final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
     private static Ladu instance;
     private boolean soundsLoaded = false;
+    public Music music;
+    public boolean isMusicEnabled = true;
+    public boolean isSoundEnabled = true;
+
 
     public Ladu() {
     }
@@ -116,13 +120,14 @@ public class Ladu extends Game {
 
     @Override
     public void create() {
+        music = Gdx.audio.newMusic(Gdx.files.internal("data/sound/theme.ogg"));
         prefs = Gdx.app.getPreferences("Ladu");
-        restoreLevel();
-//        transitionTo(Screens.SPLASH);
-        transitionTo(Screens.LEVELS);
+        restorePreferences();
+        transitionTo(Screens.SPLASH);
+//        transitionTo(Screens.LEVELS);
     }
 
-    public void restoreLevel() {
+    public void restorePreferences() {
         Integer level;
 
         level = prefs.getInteger("currentLevel");
@@ -138,6 +143,9 @@ public class Ladu extends Game {
         } else {
             unlockedLevel = 1;
         }
+
+        isMusicEnabled = prefs.getBoolean("isMusicEnabled", true);
+        isSoundEnabled = prefs.getBoolean("isSoundEnabled", true);
     }
 
     public void setCurrentLevel(int level) {
@@ -154,5 +162,6 @@ public class Ladu extends Game {
         for (Sound sound : sounds.values()) {
             sound.dispose();
         }
+        music.dispose();
     }
 }

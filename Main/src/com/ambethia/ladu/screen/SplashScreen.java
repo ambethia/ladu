@@ -18,6 +18,7 @@ public class SplashScreen extends LaduScreen {
     @Override
     public void show() {
         Ladu.toggleFullscreen();
+        playMusic = false;
         super.show();
         TextureAtlas.AtlasRegion splashRegion = getAtlas().findRegion("splash");
         Drawable splashDrawable = new TextureRegionDrawable(splashRegion);

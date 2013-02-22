@@ -4,6 +4,7 @@ import com.ambethia.ladu.Ladu;
 import com.ambethia.ladu.MenuButton;
 import com.ambethia.ladu.MenuInputListener;
 import com.badlogic.gdx.Input.*;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;

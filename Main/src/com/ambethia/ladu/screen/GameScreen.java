@@ -261,10 +261,10 @@ public class GameScreen extends LaduScreen {
             float distance = fingerOne.dst(fingerTwo);
             float factor = distance / lastDistance;
             if (lastDistance > distance) {
-                float zoom = renderer.getZoom() + (factor * Gdx.graphics.getDeltaTime() / 2);
+                float zoom = renderer.getZoom() + (factor * Gdx.graphics.getDeltaTime() / 6);
                 renderer.setZoom(Math.max(Math.min(zoom, 1.0f), 0.25f));
             } else if (lastDistance < distance) {
-                float zoom = renderer.getZoom() - (factor * Gdx.graphics.getDeltaTime() / 2);
+                float zoom = renderer.getZoom() - (factor * Gdx.graphics.getDeltaTime() / 6);
                 renderer.setZoom(Math.max(Math.min(zoom, 1.0f), 0.25f));
             }
             lastDistance = distance;
