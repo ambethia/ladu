@@ -16,7 +16,7 @@ public class CreditsScreen extends LaduScreen {
     @Override
     public void show() {
         super.show();
-        String credits = "THE LADU\n\nProgramming & Audio by\nJason L Perry\n\nArt by\nJames Basom Seaman\n\nhttp://ambethia.com";
+        String credits = "THE LADU\n\nProgramming & Audio by\nJason L Perry\n\nArt by\nJames Basom Seaman\n\nhttp://ambethia.com/ladu";
         creditsLabel = new Label(credits, new Label.LabelStyle(font, Color.WHITE));
         creditsLabel.setAlignment(Align.center, Align.center);
         stage.addActor(creditsLabel);
@@ -24,7 +24,7 @@ public class CreditsScreen extends LaduScreen {
 
     @Override
     public void update(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
             game.transitionTo(Ladu.Screens.MENU);
         }
     }

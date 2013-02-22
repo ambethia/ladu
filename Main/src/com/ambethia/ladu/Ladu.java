@@ -118,6 +118,12 @@ public class Ladu extends Game {
         return sounds.get(name);
     }
 
+    public void playSound(String name) {
+        if (sounds.containsKey(name) && isSoundEnabled) {
+            sounds.get(name).play();
+        }
+    }
+
     @Override
     public void create() {
         music = Gdx.audio.newMusic(Gdx.files.internal("data/sound/theme.ogg"));

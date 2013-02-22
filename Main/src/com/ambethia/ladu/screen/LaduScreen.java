@@ -153,11 +153,10 @@ public class LaduScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (Input.Keys.F == keycode) {
-            Ladu.toggleFullscreen();
-        }
-
         switch (keycode) {
+            case Input.Keys.F:
+                Ladu.toggleFullscreen();
+                break;
             case Input.Keys.M:
                 boolean isMusicEnabled = Ladu.getInstance().isMusicEnabled;
                 if (isMusicEnabled) {
@@ -167,8 +166,11 @@ public class LaduScreen implements Screen, InputProcessor {
                 }
                 Ladu.getInstance().setMusicEnabled(!isMusicEnabled);
                 break;
+            case Input.Keys.N:
+                boolean isSoundEnabled = Ladu.getInstance().isSoundEnabled;
+                Ladu.getInstance().setSoundEnabled(!isSoundEnabled);
+                break;
         }
-
         return true;
     }
 

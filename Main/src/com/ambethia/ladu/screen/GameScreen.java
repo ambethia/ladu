@@ -93,7 +93,7 @@ public class GameScreen extends LaduScreen {
     }
 
     private void levelCompleted() {
-        Ladu.getInstance().getSound("bell").play();
+        Ladu.getInstance().playSound("bell");
         if (!isLevelComplete) {
             isLevelComplete = true;
             if (game.currentLevel < game.numLevels) {
@@ -294,7 +294,7 @@ public class GameScreen extends LaduScreen {
 
     private void resetLevel() {
         isLevelComplete = true;
-        Ladu.getInstance().getSound("die").play();
+        Ladu.getInstance().playSound("die");
         game.transitionTo(Ladu.Screens.GAME);
     }
 

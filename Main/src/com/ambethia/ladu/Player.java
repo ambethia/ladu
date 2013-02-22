@@ -42,30 +42,33 @@ public class Player {
     public void update(float delta) {
         manager.update(delta);
 
-        // Sound
-        Sound move = Ladu.getInstance().getSound("move");
-        Sound push = Ladu.getInstance().getSound("push");
-        if (isMoving) {
-            idleTime = 0;
-            if (0 == moveSoundId)
-                moveSoundId = move.loop();
-            if (pushSoundId == 0 && isSparking)
-                pushSoundId = push.loop();
-            if (pushSoundId != 0 && !isSparking) {
-                push.stop(pushSoundId);
-                pushSoundId = 0;
-            }
-        } else {
-            idleTime += Gdx.graphics.getDeltaTime();
-            if (0 != moveSoundId && idleTime > 0.2f) {
-                move.stop(moveSoundId);
-                moveSoundId = 0;
-            }
-            if (pushSoundId != 0 && idleTime > 0.05f) {
-                push.stop(pushSoundId);
-                pushSoundId = 0;
+        if (Ladu.getInstance().isSoundEnabled) {
+            // Sound
+            Sound move = Ladu.getInstance().getSound("move");
+            Sound push = Ladu.getInstance().getSound("push");
+            if (isMoving) {
+                idleTime = 0;
+                if (0 == moveSoundId)
+                    moveSoundId = move.loop();
+                if (pushSoundId == 0 && isSparking)
+                    pushSoundId = push.loop();
+                if (pushSoundId != 0 && !isSparking) {
+                    push.stop(pushSoundId);
+                    pushSoundId = 0;
+                }
+            } else {
+                idleTime += Gdx.graphics.getDeltaTime();
+                if (0 != moveSoundId && idleTime > 0.2f) {
+                    move.stop(moveSoundId);
+                    moveSoundId = 0;
+                }
+                if (pushSoundId != 0 && idleTime > 0.05f) {
+                    push.stop(pushSoundId);
+                    pushSoundId = 0;
+                }
             }
         }
+
 
         if (pushedBlock != null) {
             pushedBlock.position.set(position.cpy().add(direction));
@@ -118,11 +121,12 @@ public class Player {
                 .ease(Quad.INOUT)
                 .start(manager);
 
+
         // Sounds
         if (rotation > newRotation) {
-            Ladu.getInstance().getSound("turn_a").play();
+            Ladu.getInstance().playSound("turn_a");
         } else if (rotation < newRotation) {
-            Ladu.getInstance().getSound("turn_b").play();
+            Ladu.getInstance().playSound("turn_b");
         }
     }
 
@@ -266,7 +270,7 @@ public class Player {
 
     public void stuck(Vector2 direction) {
         if (!isStuck) {
-            Ladu.getInstance().getSound("bump").play();
+            Ladu.getInstance().playSound("bump");
             this.direction = direction;
             solveRotation();
             isStuck = true;

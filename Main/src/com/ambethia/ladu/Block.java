@@ -29,7 +29,7 @@ public class Block {
 	public void activate() {
         if (!isActive) {
             light.color = ACTIVE_COLOR;
-            Ladu.getInstance().getSound("activate").play();
+            Ladu.getInstance().playSound("activate");
         }
 		isActive = true;
 	}
@@ -37,7 +37,7 @@ public class Block {
 	public void deactivate() {
 		if (isActive) {
             light.color = INACTIVE_COLOR;
-            Ladu.getInstance().getSound("deactivate").play();
+            Ladu.getInstance().playSound("deactivate");
         }
         isActive = false;
 	}
