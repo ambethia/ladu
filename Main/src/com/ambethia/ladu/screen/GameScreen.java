@@ -162,16 +162,25 @@ public class GameScreen extends LaduScreen {
 
     private void handleKeyboardInput() {
         if (!player.isMoving) {
-            if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+            if (anyKeyPressed(Keys.RIGHT, Keys.L, Keys.D)) {
                 move(Direction.EAST);
-            } else if (Gdx.input.isKeyPressed(Keys.UP)) {
+            } else if (anyKeyPressed(Keys.UP, Keys.K, Keys.W)) {
                 move(Direction.NORTH);
-            } else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+            } else if (anyKeyPressed(Keys.LEFT, Keys.H, Keys.A)) {
                 move(Direction.WEST);
-            } else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+            } else if (anyKeyPressed(Keys.DOWN, Keys.J, Keys.S)) {
                 move(Direction.SOUTH);
             }
         }
+    }
+
+    private boolean anyKeyPressed(int... keys) {
+        for (int key : keys) {
+            if (Gdx.input.isKeyPressed(key)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void handleTouchInput() {

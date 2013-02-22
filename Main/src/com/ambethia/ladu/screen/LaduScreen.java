@@ -83,17 +83,29 @@ public class LaduScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
+        if (Ladu.getInstance().isMusicEnabled)
+            playMusic();
+
+        inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(this);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+        transitionIn();
+    }
+
+    private void playMusic() {
         Music music = Ladu.getInstance().music;
         if (!music.isPlaying() && playMusic) {
             music.setVolume(0.6f);
             music.setLooping(true);
             music.play();
         }
+    }
 
-        inputMultiplexer.addProcessor(stage);
-        inputMultiplexer.addProcessor(this);
-        Gdx.input.setInputProcessor(inputMultiplexer);
-        transitionIn();
+    private void stopMusic() {
+        Music music = Ladu.getInstance().music;
+        if (music.isPlaying()) {
+            music.stop();
+        }
     }
 
     public void transitionIn() {
@@ -143,6 +155,18 @@ public class LaduScreen implements Screen, InputProcessor {
     public boolean keyUp(int keycode) {
         if (Input.Keys.F == keycode) {
             Ladu.toggleFullscreen();
+        }
+
+        switch (keycode) {
+            case Input.Keys.M:
+                boolean isMusicEnabled = Ladu.getInstance().isMusicEnabled;
+                if (isMusicEnabled) {
+                    stopMusic();
+                } else {
+                    playMusic();
+                }
+                Ladu.getInstance().setMusicEnabled(!isMusicEnabled);
+                break;
         }
 
         return true;

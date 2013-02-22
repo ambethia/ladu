@@ -156,6 +156,16 @@ public class Ladu extends Game {
         prefs.flush();
     }
 
+    public void setMusicEnabled(boolean musicEnabled) {
+        isMusicEnabled = musicEnabled;
+        prefs.putBoolean("isMusicEnabled", isMusicEnabled);
+    }
+
+    public void setSoundEnabled(boolean soundEnabled) {
+        isSoundEnabled = soundEnabled;
+        prefs.putBoolean("isSoundEnabled", isSoundEnabled);
+    }
+
     @Override
     public void dispose() {
         super.dispose();
