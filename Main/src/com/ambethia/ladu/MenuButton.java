@@ -22,7 +22,7 @@ public class MenuButton extends Image {
 
     public MenuButton(TextureRegionDrawable region) {
         super(region);
-        enabledColor = new Color(0.33f, 0.41f, 0.74f, 1f);
+        enabledColor = new Color(0.50f, 0.48f, 0.46f, 1f);
         focusedColor = Color.WHITE;
         disabledColor = Color.WHITE;
         setColor(enabledColor);

@@ -4,6 +4,7 @@ import com.ambethia.ladu.Ladu;
 import com.ambethia.ladu.MenuButton;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,6 +35,8 @@ public class LaduScreen implements Screen, InputProcessor {
     public Array<MenuButton> buttons = new Array();
     public MenuButton selectedButton;
     protected boolean playMusic = true;
+    private final FPSLogger fpsLogger = new FPSLogger();
+    protected boolean isTransitionComplete = false;
 
     public LaduScreen() {
         inputMultiplexer = new InputMultiplexer(this);
@@ -44,7 +47,7 @@ public class LaduScreen implements Screen, InputProcessor {
         modal.setFillParent(true);
         stage.addActor(modal);
         this.batch = new SpriteBatch();
-        this.font = new BitmapFont(Gdx.files.internal("data/btfr.fnt"), getAtlas().findRegion("btfr"), false);
+        this.font = new BitmapFont(Gdx.files.internal("data/kilkenny.fnt"), getAtlas().findRegion("kilkenny"), false);
     }
 
     public TextureAtlas getAtlas() {
@@ -66,6 +69,7 @@ public class LaduScreen implements Screen, InputProcessor {
         stage.act(delta);
         stage.draw();
         Table.drawDebug(stage);
+//        fpsLogger.log();
     }
 
     public void draw(float delta) {
@@ -113,6 +117,7 @@ public class LaduScreen implements Screen, InputProcessor {
             @Override
             public boolean act(float delta) {
                 modal.setVisible(false);
+                isTransitionComplete = true;
                 return true;
             }
         }));
@@ -121,6 +126,7 @@ public class LaduScreen implements Screen, InputProcessor {
     public void transitionTo(final LaduScreen nextScreen) {
         modal.getColor().a = 0f;
         modal.setVisible(true);
+        isTransitionComplete = false;
         modal.addAction(sequence(delay(fadeOutDelay), fadeIn(fadeOutTime), new Action() {
             @Override
             public boolean act(float delta) {

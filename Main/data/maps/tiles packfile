@@ -6,112 +6,140 @@ repeat: none
 tiles
   rotate: false
   xy: 2, 2
-  size: 128, 128
-  orig: 128, 128
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 19
+tiles
+  rotate: false
+  xy: 260, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 18
+tiles
+  rotate: false
+  xy: 518, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 17
+tiles
+  rotate: false
+  xy: 2, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 16
+tiles
+  rotate: false
+  xy: 260, 260
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 15
 tiles
   rotate: false
-  xy: 132, 2
-  size: 128, 128
-  orig: 128, 128
+  xy: 518, 260
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 14
 tiles
   rotate: false
-  xy: 262, 2
-  size: 128, 128
-  orig: 128, 128
+  xy: 2, 518
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 13
 tiles
   rotate: false
-  xy: 2, 132
-  size: 128, 128
-  orig: 128, 128
+  xy: 260, 518
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 12
 tiles
   rotate: false
-  xy: 132, 132
-  size: 128, 128
-  orig: 128, 128
+  xy: 518, 518
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 11
 tiles
   rotate: false
-  xy: 262, 132
-  size: 128, 128
-  orig: 128, 128
+  xy: 2, 776
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 10
 tiles
   rotate: false
-  xy: 2, 262
-  size: 128, 128
-  orig: 128, 128
+  xy: 260, 776
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 9
 tiles
   rotate: false
-  xy: 132, 262
-  size: 128, 128
-  orig: 128, 128
+  xy: 518, 776
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 8
 tiles
   rotate: false
-  xy: 262, 262
-  size: 128, 128
-  orig: 128, 128
+  xy: 2, 1034
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 7
 tiles
   rotate: false
-  xy: 2, 392
-  size: 128, 128
-  orig: 128, 128
+  xy: 2, 1292
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 6
 tiles
   rotate: false
-  xy: 132, 392
-  size: 128, 128
-  orig: 128, 128
+  xy: 2, 1550
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 5
 tiles
   rotate: false
-  xy: 262, 392
-  size: 128, 128
-  orig: 128, 128
+  xy: 260, 1034
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 4
 tiles
   rotate: false
-  xy: 2, 522
-  size: 128, 128
-  orig: 128, 128
+  xy: 518, 1034
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 3
 tiles
   rotate: false
-  xy: 2, 652
-  size: 128, 128
-  orig: 128, 128
+  xy: 260, 1292
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 2
 tiles
   rotate: false
-  xy: 2, 782
-  size: 128, 128
-  orig: 128, 128
+  xy: 260, 1550
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 1
 tiles
   rotate: false
-  xy: 132, 522
-  size: 128, 128
-  orig: 128, 128
+  xy: 518, 1292
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: 0

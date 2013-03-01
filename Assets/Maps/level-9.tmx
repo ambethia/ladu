@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="14" tilewidth="256" tileheight="256">
+ <tileset firstgid="1" name="Ladu" tilewidth="256" tileheight="256">
+  <image source="tiles.png" width="1280" height="1024"/>
+  <tile id="9">
+   <properties>
+    <property name="Goal" value="1"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="Obstacle" value="1"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="Obstacle" value="1"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="Obstacle" value="1"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="Obstacle" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Background" width="24" height="14">
+  <data encoding="base64" compression="zlib">
+   eJzdksENwCAIRf9JMOmQjuYojlYRTRMbW2o9ND0QiML7iDgA7ue2Td5d1fS2ki2egMRAYPXJ0oeVL2yf2e1MYhrkSy51vVn4rNzIlU2HTuy0iz3hS37mRqe+aGVu8BqLJqov7+Q5fqr1p9nT4E+s/MZo8xnMfXqfZvbi7b7e9bCS/SXbASFIG2k=
+  </data>
+ </layer>
+ <layer name="Room" width="24" height="14">
+  <data encoding="base64" compression="zlib">
+   eJytlGEKwyAMhdO6/Vntvx3Qo3mUHm0+lgdOKrzIAiHBxu+FYHOa2WGaZbHOnHl6VPh5iApf7XumtWrvif+TnczKw6zCk5+N7Dt9hQ/23t1r+ZWcnwcmaqmv8sHbWkTvLS/I4S938ljLXiL8/TeHTiV/+54X18f8anA+Fxn9nDif1OmvzJ8ad71x/s/2XWXONGZvM9qzYqvvPvIfR3YEudxBqkX2D9gfq48U7Q==
+  </data>
+ </layer>
+ <objectgroup name="Objects" width="24" height="14">
+  <object type="Player" gid="16" x="3584" y="2560"/>
+  <object type="Block" gid="14" x="2048" y="2304"/>
+  <object type="Light" x="1358" y="1106" width="94" height="102">
+   <properties>
+    <property name="Color" value="0.38, 1.00, 0.22, 0.9"/>
+    <property name="Falloff" value="0.2, 0.8, 16"/>
+    <property name="Z" value="0.2"/>
+   </properties>
+  </object>
+  <object x="2698" y="1535" width="58"/>
+  <object type="Light" x="3020" y="1747" width="94" height="102">
+   <properties>
+    <property name="Color" value="1.00, 1.00, 1.00, 0.9"/>
+    <property name="Falloff" value="0.2, 0.8, 16"/>
+    <property name="Z" value="0.2"/>
+   </properties>
+  </object>
+  <object type="Block" gid="14" x="1536" y="2048"/>
+  <object type="Block" gid="14" x="1536" y="1536"/>
+  <object type="Block" gid="14" x="4096" y="1792"/>
+  <object type="Light" x="4685" y="2637" width="94" height="102">
+   <properties>
+    <property name="Color" value="1.00, 0.22, 0.69, 0.9"/>
+    <property name="Falloff" value="0.2, 0.8, 16"/>
+    <property name="Z" value="0.2"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

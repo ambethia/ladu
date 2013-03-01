@@ -20,6 +20,9 @@ public class LaduTilePacker {
         texturePackerSettings.defaultFilterMag = Texture.TextureFilter.Linear;
         texturePackerSettings.defaultFilterMin = Texture.TextureFilter.Linear;
 
+        texturePackerSettings.maxHeight = 2048;
+        texturePackerSettings.maxWidth = 2048;
+
         TiledMapPackerSettings packerSettings = new TiledMapPackerSettings();
 
         switch (args.length) {

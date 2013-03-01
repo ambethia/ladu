@@ -3,6 +3,7 @@ package com.ambethia.ladu.screen;
 import com.ambethia.ladu.Ladu;
 import com.ambethia.ladu.MenuButton;
 import com.ambethia.ladu.MenuInputListener;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.*;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -19,19 +20,21 @@ public class MenuScreen extends LaduScreen {
         super.show();
 
         final Image title = createImage("menu-title");
-        final Image ladu = createImage("menu-ladu");
+        final Image background = createImage("menu-background");
 
         final MenuButton playButton = createButton("menu-play", new MenuInputListener(this) {
             @Override
             public void call() {
-                if (game.currentLevel > 1) {
-                    // Continuing? Show the level select screen.
-                    game.transitionTo(Ladu.Screens.LEVELS);
-                } else {
-                    // New game? Go straight to the first level.
-                    game.transitionTo(Ladu.Screens.GAME);
-                }
-
+                // DISABLE LEVEL SELECT SCREEN FOR NOW
+//                if (game.currentLevel > 1) {
+//                    // Continuing? Show the level select screen.
+//                    // game.transitionTo(Ladu.Screens.LEVELS);
+//                    game.transitionTo(Ladu.Screens.GAME);
+//                } else {
+//                    // New game? Go straight to the first level.
+//                    game.transitionTo(Ladu.Screens.GAME);
+//                }
+                game.transitionTo(Ladu.Screens.GAME);
             }
         });
         buttons.add(playButton);
@@ -52,13 +55,15 @@ public class MenuScreen extends LaduScreen {
         });
         buttons.add(quitButton);
 
+        stage.addActor(background);
+        background.setFillParent(true);
+
         final Table table = new Table();
         table.setFillParent(true);
-        table.add(ladu).colspan(3).expand().bottom();
         table.row();
-        table.add(title).colspan(3).expandY().top().padTop(20);
+        table.add(title).colspan(3).expandY().center();
         table.row();
-        for (Actor button : buttons) { table.add(button).expandY(); }
+        for (Actor button : buttons) { table.add(button).expand(); }
         stage.addActor(table);
 
         // Pre-select play button

@@ -24,7 +24,7 @@ public class GameRenderer {
     private TextureRegion blockTexture;
     private TextureRegion activeBlockTexture;
     public static int ROOM_LAYER = 1;
-    public static int PIXELS_PER_METER = 128;
+    public static int PIXELS_PER_METER = 256;
     private float elapsedTime = 0f;
     private Texture normalMap;
     private Texture heightMap;
@@ -55,8 +55,8 @@ public class GameRenderer {
         tileAtlas = new TileAtlas(tiledMap, Gdx.files.internal("data/maps"));
         tileMapRenderer = new TileMapRenderer(tiledMap, tileAtlas, 8, 8, shader);
 
-        blockTexture = tileAtlas.getRegion(5);
-        activeBlockTexture = tileAtlas.getRegion(6);
+        blockTexture = tileAtlas.getRegion(14);
+        activeBlockTexture = tileAtlas.getRegion(15);
 
         screen.player.setupAnimation(tileAtlas);
 

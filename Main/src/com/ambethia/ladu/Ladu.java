@@ -18,7 +18,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 public class Ladu extends Game {
     public int currentLevel;
     public int unlockedLevel;
-    public int numLevels = 3;
+    public int numLevels = 21;
     private Preferences prefs;
     private final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
     private static Ladu instance;
@@ -26,7 +26,6 @@ public class Ladu extends Game {
     public Music music;
     public boolean isMusicEnabled = true;
     public boolean isSoundEnabled = true;
-
 
     public Ladu() {
     }
@@ -130,7 +129,7 @@ public class Ladu extends Game {
         prefs = Gdx.app.getPreferences("Ladu");
         restorePreferences();
         transitionTo(Screens.SPLASH);
-//        transitionTo(Screens.LEVELS);
+        // transitionTo(Screens.MENU);
     }
 
     public void restorePreferences() {
@@ -149,6 +148,9 @@ public class Ladu extends Game {
         } else {
             unlockedLevel = 1;
         }
+
+        // CHEAT CODES
+        unlockedLevel = numLevels;
 
         isMusicEnabled = prefs.getBoolean("isMusicEnabled", true);
         isSoundEnabled = prefs.getBoolean("isSoundEnabled", true);

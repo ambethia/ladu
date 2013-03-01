@@ -16,8 +16,9 @@ public class CreditsScreen extends LaduScreen {
     @Override
     public void show() {
         super.show();
-        String credits = "THE LADU\n\nProgramming & Audio by\nJason L Perry\n\nArt by\nJames Basom Seaman\n\nhttp://ambethia.com/ladu";
+        String credits = "THE LADU\n\nProgramming & Audio by\nJason L Perry\n\nArt by\nJames Basom Seaman II\n\nhttp://ambethia.com/ladu";
         creditsLabel = new Label(credits, new Label.LabelStyle(font, Color.WHITE));
+        creditsLabel.setScale(0.9f);
         creditsLabel.setAlignment(Align.center, Align.center);
         stage.addActor(creditsLabel);
     }

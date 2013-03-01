@@ -9,9 +9,11 @@ import aurelienribon.tweenengine.equations.Cubic;
 import aurelienribon.tweenengine.equations.Quad;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class Player {
     public final Vector2 position = new Vector2();
@@ -31,16 +33,26 @@ public class Player {
     private long pushSoundId = 0;
     private float idleTime = 0;
 
+    public Light light;
+    static final float DEFAULT_Z = 0.075f;
+    static final Vector3 DEFAULT_FALLOFF = new Vector3(.4f, 3f, 20f);
+    static final Color INACTIVE_COLOR = new Color(0.7f, 0.6f, 0.5f, 0.8f);
+    static final Color ACTIVE_COLOR = new Color(0.6f, 0.7f, 1.0f, 2.0f);
+
     public Player(TextureAtlas atlas) {
         Tween.registerAccessor(Player.class, new PlayerTween());
         direction = Direction.SOUTH;
         effect = new ParticleEffect();
         effect.load(Gdx.files.internal("data/sparks.p"), atlas);
         emitter = effect.findEmitter("Sparks");
+        light = new Light(new Vector3(), INACTIVE_COLOR, DEFAULT_FALLOFF);
+        light.position.z = DEFAULT_Z;
     }
 
     public void update(float delta) {
         manager.update(delta);
+        light.position.x = position.x + 0.5f;
+        light.position.y = position.y + 0.5f;
 
         if (Ladu.getInstance().isSoundEnabled) {
             // Sound
@@ -74,12 +86,14 @@ public class Player {
             pushedBlock.position.set(position.cpy().add(direction));
             pushedBlock.update();
             if (!isSparking) {
+                light.color = ACTIVE_COLOR;
                 emitter.start();
                 isSparking = true;
             }
         } else {
             if (isSparking) {
                 emitter.allowCompletion();
+                light.color = INACTIVE_COLOR;
                 isSparking = false;
             }
         }
@@ -150,9 +164,9 @@ public class Player {
 
     public void setupAnimation(TileAtlas atlas) {
         animationFrames = new TextureRegion[]{
-                atlas.getRegion(7),
-                atlas.getRegion(4),
-                atlas.getRegion(8),
+                atlas.getRegion(16),
+                atlas.getRegion(17),
+                atlas.getRegion(18),
         };
 
         // TODO: Refactor this twitch animation?

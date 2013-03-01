@@ -31,10 +31,12 @@ public class GameScreen extends LaduScreen {
     public int numGoals = 0;
     private Label levelLabel;
     private boolean isLevelComplete = false;
+
     private Image backButton;
     private Image resetButton;
     private final int buttonPadding = 20;
     private InputIntent inputIntent;
+    private float timeSinceWin = 0f;
 
     // Pinch/Zoom stuff
     int numberOfFingers = 0;
@@ -55,10 +57,10 @@ public class GameScreen extends LaduScreen {
     }
 
     public void update(float delta) {
-        if (!isLevelComplete) {
+        checkForWinCondition();
+        if (isTransitionComplete) {
             handleKeyboardInput();
             updateBlocks();
-            checkForWinCondition();
         }
         player.update(delta);
     }
@@ -66,6 +68,7 @@ public class GameScreen extends LaduScreen {
     public void draw(float delta) {
         levelLabel.toFront();
         renderer.draw(delta);
+        // FPS
     }
 
     private void updateBlocks() {
@@ -74,7 +77,7 @@ public class GameScreen extends LaduScreen {
             block.update();
             int x = Math.round(block.position.x);
             int y = Math.round(block.position.y);
-            if (tilePropertyAt(x, y, "goal", "1")) {
+            if (tilePropertyAt(x, y, "Goal", "1")) {
                 block.activate();
                 count++;
             } else {
@@ -93,16 +96,20 @@ public class GameScreen extends LaduScreen {
     }
 
     private void levelCompleted() {
-        Ladu.getInstance().playSound("bell");
-        if (!isLevelComplete) {
-            isLevelComplete = true;
-            if (game.currentLevel < game.numLevels) {
-                game.setCurrentLevel(game.currentLevel + 1);
-                game.transitionTo(Ladu.Screens.GAME);
-            } else {
-                game.setCurrentLevel(1);
-                game.transitionTo(Ladu.Screens.CREDITS);
+        if (timeSinceWin > 0.5f) {
+            if (!isLevelComplete) {
+                isLevelComplete = true;
+                Ladu.getInstance().playSound("bell");
+                if (game.currentLevel < game.numLevels) {
+                    game.setCurrentLevel(game.currentLevel + 1);
+                    game.transitionTo(Ladu.Screens.GAME);
+                } else {
+                    game.setCurrentLevel(1);
+                    game.transitionTo(Ladu.Screens.CREDITS);
+                }
             }
+        } else {
+            timeSinceWin += Gdx.graphics.getDeltaTime();
         }
     }
 
@@ -128,6 +135,7 @@ public class GameScreen extends LaduScreen {
             }
         });
         stage.addActor(backButton);
+        backButton.setColor(new Color(0.50f, 0.48f, 0.46f, 1f));
 
         resetButton = createButton("icon-reset", new ClickListener() {
             @Override
@@ -136,6 +144,7 @@ public class GameScreen extends LaduScreen {
             }
         });
         stage.addActor(resetButton);
+        resetButton.setColor(new Color(0.50f, 0.48f, 0.46f, 1f));
     }
 
     @Override
@@ -207,11 +216,28 @@ public class GameScreen extends LaduScreen {
             case Keys.X:
                 resetLevel();
                 break;
+            case Keys.F7:
+                cheat(-1);
+                break;
+            case Keys.F9:
+                cheat(1);
+                break;
             default:
                 player.unstuck();
                 break;
         }
         return true;
+    }
+
+    private void cheat(int direction) {
+        int cheatLevel = game.currentLevel + direction;
+        if (cheatLevel > game.numLevels) {
+            cheatLevel = 1;
+        } else if (cheatLevel < 1) {
+            cheatLevel = game.numLevels;
+        }
+        game.setCurrentLevel(cheatLevel);
+        game.transitionTo(Ladu.Screens.GAME);
     }
 
     @Override
@@ -300,7 +326,8 @@ public class GameScreen extends LaduScreen {
 
     private void exitLevel() {
         isLevelComplete = true;
-        game.transitionTo(Ladu.Screens.LEVELS);
+        // game.transitionTo(Ladu.Screens.LEVELS);
+        game.transitionTo(Ladu.Screens.MENU);
     }
 
     private void move(Vector2 direction) {
@@ -327,7 +354,7 @@ public class GameScreen extends LaduScreen {
     }
 
     private boolean isWalkable(int x, int y) {
-        if (tilePropertyAt(x, y, "obstacle", "1")) {
+        if (tilePropertyAt(x, y, "Obstacle", "1")) {
             return false;
         } else {
             return !isBlocked(x, y);
@@ -358,15 +385,16 @@ public class GameScreen extends LaduScreen {
             for (TiledObject object : group.objects) {
                 int x = object.x / GameRenderer.PIXELS_PER_METER;
                 int y = (renderer.tileMapRenderer.getMapHeightUnits() - object.y) / GameRenderer.PIXELS_PER_METER;
-                if (object.type.equals("Player")) {
+                if ("Player".equals(object.type)) {
                     player.position.set(x, y);
+                    lights.add(player.light);
                 }
-                if (object.type.equals("Block")) {
+                if ("Block".equals(object.type)) {
                     Block block = new Block(x, y);
                     blocks.add(block);
-                    lights.add(block.light);
+//                    lights.add(block.light);
                 }
-                if (object.type.equals("Light")) {
+                if ("Light".equals(object.type)) {
                     float z = Float.parseFloat(object.properties.get("Z"));
                     String color = object.properties.get("Color");
                     String falloff = object.properties.get("Falloff");
@@ -379,7 +407,7 @@ public class GameScreen extends LaduScreen {
         numGoals = 0;
         for (int x = 0; x < renderer.tiledMap.width; x++) {
             for (int y = 0; y < renderer.tiledMap.height; y++) {
-                if (tilePropertyAt(x, y, "goal", "1")) {
+                if (tilePropertyAt(x, y, "Goal", "1")) {
                     numGoals++;
                 }
             }
